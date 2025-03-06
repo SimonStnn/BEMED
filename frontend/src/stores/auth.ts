@@ -1,16 +1,17 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import Cookies from 'js-cookie';
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import Cookies from "js-cookie";
 
-const AUTH_TOKEN_KEY = 'auth';
+const AUTH_TOKEN_KEY = "auth";
 
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore("auth", () => {
   // This is dummy code, should be replaced later with real authentication logic
   const isLoggedIn = ref(false);
 
-  function login() {
+  function login(e: SubmitEvent) {
+    console.log("Logging in with", e);
     isLoggedIn.value = true;
-    Cookies.set(AUTH_TOKEN_KEY, 'true');
+    Cookies.set(AUTH_TOKEN_KEY, "true");
   }
 
   function logout() {
@@ -19,13 +20,13 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function checkAuth() {
-    isLoggedIn.value = Cookies.get(AUTH_TOKEN_KEY) === 'true';
+    isLoggedIn.value = Cookies.get(AUTH_TOKEN_KEY) === "true";
   }
 
   return {
     isLoggedIn,
     login,
     logout,
-    checkAuth
+    checkAuth,
   };
 });

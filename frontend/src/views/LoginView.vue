@@ -1,4 +1,13 @@
-  <template>
+<script lang="ts" setup>
+import ApiForm from '@/components/ApiForm.vue';
+
+function onSuccess(data: any) {
+  console.log(data);
+}
+
+</script>
+
+<template>
   <v-container class="login">
     <v-row justify="center">
       <v-col cols="12" md="6">
@@ -7,20 +16,11 @@
             <span class="headline">Login Page</span>
           </v-card-title>
           <v-card-text>
-            <v-form @submit.prevent="login">
-              <v-text-field
-                v-model="username"
-                label="Username"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="password"
-                label="Password"
-                type="password"
-                required
-              ></v-text-field>
+            <api-form action="/login" method="POST" v-on:success="onSuccess">
+              <v-text-field label="Username" name="username" required></v-text-field>
+              <v-text-field label="Password" name="password" type="password" required></v-text-field>
               <v-btn type="submit" color="primary">Login</v-btn>
-            </v-form>
+            </api-form>
           </v-card-text>
         </v-card>
       </v-col>
@@ -29,29 +29,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useAuthStore } from '@/stores/auth';
 
-export default defineComponent({
-  setup() {
-    const authStore = useAuthStore();
-    const username = ref('');
-    const password = ref('');
-
-    const login = () => {
-      // Implement your login logic here
-      authStore.login();
-    };
-
-    return {
-      username,
-      password,
-      login
-    };
-  }
-});
 </script>
 
-<style scoped>
-/* Add your styles here */
-</style>
+<style scoped></style>
