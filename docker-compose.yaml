@@ -57,8 +57,8 @@ services:
       - KEYCLOAK_CLIENT_SECRET=your-client-secret
     ports:
       - "3000:3000"
-    # depends_on:
-    #   - keycloak
+    depends_on:
+      - keycloak
 
 volumes:
   database_data:
