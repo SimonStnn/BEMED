@@ -27,7 +27,7 @@ Alternative["Alternative SUPP"] {
     string name
     float HAPI
     int to FK "alternative to"
-    double price
+    
 }
 
 Assessment {
