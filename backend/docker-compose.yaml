@@ -1,0 +1,64 @@
+version: "3.8"
+
+name: bemed 
+
+services:
+  keycloak:
+    container_name: keycloak
+    build:
+      context: .
+      dockerfile: Dockerfile.keycloak
+      args:
+        DB_VENDOR: mariadb
+        DB_ADDR: db
+        DB_DATABASE: keycloak
+        DB_USER: keycloak
+        DB_PASSWORD: keycloak
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+    ports:
+      - "8180:8080"
+    depends_on:
+      - db
+
+  db:
+    container_name: database
+    image: mariadb:latest
+    environment:
+      - MARIADB_DATABASE=keycloak
+      - MARIADB_USER=keycloak
+      - MARIADB_PASSWORD=keycloak
+      - MARIADB_ROOT_PASSWORD=rootpassword
+    volumes:
+      - database_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=rootpassword
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+  backend:
+    container_name: backend
+    build: .
+    environment:
+      - KEYCLOAK_URL=http://keycloak:8080/auth
+      - KEYCLOAK_REALM=your-realm
+      - KEYCLOAK_CLIENT_ID=backend
+      - KEYCLOAK_CLIENT_SECRET=your-client-secret
+    ports:
+      - "3000:3000"
+    # depends_on:
+    #   - keycloak
+
+volumes:
+  database_data:
