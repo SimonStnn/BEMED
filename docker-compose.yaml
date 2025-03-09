@@ -3,9 +3,27 @@ version: "3.8"
 name: bemed
 
 services:
+  traefik:
+    container_name: traefik
+    env_file: .env
+    image: traefik:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/:/etc/traefik/:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN}`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      
   keycloak:
     container_name: keycloak
     env_file: .env
+    restart: unless-stopped
     image: quay.io/keycloak/keycloak:latest
     command: start-dev
     environment:
@@ -17,14 +35,18 @@ services:
       - KC_DB_URL=jdbc:mariadb://db/${MARIADB_DATABASE}
       - KC_HEALTH_ENABLED=true
       - KC_METRICS_ENABLED=true
-    ports:
-      - "8180:8080"
     depends_on:
       - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.keycloak.rule=Host(`${DNS_PREFIX_KEYCLOAK}.${DOMAIN}`)"
+      - "traefik.http.routers.keycloak.entrypoints=web"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
 
   db:
     container_name: database
     env_file: .env
+    restart: unless-stopped
     image: mariadb:latest
     environment:
       - MARIADB_DATABASE=${MARIADB_DATABASE}
@@ -33,51 +55,63 @@ services:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     volumes:
       - database_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
 
   phpmyadmin:
     container_name: phpmyadmin
     env_file: .env
+    restart: unless-stopped
     image: phpmyadmin:latest
     environment:
       - PMA_HOST=db
       - PMA_USER=root
       - PMA_PASSWORD=${MARIADB_ROOT_PASSWORD}
-    ports:
-      - "8081:80"
     depends_on:
       - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.${DOMAIN}`)"
+      - "traefik.http.routers.phpmyadmin.entrypoints=web"
+      - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
 
   backend:
     container_name: backend
     env_file: .env
-    build: 
+    restart: unless-stopped
+    build:
       context: ./backend
-      target: development
+      target: ${NODE_ENV}
     environment:
       - KEYCLOAK_AUTH_URL=${KEYCLOAK_AUTH_URL}
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_CLIENT_ID=${KEYCLOAK_BACKEND_CLIENT_ID}
       - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
-    ports:
-      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`${DNS_PREFIX_BEMED_BACKEND}.${DOMAIN}`)"
+      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.services.backend.loadbalancer.server.port=${BEMED_API_PORT}"
     depends_on:
       - keycloak
+      - db
 
   frontend:
     container_name: frontend
     env_file: .env
+    restart: unless-stopped
     build:
       context: ./frontend
-      target: development
+      target: ${NODE_ENV}
     environment:
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_CLIENT_ID=${KEYCLOAK_FRONTEND_CLIENT_ID}
       - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
-    ports:
-      - "5173:5173"
-      - "80:80"
-
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`${DNS_PREFIX_BEMED_FRONTEND}.${DOMAIN}`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+      - "traefik.http.routers.root.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.root.entrypoints=web"
+      - "traefik.http.routers.root.service=frontend"
 volumes:
   database_data:

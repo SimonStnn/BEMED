@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 # Copy only the necessary files for production
 COPY --from=build /usr/src/app ./
 
-EXPOSE 3000
+EXPOSE $BEMED_API_PORT
 
 # Start the application
 CMD ["npm", "run", "start"]
@@ -33,7 +33,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE $BEMED_API_PORT
 
 # Start the development server
 CMD ["npm", "run", "dev"]

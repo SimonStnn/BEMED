@@ -3,7 +3,9 @@ import rootRouter from "./routes";
 import cors from "cors";
 
 const app = express();
-const PORT = 8164;
+const PORT = process.env.BEMED_API_PORT || 3000;
+
+console.log("PORT", PORT);
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());

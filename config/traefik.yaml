@@ -1,0 +1,53 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# Change log level and format here ... [TRACE, DEBUG, INFO, WARN, ERROR, FATAL]
+log:
+  level: DEBUG
+
+# --> (Optional) Enable accesslog here ...
+# accesslog: {}
+# <--
+
+# Enable API and Dashboard here, don't do in production
+# Defined in
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: :80
+    # Redirect all HTTP to HTTPS
+    # http:
+    #   redirections:
+    #     entryPoint:
+    #       to: websecure
+    #       scheme: https
+  websecure:
+    address: :443
+
+# Configure your CertificateResolver here...
+# certificatesResolvers:
+#   myresolver:
+#     acme:
+#       email: ${ACME_EMAIL}
+#       storage: "/letsencrypt/acme.json"
+#       httpChallenge:
+#         entryPoint: web
+
+# --> (Optional) Disable TLS Cert verification check
+# serversTransport:
+#   insecureSkipVerify: true
+# <--
+
+providers:
+  docker:
+    exposedByDefault: false # <-- (Optional) Change this to true if you want to expose all services
+    # Specify discovery network - This ensures correct name resolving and possible issues with containers, that are in multiple networks.
+    # E.g. Database container in a separate network and a container in the frontend and database network.
+    # network: frontend
+  file:
+    directory: /etc/traefik
+    watch: true
