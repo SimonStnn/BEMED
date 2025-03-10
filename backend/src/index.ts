@@ -1,6 +1,17 @@
 import express from "express";
 import rootRouter from "./routes";
 import cors from "cors";
+import session from "express-session";
+import Keycloak from "keycloak-connect";
+import { type EnvVariable, url } from "./utils";
+
+const PORT = process.env.BEMED_API_PORT || 3000;
+const {
+  KEYCLOAK_BACKEND_CLIENT_ID,
+  KEYCLOAK_REALM,
+} = process.env as Record<EnvVariable, string>;
+
+console.debug(`Auth server URL: ${url.keycloak.toString()}`);
 
 const app = express();
 const PORT = process.env.BEMED_API_PORT || 3000;
