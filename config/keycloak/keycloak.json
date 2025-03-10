@@ -1,0 +1,33 @@
+{
+  "realm": "${KEYCLOAK_REALM}",
+  "displayName": "BEMED",
+  "displayNameHtml": "BEMED Auth",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "bemed-api",
+      "name": "BEMED API",
+      "description": "Backend API for BEMED",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${KEYCLOAK_CLIENT_SECRET}",
+      "surrogateAuthRequired": false,
+      "alwaysDisplayInConsole": false,
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "http://auth.localhost",
+      "redirectUris": ["http://auth.localhost"],
+      "webOrigins": ["http://auth.localhost"],
+      "authorizationServicesEnabled": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "post.logout.redirect.uris": "http://auth.localhost"
+      }
+    }
+  ]
+}
