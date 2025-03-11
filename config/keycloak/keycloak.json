@@ -1,11 +1,17 @@
 {
+  "id": "7708c1fd-be03-4482-b15e-79eeb7260264",
   "realm": "${KEYCLOAK_REALM}",
   "displayName": "BEMED",
   "displayNameHtml": "BEMED Auth",
   "enabled": true,
+  "registrationAllowed": true,
+  "rememberMe": true,
+  "resetPasswordAllowed": false,
+  "verifyEmail": false,
+  "loginWithEmailAllowed": true,
   "clients": [
     {
-      "clientId": "bemed-api",
+      "clientId": "${KEYCLOAK_BACKEND_CLIENT_ID}",
       "name": "BEMED API",
       "description": "Backend API for BEMED",
       "enabled": true,
@@ -15,9 +21,9 @@
       "alwaysDisplayInConsole": false,
       "rootUrl": "",
       "adminUrl": "",
-      "baseUrl": "http://auth.localhost",
-      "redirectUris": ["http://auth.localhost"],
-      "webOrigins": ["http://auth.localhost"],
+      "baseUrl": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/",
+      "redirectUris": ["http://${DOMAIN}/*", "http://*.${DOMAIN}/*", "*"],
+      "webOrigins": ["http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"],
       "authorizationServicesEnabled": true,
       "standardFlowEnabled": true,
       "implicitFlowEnabled": false,
@@ -26,8 +32,46 @@
       "frontchannelLogout": true,
       "protocol": "openid-connect",
       "attributes": {
-        "post.logout.redirect.uris": "http://auth.localhost"
+        "post.logout.redirect.uris": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
+      }
+    },
+    {
+      "clientId": "${KEYCLOAK_FRONTEND_CLIENT_ID}",
+      "name": "BEMED WEB",
+      "description": "Frontend for BEMED",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${KEYCLOAK_CLIENT_SECRET}",
+      "surrogateAuthRequired": false,
+      "alwaysDisplayInConsole": false,
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/",
+      "redirectUris": ["http://${DOMAIN}/*", "http://*.${DOMAIN}/*", "*"],
+      "webOrigins": ["http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"],
+      "authorizationServicesEnabled": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "post.logout.redirect.uris": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
       }
     }
-  ]
+  ],
+  "components": {
+    "org.keycloak.userprofile.UserProfileProvider": [
+      {
+        "providerId": "declarative-user-profile",
+        "subComponents": {},
+        "config": {
+          "kc.user.profile.config": [
+            "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"contact\",\"displayName\":\"Contact person\",\"validations\":{},\"annotations\":{},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"phone\",\"displayName\":\"Phone\",\"validations\":{\"pattern\":{\"pattern\":\"^[\\\\+]?[(]?[0-9]{3}[)]?[-\\\\s\\\\.]?[0-9]{3}[-\\\\s\\\\.]?[0-9]{4,6}$\",\"error-message\":\"Invalid phone number\"}},\"annotations\":{\"inputType\":\"html5-tel\"},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}"
+          ]
+        }
+      }
+    ]
+  }
 }
