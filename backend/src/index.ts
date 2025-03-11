@@ -3,7 +3,7 @@ import rootRouter from "./routes";
 import cors from "cors";
 
 const app = express();
-const PORT = process.env.BEMED_API_PORT || 3000;
+const PORT = process.env.BEMED_API_PORT || 8164;
 
 console.log("PORT", PORT);
 

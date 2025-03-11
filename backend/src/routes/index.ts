@@ -6,5 +6,8 @@ const router = Router();
 
 router.use("/login", loginRouter);
 
+import surveyRouter from "./survey";
+
+router.use("/survey", surveyRouter);
 
 export default router;
