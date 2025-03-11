@@ -85,7 +85,6 @@ services:
       context: ./backend
       target: ${NODE_ENV}
     environment:
-      - KEYCLOAK_AUTH_URL=${KEYCLOAK_AUTH_URL}
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_CLIENT_ID=${KEYCLOAK_BACKEND_CLIENT_ID}
       - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
