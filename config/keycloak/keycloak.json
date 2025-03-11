@@ -1,6 +1,6 @@
 {
   "id": "7708c1fd-be03-4482-b15e-79eeb7260264",
-  "realm": "bemed",
+  "realm": "${KEYCLOAK_REALM}",
   "displayName": "BEMED",
   "displayNameHtml": "BEMED Auth",
   "notBefore": 0,
@@ -703,24 +703,24 @@
     },
     {
       "id": "17f4f9ab-ca1d-4266-a5bc-e597c463c609",
-      "clientId": "bemed-api",
+      "clientId": "${KEYCLOAK_BACKEND_CLIENT_ID}",
       "name": "BEMED API",
       "description": "Backend API for BEMED",
       "rootUrl": "",
       "adminUrl": "",
-      "baseUrl": "http://auth.localhost/",
+      "baseUrl": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "${KEYCLOAK_CLIENT_SECRET}",
       "redirectUris": [
-        "http://*.localhost/*",
+        "http://${DOMAIN}/*", 
         "*",
-        "http://localhost/*"
+        "http://*.${DOMAIN}/*"
       ],
       "webOrigins": [
-        "http://auth.localhost/"
+        "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -735,7 +735,7 @@
       "protocol": "openid-connect",
       "attributes": {
         "realm_client": "false",
-        "post.logout.redirect.uris": "http://auth.localhost/"
+        "post.logout.redirect.uris": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -767,24 +767,24 @@
     },
     {
       "id": "9df393a9-e4fc-4418-8fe2-b132547d256a",
-      "clientId": "bemed-frontend",
+      "clientId": "${KEYCLOAK_FRONTEND_CLIENT_ID}",
       "name": "BEMED WEB",
       "description": "Frontend for BEMED",
       "rootUrl": "",
       "adminUrl": "",
-      "baseUrl": "http://auth.localhost/",
+      "baseUrl": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "${KEYCLOAK_CLIENT_SECRET}",
       "redirectUris": [
-        "http://*.localhost/*",
+        "http://${DOMAIN}/*", 
         "*",
-        "http://localhost/*"
+        "http://*.${DOMAIN}/*"
       ],
       "webOrigins": [
-        "http://auth.localhost/"
+        "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -799,7 +799,7 @@
       "protocol": "openid-connect",
       "attributes": {
         "realm_client": "false",
-        "post.logout.redirect.uris": "http://auth.localhost/"
+        "post.logout.redirect.uris": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
