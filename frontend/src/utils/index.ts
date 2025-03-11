@@ -17,7 +17,6 @@ export function getAPIUrl(path?: string): string {
 
 export const requiredEnvVars = [
   "KEYCLOAK_FRONTEND_CLIENT_ID",
-  "KEYCLOAK_BACKEND_CLIENT_ID",
   "KEYCLOAK_CLIENT_SECRET",
   "KEYCLOAK_REALM",
   "DOMAIN",

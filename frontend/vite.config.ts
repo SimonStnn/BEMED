@@ -5,6 +5,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
 import path from "path";
+import fs from "fs";
 
 import { requiredEnvVars } from "./src/utils";
 
@@ -13,7 +14,9 @@ const env: { [key: string]: string } = {};
 export function loadEnv() {
   const envPath = path.resolve(__dirname, "..", ".env");
   dotenv.config({
-    path: envPath,
+    // Only load .env if it exists
+    // if it doesn't, the global environment variables will be used
+    path: fs.existsSync(envPath) ? envPath : undefined,
     encoding: "utf8",
     processEnv: env,
   });
