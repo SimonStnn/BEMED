@@ -40,22 +40,25 @@ router.get("/", async (req: Request, res: Response) => {
 
 //* POST
 
-router.post("/", async (req: Request, res: Response) => {
-    console.log("POST /survey");
-    
-    const { question, answer } = req.body;
-
-    if (!question || Object.values(question).some(q => q === null)) {
-    res.status(400).json({ message: "Missing answer" });
-        return;
-    }
+router.post("/survey", async (req: Request, res: Response) => {
+    console.log("POST /survey request received");
 
     if (!db)    {
         res.status(500).json({message: "Database not initialized"});
         return;
     }
 
+    console.log("Received request body:", req.body);
+
+    const { question } = req.body;
+
+    if (!question || Object.values(question).some(q => q === null)) {
+    res.status(400).json({ message: "Missing answer" });
+        return;
+    }
+
     try {
+
         await db.execute("INSERT INTO survey_responses (question1, question2, question3, question4, question5, question6, question7) VALUES (?, ?, ?, ?, ?, ?, ?)", 
             [
                 question[1], question[2], question[3], question[4],
@@ -66,6 +69,8 @@ router.post("/", async (req: Request, res: Response) => {
         console.error("Database error:", error);
         res.status(500).json({message: "Internal server error" });
     }
+
+    res.status(200).json({ message: "Survey received"});
 });
 
 //* PUT

@@ -14,6 +14,10 @@ const formData = ref({
   }
 })
 
+function checkFormData() {
+  console.log("Submitting form data:", JSON.stringify(formData.value));
+}
+
 function onSuccess(data: any) {
   console.log("Response from server:", data);
 }
@@ -28,7 +32,8 @@ function onSuccess(data: any) {
             <span class="headline">Survey Page</span>
           </v-card-title>
           <v-card-text class="survey-content">
-            <api-form action="/survey" method="POST" v-on:success="onSuccess" v-bind:body="formData">
+            <api-form action="/survey" method="POST" v-on:success="onSuccess" v-bind:body="formData"
+            @submit="checkFormData">
               
               <!--Yes/no questions (4)-->
               <v-radio-group v-model="formData.questions[1]" class="survey-field" requiered>
