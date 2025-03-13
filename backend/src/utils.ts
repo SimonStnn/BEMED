@@ -13,8 +13,6 @@ const requiredEnvVars = [
 export type EnvVariable = (typeof requiredEnvVars)[number];
 
 export function loadEnv() {
-  console.log(process.env)
-  
   const envPath = path.resolve(__dirname, "..", "..", ".env");
   dotenv.config({
     path: envPath,
@@ -40,6 +38,6 @@ loadEnv();
 const { DNS_PREFIX_KEYCLOAK, DNS_PREFIX_BEMED_BACKEND, DOMAIN } =
   process.env as Record<EnvVariable, string>;
 export const url = {
-  keycloak: new URL(`http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}`),
-  backend: new URL(`http://${DNS_PREFIX_BEMED_BACKEND}.${DOMAIN}`),
+  keycloak: new URL(`http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}`).toString(),
+  backend: new URL(`http://${DNS_PREFIX_BEMED_BACKEND}.${DOMAIN}`).toString(),
 } as const;
