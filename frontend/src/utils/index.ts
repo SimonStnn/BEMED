@@ -12,5 +12,5 @@ export function joinPaths(...paths: string[]): string {
 }
 
 export function getAPIUrl(path?: string): string {
-  return joinPaths("http://api.localhost", path || "");
+  return joinPaths(import.meta.env.VITE_API_URL || "http://localhost:8164", path || "");
 }

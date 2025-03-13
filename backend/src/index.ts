@@ -7,6 +7,13 @@ const PORT = process.env.BEMED_API_PORT || 8164;
 
 console.log("PORT", PORT);
 
+app.use(cors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
+  credentials: true,
+}));
+
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(cors());

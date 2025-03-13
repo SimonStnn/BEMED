@@ -10,8 +10,9 @@ let db: mysql.Connection | null = null;
     try {
         db = await mysql.createConnection({
             host: "localhost",
+            port: 3307,
             user: "root",
-            password: "",
+            password: "rootpassword",
             database: "BEMED"
         });
         console.log("Connected to MySQL database");
@@ -40,7 +41,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 //* POST
 
-router.post("/survey", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
     console.log("POST /survey request received");
 
     if (!db)    {
