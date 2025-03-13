@@ -69,7 +69,7 @@
       },
       {
         "id": "76fd9b73-67ce-482f-b800-3dfe74b02bfd",
-        "name": "default-roles-bemed",
+        "name": "default-roles-${KEYCLOAK_REALM}",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -313,7 +313,7 @@
         }
       ],
       "security-admin-console": [],
-      "bemed-api": [
+      "${KEYCLOAK_BACKEND_CLIENT_ID}": [
         {
           "id": "13553ad9-38e0-423e-8c58-9cf41444a034",
           "name": "uma_protection",
@@ -325,7 +325,7 @@
       ],
       "admin-cli": [],
       "account-console": [],
-      "bemed-frontend": [
+      "${KEYCLOAK_FRONTEND_CLIENT_ID}": [
         {
           "id": "dd51a055-95ad-4091-8e1b-e92411c9fce0",
           "name": "uma_protection",
@@ -439,7 +439,7 @@
   "groups": [],
   "defaultRole": {
     "id": "76fd9b73-67ce-482f-b800-3dfe74b02bfd",
-    "name": "default-roles-bemed",
+    "name": "default-roles-${KEYCLOAK_REALM}",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -489,50 +489,6 @@
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "webAuthnPolicyPasswordlessExtraOrigins": [],
-  "users": [
-    {
-      "id": "c1a79cea-88c9-43d5-8537-19ebc615557e",
-      "username": "service-account-bemed-api",
-      "emailVerified": false,
-      "createdTimestamp": 1741729782749,
-      "enabled": true,
-      "totp": false,
-      "serviceAccountClientId": "bemed-api",
-      "disableableCredentialTypes": [],
-      "requiredActions": [],
-      "realmRoles": [
-        "default-roles-bemed"
-      ],
-      "clientRoles": {
-        "bemed-api": [
-          "uma_protection"
-        ]
-      },
-      "notBefore": 0,
-      "groups": []
-    },
-    {
-      "id": "4a0396fa-67bf-4489-8f94-4c9e32105d7e",
-      "username": "service-account-bemed-frontend",
-      "emailVerified": false,
-      "createdTimestamp": 1741729782806,
-      "enabled": true,
-      "totp": false,
-      "serviceAccountClientId": "bemed-frontend",
-      "disableableCredentialTypes": [],
-      "requiredActions": [],
-      "realmRoles": [
-        "default-roles-bemed"
-      ],
-      "clientRoles": {
-        "bemed-frontend": [
-          "uma_protection"
-        ]
-      },
-      "notBefore": 0,
-      "groups": []
-    }
-  ],
   "scopeMappings": [
     {
       "clientScope": "offline_access",
@@ -558,13 +514,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/bemed/account/",
+      "baseUrl": "/realms/${KEYCLOAK_REALM}/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/bemed/account/*"
+        "/realms/${KEYCLOAK_REALM}/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -605,13 +561,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/bemed/account/",
+      "baseUrl": "/realms/${KEYCLOAK_REALM}/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/bemed/account/*"
+        "/realms/${KEYCLOAK_REALM}/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -918,13 +874,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/bemed/console/",
+      "baseUrl": "/admin/${KEYCLOAK_REALM}/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/bemed/console/*"
+        "/admin/${KEYCLOAK_REALM}/console/*"
       ],
       "webOrigins": [
         "+"
