@@ -720,7 +720,7 @@
         "http://*.${DOMAIN}/*"
       ],
       "webOrigins": [
-        "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
+        "*"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -735,7 +735,7 @@
       "protocol": "openid-connect",
       "attributes": {
         "realm_client": "false",
-        "post.logout.redirect.uris": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
+        "post.logout.redirect.uris": "*"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -784,7 +784,7 @@
         "http://*.${DOMAIN}/*"
       ],
       "webOrigins": [
-        "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
+        "*"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -799,7 +799,7 @@
       "protocol": "openid-connect",
       "attributes": {
         "realm_client": "false",
-        "post.logout.redirect.uris": "http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}/"
+        "post.logout.redirect.uris": "*"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
