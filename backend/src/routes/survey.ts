@@ -1,25 +1,7 @@
 import { Request, Router, type Response } from "express";
-import mysql from "mysql2/promise";
+import db from "@/db"
 
 const router = Router();
-
-let db: mysql.Connection | null = null;
-
-//* CONNECT
-(async () => {
-    try {
-        db = await mysql.createConnection({
-            host: "localhost",
-            port: 3307,
-            user: "root",
-            password: "rootpassword",
-            database: "BEMED"
-        });
-        console.log("Connected to MySQL database");
-    } catch (error) {
-        console.error("Database connection error:", error);
-    }
-})();
 
 //* GET
 
