@@ -9,7 +9,7 @@ import fs from "fs";
 
 import { requiredEnvVars } from "./src/utils";
 
-const env: Record<string, string> = process.env as Record<string, string>;
+const env: Record<string, string> = Object.assign({}, process.env) as Record<string, string>;
 
 export function loadEnv() {
   const envPath = path.resolve(__dirname, "..", ".env");
