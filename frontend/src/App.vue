@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-
 import { ref, watch } from 'vue'
+import ProfileMenu from '@/components/ProfileMenu.vue'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+authStore.login()
 
 const items: { title: string, url: string, icon: string }[] = [
   {
     title: 'Home',
     url: '/',
     icon: 'mdi-home',
-  },
-  {
-    title: 'Login',
-    url: '/login',
-    icon: 'mdi-login',
   },
   {
     title: 'Survey',
@@ -22,6 +21,7 @@ const items: { title: string, url: string, icon: string }[] = [
 ]
 
 const drawer = ref(false)
+const logginInLoader = ref(false)
 const group = ref<string | null>(null)
 
 watch(group, () => {
@@ -35,16 +35,11 @@ watch(group, () => {
       <v-app-bar color="primary">
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <img src="@/assets/img/logo.png" alt="Vue.js logo" class="logo" />
-        <v-toolbar-title> Home </v-toolbar-title>
+        <img src="@/assets/img/logo.png" alt="logo" class="logo" />
 
         <v-spacer></v-spacer>
 
-        <template v-if="$vuetify.display.mdAndUp">
-          <v-btn icon="mdi-account" variant="text"></v-btn>
-        </template>
-
-        <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
+        <profile-menu />
       </v-app-bar>
 
       <v-navigation-drawer v-model="drawer" :location="$vuetify.display.mobile ? 'bottom' : undefined" temporary>
@@ -56,7 +51,25 @@ watch(group, () => {
         </v-list>
       </v-navigation-drawer>
       <v-main style="height: 100dvh;">
-        <RouterView />
+        <!-- While login is loading -->
+        <v-container v-if="authStore.isLoggedIn === null">
+          <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
+            <v-progress-circular indeterminate color="primary" />
+            <p>Logging in...</p>
+          </v-row>
+        </v-container>
+        <!-- If user isn't logged in correctly -->
+        <v-container v-else-if="!authStore.isLoggedIn">
+          <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
+            <v-btn color="primary" :loading="logginInLoader" @click="() => {
+              logginInLoader = true
+              return authStore.login()
+            }">Login</v-btn>
+            <p style="margin-top: .5rem;">Please login to access the content</p>
+          </v-row>
+        </v-container>
+        <!-- If user is logged in -->
+        <RouterView v-else-if="authStore.isLoggedIn" />
       </v-main>
     </v-layout>
   </v-card>

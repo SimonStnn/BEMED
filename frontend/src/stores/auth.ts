@@ -17,10 +17,10 @@ const keycloak = new Keycloak({
 });
 
 export const useAuthStore = defineStore("auth", () => {
-  const isLoggedIn = ref(false);
+  const isLoggedIn = ref<boolean | null>(null);
   const userInfo = ref<Keycloak.KeycloakTokenParsed | null>(null);
   const token = ref<string | null>(null);
-
+  
   async function login(): Promise<void> {
     const authenticated = await keycloak.init({ onLoad: KEYCLOAK_ON_LOAK });
     isLoggedIn.value = authenticated;
