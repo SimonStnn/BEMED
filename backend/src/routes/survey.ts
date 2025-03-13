@@ -7,11 +7,6 @@ const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
     console.log("GET /survey");
-
-    if (!db)    {
-        res.status(500).json({message: "Database not initialized"});
-        return;
-    }
     try {
         const [rows] = await db.execute("SELECT * FROM survey_responses");
         res.status(200).json({ message: "Survey data retreived", data: rows });
@@ -25,12 +20,6 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
     console.log("POST /survey request received");
-
-    if (!db)    {
-        res.status(500).json({message: "Database not initialized"});
-        return;
-    }
-
     console.log("Received request body:", req.body);
 
     const { question } = req.body;
