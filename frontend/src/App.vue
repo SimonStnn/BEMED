@@ -52,7 +52,7 @@ watch(group, () => {
       </v-navigation-drawer>
       <v-main style="height: 100dvh;">
         <!-- While login is loading -->
-        <v-container v-if="authStore.isLoggedIn === null">
+        <v-container v-else-if="authStore.isLoggedIn === null">
           <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
             <v-progress-circular indeterminate color="primary" />
             <p>Logging in...</p>
@@ -68,7 +68,7 @@ watch(group, () => {
             <p style="margin-top: .5rem;">Please login to access the content</p>
           </v-row>
         </v-container>
-        <!-- If user is logged in -->
+        <!-- If user is logged in; show main content -->
         <RouterView v-else-if="authStore.isLoggedIn" />
       </v-main>
     </v-layout>
