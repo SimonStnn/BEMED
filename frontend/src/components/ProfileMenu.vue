@@ -9,7 +9,8 @@ const items: ComputedRef<{
     onClick?: () => void,
 }[]> = computed(() => [
     {
-        title: 'Profile'
+        title: 'Profile',
+        onClick: authStore.keycloak.accountManagement
     },
     {
         title: 'Settings'
