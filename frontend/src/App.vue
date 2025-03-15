@@ -33,13 +33,13 @@ watch(group, () => {
   <v-card>
     <v-layout>
       <v-app-bar color="primary">
-        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" :disabled="!authStore.isLoggedIn" />
 
         <img src="@/assets/img/logo.png" alt="logo" class="logo" />
 
         <v-spacer></v-spacer>
 
-        <profile-menu />
+        <profile-menu :disabled="!authStore.isLoggedIn"/>
       </v-app-bar>
 
       <v-navigation-drawer v-model="drawer" :location="$vuetify.display.mobile ? 'bottom' : undefined" temporary>
@@ -51,6 +51,16 @@ watch(group, () => {
         </v-list>
       </v-navigation-drawer>
       <v-main style="height: 100dvh;">
+        <!-- Login error -->
+        <v-container v-if="authStore.errorCode !== null">
+          <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
+            <v-btn color="primary" :loading="logginInLoader" @click="() => {
+              logginInLoader = true
+              return authStore.logout()
+            }">Logout</v-btn>
+            <p style="margin-top: .5rem;">Something went wrong</p>
+          </v-row>
+        </v-container>
         <!-- While login is loading -->
         <v-container v-else-if="authStore.isLoggedIn === null">
           <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
@@ -80,6 +90,7 @@ watch(group, () => {
   height: 58px;
   /* Make non transparent pixels white */
   filter: brightness(0) invert(1);
+  user-select: none;
 }
 
 .router-link {

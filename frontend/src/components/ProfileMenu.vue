@@ -2,6 +2,10 @@
 import { useAuthStore } from '@/stores/auth'
 import { computed, type ComputedRef } from 'vue'
 
+const component_props = defineProps<{
+    disabled: boolean
+}>()
+
 const authStore = useAuthStore()
 
 const items: ComputedRef<{
@@ -33,7 +37,7 @@ const items: ComputedRef<{
 <template>
     <v-menu>
         <template v-slot:activator="{ props }">
-            <v-btn icon="mdi-account" variant="text" v-bind="props" />
+            <v-btn icon="mdi-account" variant="text" v-bind="props" :disabled="component_props.disabled" />
         </template>
         <v-list>
             <v-list-item v-for="(item, index) in items" :key="index" :value="index" :onclick="item.onClick">
