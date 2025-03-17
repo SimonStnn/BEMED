@@ -12,11 +12,11 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./config/:/etc/traefik/:ro
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/traefik/:/etc/traefik/:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN}`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${BEMED_DOMAIN}`)"
       - "traefik.http.routers.traefik.entrypoints=web"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
@@ -31,10 +31,10 @@ services:
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=${KC_BOOTSTRAP_ADMIN_USERNAME}
       - KC_BOOTSTRAP_ADMIN_PASSWORD=${KC_BOOTSTRAP_ADMIN_PASSWORD}
-      - KC_DB_USERNAME=${MARIADB_USER}
-      - KC_DB_PASSWORD=${MARIADB_PASSWORD}
+      - KC_DB_USERNAME=${KC_DB_USERNAME}
+      - KC_DB_PASSWORD=${KC_DB_PASSWORD}
       - KC_DB=mariadb
-      - KC_DB_URL=jdbc:mariadb://db/${MARIADB_DATABASE}
+      - KC_DB_URL=jdbc:mariadb://db/${KC_DB_NAME}
       - KC_HEALTH_ENABLED=true
       - KC_METRICS_ENABLED=true
     volumes:
@@ -43,7 +43,7 @@ services:
       - db
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.keycloak.rule=Host(`${DNS_PREFIX_KEYCLOAK}.${DOMAIN}`)"
+      - "traefik.http.routers.keycloak.rule=Host(`${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`)"
       - "traefik.http.routers.keycloak.entrypoints=web"
       - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
 
@@ -53,11 +53,9 @@ services:
     restart: unless-stopped
     image: mariadb:latest
     environment:
-      - MARIADB_DATABASE=${MARIADB_DATABASE}
-      - MARIADB_USER=${MARIADB_USER}
-      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     volumes:
+      - ./config/db/:/docker-entrypoint-initdb.d/:ro
       - database_data:/var/lib/mysql
 
   phpmyadmin:
@@ -73,7 +71,7 @@ services:
       - db
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.${DOMAIN}`)"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.${BEMED_DOMAIN}`)"
       - "traefik.http.routers.phpmyadmin.entrypoints=web"
       - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
 
@@ -85,13 +83,12 @@ services:
       context: ./backend
       target: ${NODE_ENV}
     environment:
-      - KEYCLOAK_AUTH_URL=${KEYCLOAK_AUTH_URL}
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_CLIENT_ID=${KEYCLOAK_BACKEND_CLIENT_ID}
       - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`${DNS_PREFIX_BEMED_BACKEND}.${DOMAIN}`)"
+      - "traefik.http.routers.backend.rule=Host(`${DNS_PREFIX_BEMED_BACKEND}.${BEMED_DOMAIN}`)"
       - "traefik.http.routers.backend.entrypoints=web"
       - "traefik.http.services.backend.loadbalancer.server.port=${BEMED_API_PORT}"
     depends_on:
@@ -111,10 +108,10 @@ services:
       - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`${DNS_PREFIX_BEMED_FRONTEND}.${DOMAIN}`)"
+      - "traefik.http.routers.frontend.rule=Host(`${DNS_PREFIX_BEMED_FRONTEND}.${BEMED_DOMAIN}`)"
       - "traefik.http.routers.frontend.entrypoints=web"
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
-      - "traefik.http.routers.root.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.root.rule=Host(`${BEMED_DOMAIN}`)"
       - "traefik.http.routers.root.entrypoints=web"
       - "traefik.http.routers.root.service=frontend"
 volumes:
