@@ -10,9 +10,6 @@
             <span class="headline">Survey Page</span>
           </v-card-title>
           <v-card-text>
-            <api-form action="/survey" method="POST" v-on:success="onSuccess">
-              <v-btn type="submit" color="primary">Submit</v-btn>
-            </api-form>
           </v-card-text>
         </v-card>
       </v-col>

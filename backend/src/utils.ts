@@ -5,7 +5,7 @@ const requiredEnvVars = [
   "KEYCLOAK_BACKEND_CLIENT_ID",
   "KEYCLOAK_CLIENT_SECRET",
   "KEYCLOAK_REALM",
-  "DOMAIN",
+  "BEMED_DOMAIN",
   "DNS_PREFIX_KEYCLOAK",
   "DNS_PREFIX_BEMED_BACKEND",
 ] as const;
@@ -35,9 +35,11 @@ export function loadEnv() {
 }
 loadEnv();
 
-const { DNS_PREFIX_KEYCLOAK, DNS_PREFIX_BEMED_BACKEND, DOMAIN } =
+const { DNS_PREFIX_KEYCLOAK, DNS_PREFIX_BEMED_BACKEND, BEMED_DOMAIN } =
   process.env as Record<EnvVariable, string>;
 export const url = {
-  keycloak: new URL(`http://${DNS_PREFIX_KEYCLOAK}.${DOMAIN}`).toString(),
-  backend: new URL(`http://${DNS_PREFIX_BEMED_BACKEND}.${DOMAIN}`).toString(),
+  keycloak: new URL(`http://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`).toString(),
+  backend: new URL(
+    `http://${DNS_PREFIX_BEMED_BACKEND}.${BEMED_DOMAIN}`
+  ).toString(),
 } as const;
