@@ -36,28 +36,28 @@ function onSuccess(data: any) {
             @submit="checkFormData">
               
               <!--Yes/no questions (4)-->
-              <v-radio-group v-model="formData.questions[1]" class="survey-field" requiered>
+              <v-radio-group v-model="formData.questions[1]" class="survey-field" name="q1" required>
                 <p class="question-label">Does your institution currently practice waste separation?</p>
                 <v-radio label="Yes" value="Yes"></v-radio>
                 <v-radio label="No" value="No"></v-radio>
                 <v-radio label="I don't know" value="I don't know"></v-radio>
               </v-radio-group>
 
-              <v-radio-group v-model="formData.questions[2]" class="survey-field" requiered>
+              <v-radio-group v-model="formData.questions[2]" class="survey-field" name="q2" required>
                 <p class="question-label">Does your institution have special bins or containers for separate waste collection?</p>
                 <v-radio label="Yes" value="Yes"></v-radio>
                 <v-radio label="No" value="No"></v-radio>
                 <v-radio label="I don't know" value="I don't know"></v-radio>
               </v-radio-group>
 
-              <v-radio-group v-model="formData.questions[3]" class="survey-field" requiered>
+              <v-radio-group v-model="formData.questions[3]" class="survey-field" name="q3" required>
                 <p class="question-label">Does your institution have established policies or guidelines for waste management?</p>
                 <v-radio label="Yes" value="Yes"></v-radio>
                 <v-radio label="No" value="No"></v-radio>
                 <v-radio label="I don't know" value="I don't know"></v-radio>
               </v-radio-group>
 
-              <v-radio-group v-model="formData.questions[4]" class="survey-field" requiered>
+              <v-radio-group v-model="formData.questions[4]" class="survey-field" name="q4" required>
                 <p class="question-label">Does your institution conduct training to raise awareness about waste management?</p>
                 <v-radio label="Yes" value="Yes"></v-radio>
                 <v-radio label="No" value="No"></v-radio>
@@ -67,15 +67,15 @@ function onSuccess(data: any) {
               <!--Numeric questions-->
               <div class="survey-field">
               <p class="num-question-label">How much single-use plastic packaging has your institution collected since the beginning of the year? Approximation in KG</p>
-              <v-text-field v-model.number="formData.questions[5]" type="number" required></v-text-field></div>
+              <v-text-field v-model.number="formData.questions[5]" type="number" label="Q5" name="q5" required></v-text-field></div>
 
               <div class="survey-field">
               <p class="num-question-label">How much paper (if collected separately) has your institution gathered so far? Approximation in KG</p>
-              <v-text-field v-model.number="formData.questions[6]" type="number"></v-text-field></div>
+              <v-text-field v-model.number="formData.questions[6]" type="number" label="Q6" name="q6"></v-text-field></div>
 
               <div class="survey-field">
               <p class="num-question-label">What is the total amount of separately collected waste? Approximation in KG</p>
-              <v-text-field v-model.number="formData.questions[7]" type="number" required></v-text-field></div>
+              <v-text-field v-model.number="formData.questions[7]" type="number" label="Q7" name="q7" required></v-text-field></div>
 
               <!--Submit survey-->
               <v-btn type="submit" color="primary">Submit</v-btn>

@@ -22,19 +22,18 @@ router.post("/", async (req: Request, res: Response) => {
     console.log("POST /survey request received");
     console.log("Received request body:", req.body);
 
-    const { question } = req.body;
+    const { q1, q2, q3, q4, q5, q6, q7 } = req.body;
 
-    if (!question || Object.values(question).some(q => q === null)) {
+    if (!q1 || !q2 || !q3 || !q4 || !q5 || !q6 || !q7 ) {
     res.status(400).json({ message: "Missing answer" });
         return;
     }
 
     try {
 
-        await db.execute("INSERT INTO survey_responses (question1, question2, question3, question4, question5, question6, question7) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+        await db.execute("INSERT INTO surveys (question1, question2, question3, question4, question5, question6, question7) VALUES (?, ?, ?, ?, ?, ?, ?)", 
             [
-                question[1], question[2], question[3], question[4],
-                question[5], question[6], question[7]
+                q1, q2, q3, q4, q5, q6, q7
             ]);
         res.status(201).json({ message: "Survey submitted successfully", data: req.body});
     } catch (error) {
