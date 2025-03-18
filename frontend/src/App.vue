@@ -19,6 +19,11 @@ const items: { title: string, url: string, icon: string }[] = [
     url: '/survey',
     icon: 'mdi-clipboard-text',
   },
+  {
+    title: 'Alternatives',
+    url: '/alternatives',
+    icon: 'mdi-clipboard-text',
+  },
 ]
 
 const drawer = ref(false)
