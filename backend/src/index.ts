@@ -14,6 +14,14 @@ const { KEYCLOAK_BACKEND_CLIENT_ID, KEYCLOAK_REALM, KEYCLOAK_CLIENT_SECRET } = p
 console.debug(`Auth server URL: ${url.keycloak}`);
 
 const app = express();
+
+app.use(cors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
+  credentials: true,
+}));
+
 const memoryStore = new session.MemoryStore();
 const keycloak = new Keycloak(
   { store: memoryStore },

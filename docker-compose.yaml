@@ -1,4 +1,3 @@
-version: "3.8"
 
 name: bemed
 
@@ -54,6 +53,8 @@ services:
     image: mariadb:latest
     environment:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"
     volumes:
       - ./config/db/:/docker-entrypoint-initdb.d/:ro
       - database_data:/var/lib/mysql

@@ -67,7 +67,5 @@ function sendRequest(event: SubmitEvent) {
 </template>
 
 <style scoped>
-/* Add your styles here */
 
-/* Add your styles here */
 </style>
