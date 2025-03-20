@@ -2,23 +2,24 @@
 import ApiForm from '@/components/ApiForm.vue';
 import { ref } from 'vue';
 
-const formData = ref({
+const formData = ref<{
+  questions: Record<number, string[]>
+}>({
   questions: {
-    1: null,
-    2: null,
-    3: null,
-    4: null,
-    5: null,
-    6: null,
-    7: null,
-    8: null,
-    9: null,
-    10: null,
-    11: null,
-    12: null,
-    13: null,
-    14: null,
-    15: null,
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: [],
+    10: [],
+    11: [],
+    12: [],
+    13: [],
+    14: [],
   }
 })
 
@@ -29,6 +30,23 @@ function checkFormData() {
 function onSuccess(data: any) {
   console.log("Response from server:", data);
 }
+
+// HAPI index mapping
+const hapiValues: Record<string, number> = {
+  "None": 0,
+  "Paper straw": 6.21,
+  "Reusable straw": 3.24,
+}
+
+// Calculate the average HAPI index
+const calculateAverageHAPI = (questionId: number) => {
+  const selectedOptions = formData.value.questions[questionId] || [];
+  if (!Array.isArray(selectedOptions) || selectedOptions.length === 0) return null;
+
+  const totalHAPI = selectedOptions.reduce((sum, option) => sum + hapiValues[option], 0);
+  return (totalHAPI / selectedOptions.length).toFixed(2); // Round off to 2 decimals
+}
+
 </script>
 
 <template>
@@ -50,13 +68,18 @@ function onSuccess(data: any) {
                 <v-checkbox label="Paper straws (HAPI: 6.21)" value="Paper straw"></v-checkbox>
                 <v-checkbox label="Reusable straws (e.g., metal, bamboo, glass) (HAPI: 3.24)" value="Reusable straw"></v-checkbox>
                 <v-checkbox label="No straws (HAPI: 00.00)" value="None"></v-checkbox>
+
+              <!-- Display HAPI Index -->
+                <p v-if="calculateAverageHAPI(1) !== null" class="hapi-index">
+                  HAPI Index: {{ calculateAverageHAPI(1) }}
+                </p>
               </v-container>
 
               <v-container v-model="formData.questions[2]" class="survey-field" name="q2" required>
                 <p class="question-label">Alternatives for SUP cups</p>
                 <v-checkbox label="Paper cups (HAPI: 7.02)" value="Paper cup"></v-checkbox>
                 <v-checkbox label="Reusable cups from hard plastic (HAPI: 3.69)" value="Reusable plastic cup"></v-checkbox>
-                <v-checkbox label="Reusable cups (e.g. ceramic, glass)" value="Reusable cup"></v-checkbox>
+                <v-checkbox label="Reusable cups (e.g. ceramic, glass) (HAPI: 3.15)" value="Reusable cup"></v-checkbox>
               </v-container>
 
               <v-container v-model="formData.questions[3]" class="survey-field" name="q3" required>
@@ -183,11 +206,8 @@ function onSuccess(data: any) {
     display: block;
   }
 
-  .num-question-label {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 10px;
-    display: block;
-  }
-
+  .hapi-index {
+  font-weight: bold;
+  margin-top: 10px;
+}
 </style>  
