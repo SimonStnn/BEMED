@@ -1,16 +1,26 @@
 import mysql from "mysql2";
+import { EnvVariable } from "@/utils";
+
+const { BEMED_DB_NAME, BEMED_DB_USERNAME, BEMED_DB_PASSWORD } =
+  process.env as Record<EnvVariable, string>;
 
 const pool = mysql.createPool({
-  host: "localhost",
-  port: 3307,
-  user: "root",
-  password: "rootpassword",
-  database: "BEMED",
+  host: "db",
+  user: BEMED_DB_USERNAME,
+  password: BEMED_DB_PASSWORD,
+  database: BEMED_DB_NAME,
 });
 
 pool.getConnection((err, connection) => {
   if (err) {
-    console.error("Error connecting to the database:", err);
+    if ((err as any).fatal) {
+      if (err.code === "ECONNREFUSED")
+        console.info(
+          "Is the database running? The database could still be starting. If this message persists, check the database logs."
+        );
+      throw err;
+    }
+    console.error("Error connecting to the database", err);
   }
   if (connection) {
     const cc = connection.config;
