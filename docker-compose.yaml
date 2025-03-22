@@ -1,4 +1,3 @@
-
 name: bemed
 
 services:
@@ -103,10 +102,20 @@ services:
     build:
       context: ./frontend
       target: ${NODE_ENV}
+      args:
+        KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+        KEYCLOAK_FRONTEND_CLIENT_ID: ${KEYCLOAK_FRONTEND_CLIENT_ID}
+        KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET}
+        BEMED_DOMAIN: ${BEMED_DOMAIN}
+        DNS_PREFIX_KEYCLOAK: ${DNS_PREFIX_KEYCLOAK}
+        DNS_PREFIX_BEMED_BACKEND: ${DNS_PREFIX_BEMED_BACKEND}
     environment:
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
-      - KEYCLOAK_CLIENT_ID=${KEYCLOAK_FRONTEND_CLIENT_ID}
+      - KEYCLOAK_FRONTEND_CLIENT_ID=${KEYCLOAK_FRONTEND_CLIENT_ID}
       - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
+      - BEMED_DOMAIN=${BEMED_DOMAIN}
+      - DNS_PREFIX_KEYCLOAK=${DNS_PREFIX_KEYCLOAK}
+      - DNS_PREFIX_BEMED_BACKEND=${DNS_PREFIX_BEMED_BACKEND}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`${DNS_PREFIX_BEMED_FRONTEND}.${BEMED_DOMAIN}`)"
@@ -117,3 +126,4 @@ services:
       - "traefik.http.routers.root.service=frontend"
 volumes:
   database_data:
+  portainer_data:
