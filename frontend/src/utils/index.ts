@@ -12,7 +12,7 @@ export function joinPaths(...paths: string[]): string {
 }
 
 export function getAPIUrl(path?: string): string {
-  return joinPaths(`http://${url.backend.toString()}:8164`, path || "");
+  return joinPaths(url.backend.toString(), path || "");
 }
 
 export const requiredEnvVars = [
@@ -22,13 +22,23 @@ export const requiredEnvVars = [
   "BEMED_DOMAIN",
   "DNS_PREFIX_KEYCLOAK",
   "DNS_PREFIX_BEMED_BACKEND",
+  "NODE_ENV",
+  "BEMED_PROTOCOL",
 ] as const;
 
 export type EnvVariable = (typeof requiredEnvVars)[number];
 
-const { DNS_PREFIX_KEYCLOAK, DNS_PREFIX_BEMED_BACKEND, BEMED_DOMAIN } =
-  process.env as Record<EnvVariable, string>;
+const {
+  DNS_PREFIX_KEYCLOAK,
+  DNS_PREFIX_BEMED_BACKEND,
+  BEMED_DOMAIN,
+  BEMED_PROTOCOL,
+} = process.env as Record<EnvVariable, string>;
 export const url = {
-  keycloak: new URL(`http://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`),
-  backend: new URL(`http://${DNS_PREFIX_BEMED_BACKEND}.${BEMED_DOMAIN}`),
+  keycloak: new URL(
+    `${BEMED_PROTOCOL}://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`
+  ),
+  backend: new URL(
+    `${BEMED_PROTOCOL}://${DNS_PREFIX_BEMED_BACKEND}.${BEMED_DOMAIN}`
+  ),
 } as const;

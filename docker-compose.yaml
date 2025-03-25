@@ -9,6 +9,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8080:8080"
     volumes:
       - ./config/traefik/:/etc/traefik/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -18,6 +19,18 @@ services:
       - "traefik.http.routers.traefik.entrypoints=web"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    restart: always
+    environment:
+      - ADMIN_PASSWORD=admin
+    ports:
+      - "9000:9000" 
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro" 
+      - "portainer_data:/data" 
+
   keycloak:
     container_name: keycloak
     env_file: .env
@@ -26,6 +39,8 @@ services:
     command:
       - "start-dev"
       - "--import-realm"
+      # - "--override"
+      # - "--optimized"
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=${KC_BOOTSTRAP_ADMIN_USERNAME}
       - KC_BOOTSTRAP_ADMIN_PASSWORD=${KC_BOOTSTRAP_ADMIN_PASSWORD}
@@ -33,8 +48,18 @@ services:
       - KC_DB_PASSWORD=${KC_DB_PASSWORD}
       - KC_DB=mariadb
       - KC_DB_URL=jdbc:mariadb://db/${KC_DB_NAME}
+      # - KC_PROXY_HEADERS=xforwarded
+      # - KC_PROXY=edge
       - KC_HEALTH_ENABLED=true
       - KC_METRICS_ENABLED=true
+      # - KC_TLS_HOSTNAME_VERIFIER=ANY
+      # - KC_HOSTNAME_STRICT=false
+      - KC_HTTP_ENABLED=true
+      - KC_LOG_CONSOLE_LEVEL=debug
+    ports:
+      - "8082:8080"
+      - "8433:8443"
+      - "8083:9000"
     volumes:
       - ./config/keycloak/:/opt/keycloak/data/import/:ro
     depends_on:
@@ -44,6 +69,7 @@ services:
       - "traefik.http.routers.keycloak.rule=Host(`${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`)"
       - "traefik.http.routers.keycloak.entrypoints=web"
       - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
+      # - "traefik.http.routers.keycloak.tls=true"
 
   db:
     container_name: database
@@ -67,6 +93,8 @@ services:
       - PMA_HOST=db
       - PMA_USER=root
       - PMA_PASSWORD=${MARIADB_ROOT_PASSWORD}
+    ports:
+      - "8081:80"
     depends_on:
       - db
     labels:
@@ -86,6 +114,8 @@ services:
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_CLIENT_ID=${KEYCLOAK_BACKEND_CLIENT_ID}
       - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
+    ports:
+      - "3000:${BEMED_API_PORT}"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`${DNS_PREFIX_BEMED_BACKEND}.${BEMED_DOMAIN}`)"
