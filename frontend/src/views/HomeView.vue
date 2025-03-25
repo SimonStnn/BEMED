@@ -14,10 +14,6 @@
             <h3 class="intro">Our mission is to raise awareness and lobby to change laws
             and behaviours to stop littering and reduce waste production.
             </h3>
-          </v-card-text>
-          <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
-          <span>We are located in Podgorica, Montenegro</span>
-          <v-card-text>
             <p>
               The methodologies we use involve alternatives to single-use products
               and packaging, reusing and recycling discarded materials at the source,
@@ -26,15 +22,24 @@
               and better consideration of the most disadvantaged and
               future generations.
               If you would like to read more about the Zero Waste movement, <br>
-              go to <a href="https://zerowasteeurope.eu" target="_blank" rel="noopener noreferrer" class="link">ZeroWasteEurope</a> and read more about this special journey.
+              go to <a href="https://zerowasteeurope.eu" target="_blank" rel="noopener noreferrer" 
+              class="link">ZeroWasteEurope</a> and read more about this special journey.
             </p>
             <h3 class="contact-us">Contact us</h3>
-            <p>
-              In case you want to follow our journey of cleaning up the country,
-              check out our instagram at <a href="https://www.instagram.com/zero.waste.montenegro/" target="_blank" rel="noopener noreferrer" class="link">@zero.waste.montenegro</a>.
-              <br> <br> For any questions, feel free to send an email to
-            </p>
           </v-card-text>
+          <div class="contact-item">
+          <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
+          <span class="span">We are located in Podgorica, Montenegro</span></div>
+
+          <div class="contact-item"><v-icon color="primary" class="icon">mdi-instagram</v-icon>
+          <span class="span">You can follow our progress on <a href="https://www.instagram.com/zero.waste.montenegro/" 
+            target="_blank" rel="noopener noreferrer" class="link">Instagram</a> at @zero.waste.montenegro.</span></div>
+          
+          <div class="contact-item"><v-icon color="primary" class="icon">mdi-email</v-icon>
+          <a href="mailto:info@zerowastemontenegro.me" class="link">info@zerowastemontenegro.me</a></div>
+
+          <div class="contact-item"><v-icon color="primary" class="icon">mdi-phone</v-icon>
+          <a href="tel:+38267627645" class="link">+382(0) 67627645</a></div>
         </v-card>
       </v-col>
     </v-row>
@@ -67,6 +72,7 @@
   padding-left: 10px;
   padding-top: 10px;
   font-family: 'Dosis', 'Helvetica', 'Arial', 'Lucida', 'sans-serif';
+  color: #c1121f;
 }
 
 .headline {
@@ -77,7 +83,7 @@
 }
 
 .icon {
-  padding-left: 30px;
+  padding-left: 35px;
   padding-right: 20px;
 }
 
@@ -103,6 +109,13 @@ p {
   color: #c1121f; /* our primary red */
   text-decoration: none;
   font-weight: bold;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
 }
 
 .link:hover {
