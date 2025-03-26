@@ -41,6 +41,7 @@ watch(group, () => {
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" :disabled="!authStore.isLoggedIn" />
 
         <img src="@/assets/img/logo.png" alt="logo" class="logo" />
+        <v-toolbar-title class="nav-title"> Zero Waste Montenegro </v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -111,4 +112,10 @@ watch(group, () => {
 .router-link:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.nav-title {
+  font-family: 'Dosis', 'Helvetica', 'Arial', 'Lucida', 'sans-serif';
+  font-weight: bold;
+}
+
 </style>
