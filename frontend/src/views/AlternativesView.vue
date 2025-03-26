@@ -2,11 +2,13 @@
 import ApiForm from '@/components/ApiForm.vue';
 import { ref } from 'vue';
 
+function checkFormData() {
+  console.log("Submitting form data:", JSON.stringify(formData.value));
+}
 
-
-//function onSuccess(data: any) {
-//  console.log("Response from server:", data);
-//}
+function onSuccess(data: any) {
+  console.log("Response from server:", data);
+}
 
 </script>
 
@@ -15,10 +17,12 @@ import { ref } from 'vue';
     <v-row justify="center">
       <v-col cols="12" md="12">
         <v-card class="survey-card">
-          <v-card-title>
+          <v-card-title class="title">
             <span class="headline">Plastic Alternatives Survey Page</span>
           </v-card-title>
           <v-card-text class="survey-content">
+            <api-form action="/alternatives" method="POST" v-on:success="onSuccess" v-bind:body="formData"
+            @submit="checkFormData">
             <div v-for="(question, questionId) in questions" :key="questionId">
             <p class="question-label">{{ question.text }}</p>
 
@@ -40,7 +44,8 @@ import { ref } from 'vue';
 
               <!--Submit survey-->
               <v-btn type="submit" color="primary">Submit</v-btn>
-          </v-card-text>
+            </api-form>
+            </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -68,22 +73,130 @@ const formData = ref<{ questions: Record<number, string[]> }>({
 const questions = ref<Question[]>([
   {
     id: 1,
-    text: "Alternatives: Plastic straws - Choose an alternative:",
+    text: "SUP straws - Choose an alternative:",
     options: [
-      { label: "None", hapi: 0 },
-      { label: "Paper straw", hapi: 6.21 },
-      { label: "Reusable straw", hapi: 3.24 }
+      { label: "No straws", hapi: 0.0 },
+      { label: "Paper straws", hapi: 6.21 },
+      { label: "Reusable straws (e.g., metal, bamboo, glass)", hapi: 3.24 }
     ]
   },
   {
     id: 2,
-    text: "Alternatives: Plastic cutlery - Choose an alternative:",
+    text: "SUP cups - Choose an alternative:",
     options: [
-      { label: "None", hapi: 0 },
-      { label: "Wooden cutlery", hapi: 4.5 },
-      { label: "Reusable cutlery", hapi: 2.3 }
+      { label: "Paper cups", hapi: 7.02 },
+      { label: "Reusable cups from hard plastic", hapi: 3.69 },
+      { label: "Reusable cups (e.g., ceramic, glass)", hapi: 3.15 }
     ]
-  }
+  },
+  {
+    id: 3,
+    text: "SUP water bottles - Choose an alternative:",
+    options: [
+      { label: "No bottles, only tapwater", hapi: 0.0 },
+      { label: "Water dispenser with returnable 5L bottles", hapi: 1.85 },
+      { label: "Water in single use glass bottles", hapi: 5.0 }
+    ]
+  },
+  {
+    id: 4,
+    text: "SUP juice bottles - Choose an alternative:",
+    options: [
+      { label: "Drinks made on-site", hapi: 0.0 },
+      { label: "Big (>5L) SUP bottles", hapi: 3.69 },
+      { label: "Returnable glass bottles", hapi: 3.0 },
+      { label: "Cans with plastic lining", hapi: 6.48 },
+      { label: "Tetra Packs", hapi: 8.0 }
+    ]
+  },
+  {
+    id: 5,
+    text: "Plastic coffee capsules - Choose an alternative:",
+    options: [
+      { label: "No alternative", hapi: 7.38 },
+      { label: "Coffee in plastic or aluminium bags", hapi: 5.54 },
+      { label: "Coffee purchased by weight", hapi: 0.0 },
+      { label: "No capsules used", hapi: 0.0 }
+    ]
+  },
+  {
+    id: 6,
+    text: "Tea bags - Choose an alternative:",
+    options: [
+      { label: "Tea in plastic bags", hapi: 7.38 },
+      { label: "Paper tea bags", hapi: 6.21 },
+      { label: "No tea bags", hapi: 0.0 }
+    ]
+  },
+  {
+    id: 7,
+    text: "Coffee stir sticks - Choose an alternative:",
+    options: [
+      { label: "Reusable spoons (e.g. metal)", hapi: 3.24 },
+      { label: "Single use sticks (wooden or bamboo)", hapi: 6.39 },
+      { label: "No stir sticks", hapi: 0.0 }
+    ]
+  },
+  {
+    id: 8,
+    text: "SUP plates - Choose an alternative:",
+    options: [
+      { label: "Paper or cardboard plates", hapi: 7.02 },
+      { label: "Reusable plates (e.g. ceramic)", hapi: 3.51 },
+      { label: "Reusable hard plastic plates", hapi: 3.60 }
+    ]
+  },
+  {
+    id: 9,
+    text: "SUP cutlery - Choose an alternative:",
+    options: [
+      { label: "Reusable cutlery", hapi: 3.24 },
+      { label: "Single use cutlery (e.g. wood, bamboo)", hapi: 6.48 },
+      { label: "Bring your own cutlery", hapi: 0.0 }
+    ]
+  },
+  {
+    id: 10,
+    text: "SUP bags - Choose an alternative:",
+    options: [
+      { label: "Reusable and durable bags or baskets (e.g., cotton, jute)", hapi: 2.63 },
+      { label: "Bring your own bag", hapi: 0.0 },
+      { label: "No plastic bags", hapi: 0.0 }
+    ]
+  },
+  {
+    id: 11,
+    text: "Individual packaging (e.g., sugar, coffee) - Choose an alternative:",
+    options: [
+      { label: "Reusable containers", hapi: 4.0 },
+      { label: "Individual portions from medium or larger packaging", hapi: 4.0 }
+    ]
+  },
+  {
+    id: 12,
+    text: "Plastic toiletries - Choose an alternative:",
+    options: [
+      { label: "Toiletries in reusable containers", hapi: 3.69 },
+      { label: "Soaps without plastic packaging", hapi: 6.21 },
+      { label: "No toiletires", hapi: 0.0 }
+    ]
+  },
+  {
+    id: 13,
+    text: "Plastic hand sanitizer bottles - Choose an alternative:",
+    options: [
+      { label: "Large single use bottles", hapi: 3.69 },
+      { label: "No sanitizer, only hand washing", hapi: 0.0 }
+    ]
+  },
+  {
+    id: 14,
+    text: "SUP gloves - Choose an alternative:",
+    options: [
+      { label: "Reusable rubber gloves", hapi: 4.05 },
+      { label: "No gloves, washing hands regularly instead", hapi: 0.0 }
+    ]
+  },
 ]);
 
 // Initialize formData for each question
@@ -110,6 +223,11 @@ const calculateAverageHAPI = (questionId: number) => {
   .headline {
     font-size: 1.5rem;
     font-weight: bold;
+
+  }
+
+  .title {
+    padding-bottom: 20px;
   }
 
   .survey-card {

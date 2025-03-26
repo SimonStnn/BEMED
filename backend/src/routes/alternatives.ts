@@ -22,26 +22,29 @@ router.post("/", async (req: Request, res: Response) => {
     console.log("POST /alternatives request received");
     console.log("Received request body:", req.body);
 
-    const { q1, q2, q3, q4, q5, q6, q7 } = req.body;
+    const { questions } = req.body;
 
-    if (!q1 || !q2 || !q3 || !q4 || !q5 || !q6 || !q7 ) {
+    if (!questions || typeof questions !== "object" ) {
     res.status(400).json({ message: "Missing answer" });
         return;
     }
 
     try {
+        const entries = Object.entries(questions); // Convert object to an array of [key, value] pairs
 
-        await db.execute("INSERT INTO surveys (question1, question2, question3, question4, question5, question6, question7) VALUES (?, ?, ?, ?, ?, ?, ?)", 
-            [
-                q1, q2, q3, q4, q5, q6, q7
-            ]);
-        res.status(201).json({ message: "Survey submitted successfully", data: req.body});
+        for (const [qId, answer] of entries) {
+            await db.execute(
+                `INSERT INTO alternatives (question_id, answer) VALUES (?, ?)`,
+                [qId, answer]
+            );
+        }
+        
+        res.status(201).json({ message: "Survey submitted successfully", data: questions });
+
     } catch (error) {
         console.error("Database error:", error);
-        res.status(500).json({message: "Internal server error" });
+        res.status(500).json({ message: "Internal server error" });
     }
-
-    res.status(200).json({ message: "Survey received"});
 });
 
 //* PUT
