@@ -48,8 +48,8 @@ services:
       - KC_DB_PASSWORD=${KC_DB_PASSWORD}
       - KC_DB=mariadb
       - KC_DB_URL=jdbc:mariadb://db/${KC_DB_NAME}
-      # - KC_PROXY_HEADERS=xforwarded
-      # - KC_PROXY=edge
+      # - KC_PROXY_HEADERS=forwarded
+      # - KC_PROXY_PROTOCOL_ENABLED=true
       - KC_HEALTH_ENABLED=true
       - KC_METRICS_ENABLED=true
       # - KC_TLS_HOSTNAME_VERIFIER=ANY
@@ -139,6 +139,7 @@ services:
         BEMED_DOMAIN: ${BEMED_DOMAIN}
         DNS_PREFIX_KEYCLOAK: ${DNS_PREFIX_KEYCLOAK}
         DNS_PREFIX_BEMED_BACKEND: ${DNS_PREFIX_BEMED_BACKEND}
+        BEMED_PROTOCOL: ${BEMED_PROTOCOL}
     environment:
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_FRONTEND_CLIENT_ID=${KEYCLOAK_FRONTEND_CLIENT_ID}
