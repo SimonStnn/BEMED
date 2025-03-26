@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-import * as path from "path";
+import path from "path";
+import fs from "fs";
 
 const requiredEnvVars = [
   "KEYCLOAK_BACKEND_CLIENT_ID",
@@ -17,9 +18,16 @@ export type EnvVariable = (typeof requiredEnvVars)[number];
 
 export function loadEnv() {
   const envPath = path.resolve(__dirname, "..", "..", ".env");
+  const exists = fs.existsSync(envPath);
+
+  if (exists) console.debug(`Loading environment variables from ${envPath}`);
+  else console.debug("Using global environment variables");
+
   dotenv.config({
-    path: envPath,
-    encoding: "utf8",
+    // Only load .env if it exists
+    // if it doesn't, the global environment variables will be used
+    path: exists ? envPath : undefined,
+    encoding: exists ? "utf8" : undefined,
   });
 
   class EnvError extends Error {
@@ -28,13 +36,8 @@ export function loadEnv() {
     }
   }
 
-  for (const envVar of requiredEnvVars) {
-    if (!process.env[envVar]) {
-      throw new EnvError(envVar);
-    }
-  }
-
-  console.debug(`Loaded environment variables from ${envPath}`);
+  for (const envVar of requiredEnvVars)
+    if (!process.env[envVar]) throw new EnvError(envVar);
 }
 loadEnv();
 

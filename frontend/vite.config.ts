@@ -9,16 +9,24 @@ import fs from "fs";
 
 import { requiredEnvVars } from "./src/utils";
 
-const env: Record<string, string> = Object.assign({}, process.env) as Record<string, string>;
+const env: Record<string, string> = Object.assign({}, process.env) as Record<
+  string,
+  string
+>;
 
 export function loadEnv() {
   const envPath = path.resolve(__dirname, "..", ".env");
   const exists = fs.existsSync(envPath);
+
+  console.debug(envPath, exists);
+  if (exists) console.debug(`Loading environment variables from ${envPath}`);
+  else console.debug("Using global environment variables");
+
   dotenv.config({
     // Only load .env if it exists
     // if it doesn't, the global environment variables will be used
     path: exists ? envPath : undefined,
-    encoding: exists ? "utf8": undefined,
+    encoding: exists ? "utf8" : undefined,
     processEnv: env,
   });
 
@@ -40,10 +48,6 @@ export function loadEnv() {
       delete env[key];
     }
   });
-
-  if (exists)
-    console.debug(`Loaded environment variables from ${envPath}`);
-  else console.debug("Using global environment variables");
 }
 loadEnv();
 

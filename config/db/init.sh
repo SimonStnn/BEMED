@@ -26,4 +26,4 @@ mariadb -u root -p${MARIADB_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 
 echo "Created database ${BEMED_DB_NAME} for ${BEMED_DB_USERNAME}@%"
 
-echo "Database is ready"
+echo "Database is ready!"
