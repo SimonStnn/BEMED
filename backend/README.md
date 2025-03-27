@@ -15,7 +15,7 @@ treatments["Waste Treatment System"] {
 
 questions["Questions"] {
     int id PK
-    int for FK "question for"
+    int questionFor FK "question for"
     string question
     string type "text, number, date, etc."
 }
@@ -35,7 +35,7 @@ products["Product SUPP"] {
     float price 
     float weight "in grams"
     float EF "Environmental Footprint"
-    int to FK "alternative to"
+    int toProduct FK "alternative to"
 }
 
 alternatives["Alternatives"] {
