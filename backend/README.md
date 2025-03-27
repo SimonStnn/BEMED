@@ -4,39 +4,47 @@
 
 ```mermaid
 erDiagram
-Institution {
+User["User (Institution)"] {}
+
+Treatment["Waste Treatment System"] {
     int id PK
-    string username 
-    string email
-    string role FK
-    string password "Hashed"
+    string institutionId FK
+    bool Q1 "Waste separation?"
+    bool Q2 "bins or containers?"
+    bool Q3 "policies or guidelines?"
+    bool Q4 "raise awareness?"
+    int Q5 "single-use plastic amount"
+    int Q6 "paper amount"
+    int Q7 "total"
     date createdAt
-    int contactId FK
-    string phone
+    date updatedAt
 }
 
-Product {
+Assesment {
     int id PK
-    string name
-    float weight "per unit"
-    double price
+    string institutionId FK
+    int ppm "pieces per month"
+    int productId FK
+    date createdAt
+    date updatedAt
 }
 
-Alternative["Alternative SUPP"] {
+Product["Product SUPP"] {
     int id PK
     string name
-    float HAPI
+    float price 
+    float weight "in grams"
+    float EF "Environmental Footprint"
     int to FK "alternative to"
-    
 }
 
-Assessment {
+Alternative {
     int id PK
-    int institutionId FK
     int productId FK
 }
 
-Institution ||--o{ Assessment : "makes"
-Product ||--o{ Assessment : "assessed"
+User ||--o{ Treatment : "has"
+User ||--o{ Assesment : "makes"
 Product ||--o{ Alternative : "has"
+Assesment ||--|| Product : "uses"
 ```
