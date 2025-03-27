@@ -4,23 +4,23 @@
 
 ```mermaid
 erDiagram
-Users["Users (Institution)"] {}
+users["Users (Institution)"] {}
 
-Treatments["Waste Treatment System"] {
+treatments["Waste Treatment System"] {
     int id PK
     string userId FK
     date createdAt
     date updatedAt
 }
 
-Questions {
+questions["Questions"] {
     int id PK
     int for FK "question for"
     string question
     string type "text, number, date, etc."
 }
 
-Assesments {
+assesments["Assesments"] {
     int id PK
     string userId FK
     int ppm "pieces per month"
@@ -29,7 +29,7 @@ Assesments {
     date updatedAt
 }
 
-Products["Product SUPP"] {
+products["Product SUPP"] {
     int id PK
     string name
     float price 
@@ -38,14 +38,14 @@ Products["Product SUPP"] {
     int to FK "alternative to"
 }
 
-Alternatives {
+alternatives["Alternatives"] {
     int id PK
     int productId FK
 }
 
-Treatments ||--o{ Questions : "has"
-Users ||--o{ Treatments : "has"
-Users ||--o{ Assesments : "makes"
-Products ||--o{ Alternatives : "has"
-Assesments }o--|| Products : "uses"
+treatments ||--o{ questions : "has"
+users ||--o{ treatments : "has"
+users ||--o{   assesments : "makes"
+products ||--o{ alternatives : "has"
+assesments }o--|| products : "uses"
 ```
