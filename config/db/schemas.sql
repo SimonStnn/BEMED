@@ -3,53 +3,53 @@ USE "BEMED";
 -- Users Table
 CREATE TABLE users (
     id INT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) UNIQUE NOT NULL
 );
 
 -- Treatments Table
 CREATE TABLE treatments (
-    id INT PRIMARY KEY,
-    userId INT,
-    createdAt DATE,
-    updatedAt DATE,
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    createdAt DATE NOT NULL,
+    updatedAt DATE NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(id)
 );
 
 -- Questions Table
 CREATE TABLE questions (
-    id INT PRIMARY KEY,
-    questionFor INT,
-    question VARCHAR(255),
-    type VARCHAR(50),
-    FOREIGN KEY (questionFor) REFERENCES treatments(id)
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    treatmentId INT NOT NULL,
+    question VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    FOREIGN KEY (treatmentId) REFERENCES treatments(id)
 );
 
 -- Products Table
 CREATE TABLE products (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    price FLOAT,
-    weight FLOAT,
-    EF FLOAT,
-    toProduct INT,
-    FOREIGN KEY (toProduct) REFERENCES products(id)
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    price FLOAT NOT NULL,
+    weight FLOAT NOT NULL,
+    EF FLOAT NOT NULL,
+    productId INT,
+    FOREIGN KEY (productId) REFERENCES products(id)
 );
 
 -- Assesments Table
 CREATE TABLE assesments (
-    id INT PRIMARY KEY,
-    userId INT,
-    ppm INT,
-    productId INT,
-    createdAt DATE,
-    updatedAt DATE,
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    ppm INT NOT NULL,
+    productId INT NOT NULL,
+    createdAt DATE NOT NULL,
+    updatedAt DATE NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(id),
-    FOREIGN KEY (productId) REFERENCES products(id)
+    FOREIGN KEY (productId) REFERENCES alternatives(id)
 );
 
 -- Alternatives Table
 CREATE TABLE alternatives (
-    id INT PRIMARY KEY,
-    productId INT,
-    FOREIGN KEY (productId) REFERENCES products(id)
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    productId INT NOT NULL,
+    FOREIGN KEY (productId) REFERENCES products(id) ON DELETE CASCADE
 );
