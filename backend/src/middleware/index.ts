@@ -3,12 +3,17 @@ import express, { type Express } from "express";
 import session from "express-session";
 
 import keycloak, { memoryStore } from "@/middleware/keycloak";
+import logMiddleware from "@/middleware/log";
 import { EnvVariable } from "@/utils";
 
 const { KEYCLOAK_CLIENT_SECRET } = process.env as Record<EnvVariable, string>;
 
 export function setupMiddleware(app: Express) {
   console.debug("Setting up middleware...");
+
+  // Log each request
+  app.use(logMiddleware);
+
   app.use(
     cors({
       origin: "*",
