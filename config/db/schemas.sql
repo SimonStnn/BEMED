@@ -24,6 +24,16 @@ CREATE TABLE questions (
     FOREIGN KEY (treatmentId) REFERENCES treatments(id)
 );
 
+-- Answers Table
+CREATE TABLE answers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    questionId INT NOT NULL,
+    treatmentId INT NOT NULL,
+    answer VARCHAR(255) NOT NULL,
+    FOREIGN KEY (questionId) REFERENCES questions(id)
+    FOREIGN KEY (treatmentId) REFERENCES treatments(id)
+);
+
 -- Products Table
 CREATE TABLE products (
     id INT PRIMARY KEY AUTO_INCREMENT,
