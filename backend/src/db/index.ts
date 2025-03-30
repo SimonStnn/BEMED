@@ -1,11 +1,15 @@
 import mysql from "mysql2";
-import { EnvVariable } from "@/utils";
+import { type EnvVariable } from "@/utils";
 
 const { BEMED_DB_NAME, BEMED_DB_USERNAME, BEMED_DB_PASSWORD } =
   process.env as Record<EnvVariable, string>;
 
+console.log(
+  `Connecting to the "${BEMED_DB_NAME}" database as "${BEMED_DB_USERNAME}"...`
+);
+
 const pool = mysql.createPool({
-  host: "db",
+  host: "localhost",
   user: BEMED_DB_USERNAME,
   password: BEMED_DB_PASSWORD,
   database: BEMED_DB_NAME,
@@ -18,6 +22,7 @@ pool.getConnection((err, connection) => {
         console.info(
           "Is the database running? The database could still be starting. If this message persists, check the database logs."
         );
+      console.error("Database connection error");
       throw err;
     }
     console.error("Error connecting to the database", err);
@@ -25,7 +30,7 @@ pool.getConnection((err, connection) => {
   if (connection) {
     const cc = connection.config;
     console.log(
-      `Connected to the database (${cc.database}) at ${cc.user}@${cc.host}:${cc.port}`
+      `Connected to the database ${cc.database} at ${cc.user}@${cc.host}:${cc.port}`
     );
     connection.release();
   }
