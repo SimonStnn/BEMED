@@ -20,6 +20,13 @@ questions["Questions"] {
     string type "text, number, date, etc."
 }
 
+answer["Treatment answer"] {
+    int id PK
+    int questionId FK
+    int treatmentId FK
+    string answer
+}
+
 assesments["Assesments"] {
     int id PK
     string userId FK
@@ -43,8 +50,10 @@ alternatives["Alternatives"] {
     int productId FK
 }
 
-treatments ||--o{ questions : "has"
 users ||--o{ treatments : "has"
+treatments ||--o{ questions : "has"
+questions ||--o{ answer : "has"
+treatments ||-- |{ answer : "has"
 users ||--o{   assesments : "makes"
 products ||--o{ alternatives : "has"
 assesments }o--|| products : "uses"
