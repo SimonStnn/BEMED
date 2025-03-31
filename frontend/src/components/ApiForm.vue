@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, type PropType } from 'vue';
 import { getAPIUrl } from '@/utils';
+import { useAuthStore } from '@/stores/auth';
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -18,6 +19,7 @@ const props = defineProps({
     default: () => { },
   },
 });
+const authStore = useAuthStore();
 
 function sendRequest(event: SubmitEvent) {
   event.preventDefault();
@@ -40,6 +42,7 @@ function sendRequest(event: SubmitEvent) {
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
+      "Authorization": `Bearer ${authStore.token}`, // Retrieve token from cookies
     },
   };
 
@@ -66,6 +69,4 @@ function sendRequest(event: SubmitEvent) {
   </v-form>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
