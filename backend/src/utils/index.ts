@@ -17,7 +17,7 @@ const requiredEnvVars = [
 export type EnvVariable = (typeof requiredEnvVars)[number];
 
 export function loadEnv() {
-  const envPath = path.resolve(__dirname, "..", "..", ".env");
+  const envPath = path.resolve(__dirname, "..", "..", "..", ".env");
   const exists = fs.existsSync(envPath);
 
   if (exists) console.debug(`Loading environment variables from ${envPath}`);
