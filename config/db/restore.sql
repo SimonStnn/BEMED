@@ -32,9 +32,9 @@ CREATE TABLE products (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NULL DEFAULT NULL,
-    price FLOAT NOT NULL,
-    weight FLOAT NOT NULL,
-    EF FLOAT NOT NULL
+    price FLOAT NULL DEFAULT NULL,
+    weight FLOAT NULL DEFAULT NULL,
+    EF FLOAT NULL DEFAULT NULL
 );
 -- Alternatives Table
 CREATE TABLE alternatives (
@@ -94,58 +94,66 @@ VALUES --
         1,
         'SUP straws',
         NULL,
-        0.10,
-        0.01,
-        0.5
+        NULL,
+        NULL,
+        NULL
     ),
     (
         2,
         'Paper straws',
+        'Single use paper straws',
         NULL,
-        0.15,
-        0.01,
-        0.2
+        NULL,
+        6.21
     ),
     (
         3,
         'Reusable straws',
+        'Reusable straws from hard plastic',
         NULL,
-        0.50,
-        0.25,
-        0.1
+        NULL,
+        3.24
     ),
+    (
+        4,
+        'No straws',
+        NULL,
+        NULL,
+        NULL,
+        0.0
+    )
     -- SUP plastic cups
     (
         4,
         'SUP cups',
+        'Single use plastic cups',
         NULL,
-        0.20,
-        0.02,
-        0.6
+        NULL,
+        NULL
     ),
     (
         5,
         'Paper cups',
+        'Single use paper cups',
         NULL,
-        0.25,
-        0.02,
-        0.3
+        NULL,
+        7.02
     ),
     (
         6,
         'Reusable cups',
         'Reusable cups from hard plastic',
-        1.00,
-        0.5,
-        0.2
+        NULL,
+        NULL,
+        3.69
     ),
     (
         7,
         'Reusable cups',
-        'Reusable cups from ceramic, glass, …',
-        1.00,
-        0.5,
-        0.2
+        'Reusable cups from ceramic, glass or other materials',
+        NULL,
+        NULL,
+        3.15
     ),
     -- SUP plastic plates
     (
@@ -304,3 +312,4 @@ VALUES --
     -- reusable cups can be replaced by paper cups
     (6, 5) --
 ;
+
