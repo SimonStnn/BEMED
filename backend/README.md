@@ -26,34 +26,34 @@ answer["Treatment answer"] {
     string answer
 }
 
+products["Product SUPP"] {
+    int id PK
+    string name
+    string description
+    float price 
+    float weight "in grams"
+    float EF "Environmental Footprint"
+}
+
+alternatives["Alternatives"] {
+    int productId PK, FK
+    int alternativeId PK, FK
+}
+
 assesments["Assesments"] {
     int id PK
     string userId FK
-    int ppm "pieces per month"
     int productId FK
+    int ppm "pieces per month"
     date createdAt
     date updatedAt
 }
 
-products["Product SUPP"] {
-    int id PK
-    string name
-    float price 
-    float weight "in grams"
-    float EF "Environmental Footprint"
-    int alternativeId FK "alternative to"
-}
-
-alternatives["Alternatives"] {
-    int id PK
-    int productId FK
-}
-
-users ||--o{ treatments : "has"
-treatments ||--o{ questions : "has"
 questions ||--o{ answer : "has"
-treatments ||-- |{ answer : "has"
-users ||--o{   assesments : "makes"
+treatments ||-- |{ answer : "contains"
+users ||--o{ treatments : "has"
+users ||--o{ assesments : "makes"
 products ||--o{ alternatives : "has"
-assesments }o--|| products : "uses"
+assesments }o--|| products : "is for"
+
 ```
