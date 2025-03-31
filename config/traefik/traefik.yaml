@@ -19,14 +19,20 @@ api:
 entryPoints:
   web:
     address: :80
-    # Redirect all HTTP to HTTPS
-    # http:
-    #   redirections:
-    #     entryPoint:
-    #       to: websecure
-    #       scheme: https
+    http:
+      middlewares:
+        - xforwarded@file
   websecure:
     address: :443
+
+http:
+  middlewares:
+    xforwarded:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+        customResponseHeaders:
+          X-Forwarded-Proto: https
 
 # Configure your CertificateResolver here...
 # certificatesResolvers:
