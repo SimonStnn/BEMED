@@ -96,7 +96,7 @@ VALUES --
     -- SUP plastic straws
     (
         'SUP straws',
-        NULL,
+        'SUP straws',
         NULL,
         NULL,
         NULL
@@ -110,22 +110,22 @@ VALUES --
     ),
     (
         'Reusable straws',
-        'Reusable straws from hard plastic',
+        'Reusable straws',
         NULL,
         NULL,
         3.24
     ),
     (
         'No straws',
-        NULL,
-        NULL,
-        NULL,
+        'None',
+        0.0,
+        0.0,
         0.0
     ),
     -- SUP plastic cups
     (
         'SUP cups',
-        'Single use plastic cups',
+        'SUP cups',
         NULL,
         NULL,
         NULL
@@ -154,119 +154,386 @@ VALUES --
     -- SUP plastic plates
     (
         'SUP plates',
+        'SUP plates',
         NULL,
-        0.30,
-        0.03,
-        0.7
+        NULL,
+        NULL
     ),
     (
         'Paper plates',
+        'Single use paper or cardboard plates',
         NULL,
-        0.35,
-        0.03,
-        0.4
+        NULL,
+        7.02
     ),
     (
         'Reusable plates',
+        'Reusable plates from ceramic or other',
         NULL,
-        1.50,
-        1.0,
-        0.3
+        NULL,
+        3.51
+    ),
+        (
+        'Hard plastic plates',
+        'Reusable plates from hard plastic',
+        NULL,
+        NULL,
+        3.60
     ),
     -- SUP water bottles
     (
         'SUP water bottles',
+        'SUP water bottles',
         NULL,
-        0.50,
-        0.05,
-        0.8
+        NULL,
+        NULL
     ),
     (
         'No water bottles',
         'No water bottles, only tapwater',
-        1.50,
-        0.5,
-        0.4
+        0.0,
+        0.0,
+        0.0
     ),
     (
         'Water dispencer',
         'Water dispencer with returnable 5L bottles',
-        1.50,
-        0.5,
-        0.4
+        NULL,
+        NULL,
+        1.85
+    ),
+        (
+        'Returnable glass bottles',
+        'Water in returnable glass bottles',
+        NULL,
+        NULL,
+        3.00
     ),
     (
-        'Reusable water bottles',
-        'Reusable water bottles e.g. glass bottles',
-        1.50,
-        0.5,
-        0.4
+        'Single use glass bottles',
+        'Water in single use glass bottles',
+        NULL,
+        NULL,
+        5.00
     ),
     -- SUP juice bottles
     (
         'SUP juice bottles',
+        'SUP juice bottles',
         NULL,
-        0.50,
-        0.05,
-        0.8
+        NULL,
+        NULL
+    ),
+        (
+        'Returnable glass bottles',
+        'Drinks in returnable glass bottles',
+        NULL,
+        NULL,
+        3.0
+    ),
+    (
+        'Single use glass bottles',
+        'Drinks in single use glass bottles',
+        NULL,
+        NULL,
+        5.5
     ),
     (
         'Drinks made on site',
-        NULL,
-        1.50,
-        0.5,
-        0.4
+        'No bottles, on-site drinks only',
+        0.0,
+        0.0,
+        0.0
     ),
     (
         'Big (>5L) SUP bottles',
-        'Juice dispencer with returnable 5L bottles',
-        1.50,
-        0.5,
-        0.4
+        'Juice dispencer with single use 5L bottles',
+        NULL,
+        NULL,
+        3.69
     ),
     (
-        'Cans with plastic lids',
+        'Cans with plastic lining',
+        'Cans with plastic lining',
         NULL,
-        1.50,
-        0.5,
-        0.4
+        NULL,
+        6.48
     ),
     (
         'Tetra packs',
+        'Drinks in Tetra Paks (with plastic lining)',
         NULL,
-        1.50,
-        0.5,
-        0.4
+        NULL,
+        8.0
     ),
     -- Plastic coffee capsules
     (
         'Plastic coffee capsules',
+        'Plastic coffee capsules',
         NULL,
-        0.50,
-        0.05,
-        0.8
+        NULL,
+        7.38
     ),
     (
         'Coffee in plastic or aluminium bags',
+        'Coffee in plastic or aluminium bags',
         NULL,
-        1.50,
-        0.5,
-        0.4
+        NULL,
+        5.54
     ),
     (
         'Coffee purchased by weight',
-        NULL,
-        1.50,
-        0.5,
-        0.4
+        'Coffee purchased by weight',
+        0.0,
+        0.0,
+        0.0
     ),
     (
         'No capsules used',
+        'No coffee capsules',
+        0.0,
+        0.0,
+        0.0
+    ) 
+-- Tea bags
+    (
+        'Single use tea bags',
+        'Single use tea bags',
         NULL,
-        1.50,
-        0.5,
-        0.4
-    ) --
+        NULL,
+        NULL
+    ),
+    (
+        'Tea in plastic bags',
+        'Tea in bigger plastic bags',
+        NULL,
+        NULL,
+        7.38
+    ),
+    (
+        'Tea purchased by weight',
+        'Tea purchased by weight',
+        0.0,
+        0.0,
+        0.0
+    ),
+    (
+        'No tea bags',
+        'No tea bags used',
+        0.0,
+        0.0,
+        0.0
+    ),
+    (
+        'Single use paper tea bags',
+        'Single use paper tea bags',
+        NULL,
+        NULL,
+        6.21
+    ),
+-- plastic coffee stir sticks
+    (
+        'Plastic coffee stirs',
+        'Plastic coffee stir sticks',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        'Reusable spoons',
+        'Reusable spoons from metal or other materials',
+        NULL,
+        NULL,
+        3.24
+    ),
+    (
+        'Wooden sticks',
+        'Wooden stir sticks',
+        NULL,
+        NULL,
+        6.39
+    ),
+    (
+        'No stir sticks',
+        'No stir sticks',
+        0.0,
+        0.0,
+        0.0
+    ),
+-- Plastic cutlery
+    (
+        'SUP cutlery',
+        'SUP cutlery',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        'Reusable cutlery',
+        'Reusable cutlery made of metal',
+        NULL,
+        NULL,
+        3.24
+    ),
+    (
+        'Single use bio cutlery',
+        'Single use biodegradable cutlery, paper wood etc.',
+        NULL,
+        NULL,
+        6.48
+    ),
+    (
+        'Bring your own cutlery',
+        'Bring your own cutlery',
+        0.0,
+        0.0,
+        0.0
+    ),
+-- Plastic bags
+    (
+        'SUP bags',
+        'SUP bags',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        'Paper bags',
+        'Paper bags',
+        NULL,
+        NULL,
+        4.66
+    ),
+    (
+        'Reusable bags',
+        'Reusable and durable bags or baskets made from organic materials',
+        NULL,
+        NULL,
+        2.63
+    ),
+    (
+        'BYO',
+        'BYO - bring your own bag',
+        0.0,
+        0.0,
+        0.0
+    ),
+    (
+        'No bags',
+        'Not using any bags',
+        0.0,
+        0.0,
+        0.0
+    ),
+-- plastic / polystyrene food packaging
+    (
+        'Plastic/polystyrene food packaging',
+        'Plastic/polystyrene food packaging',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        'Single use paper boxes',
+        'Single use paper or cardboard boxes',
+        NULL,
+        NULL,
+        7.02
+    ),
+    (
+        'No boxes',
+        'No food packaging boxes',
+        0.0,
+        0.0,
+        0.0
+    ),
+-- individual packaging (sugar, coffee, oil, vinegar etc.)
+    (
+        'Individual packaging',
+        'individual packaging (sugar, coffee, oil, vinegar etc.)',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        'Reusable containers',
+        'Reusable containers',
+        NULL,
+        NULL,
+        4.0
+    ),
+    (
+        'Individual portions medium up to 1KG, large >1KG',
+        'Individual portions medium up to 1KG, large >1KG packaging',
+        NULL,
+        NULL,
+        4.0
+    ),
+-- toiletries
+    (
+        'Plastic toilet products/packaging',
+        'Plastic toilet products/packaging',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        'Toiletries in reusable containers',
+        'Toiletries in reusable containers filled from single use packaging',
+        NULL,
+        NULL,
+        3.69
+    ),
+    (
+        'Soaps without plastic packaging',
+        'Soaps without plastic packaging',
+        NULL,
+        NULL,
+        6.21
+    ),
+    (
+        'No toiletries',
+        'No toiletries used',
+        0.0,
+        0.0,
+        0.0
+    ),
+-- plastic hand sanitizer bottles
+    (
+        'Hand sanitizer in large single use bottles',
+        'Hand sanitizer in large single use bottles',
+        NULL,
+        NULL,
+        3.69
+    ),
+    (
+        'Hand washing',
+        'No hand sanitizer available, only hand washing',
+        0.0,
+        0.0,
+        0.0
+    ),  
+    (
+        'SUP gloves',
+        'SUP gloves',
+        NULL,
+        NULL,
+        NULL
+    ),
+        (
+        'Reusable rubber gloves',
+        'Reusable rubber gloves',
+        NULL,
+        NULL,
+        4.05
+    ),
+        (
+        'Washing hands often',
+        'No gloves used, washing hands frequently',
+        0.0,
+        0.0,
+        0.0
+    ),
 ;
 -- Insert Alternatives
 INSERT INTO alternatives (productId, alternativeId)
