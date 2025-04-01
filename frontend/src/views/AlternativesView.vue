@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import ApiForm from '@/components/ApiForm.vue';
 import { ref } from 'vue';
-import { watchEffect } from "vue";
-import { watch } from "vue";
-import { reactive } from 'vue';
 
 function checkFormData() {
   console.log("Submitting form data:", JSON.stringify(formData));
@@ -18,44 +15,52 @@ function onSuccess(data: any) {
 
 <template>
   <v-container class="alternatives">
-  <v-row justify="center">
-  <v-col cols="12" md="12">
-    <v-card class="survey-card">
-    <v-card-title class="title">
-      <span class="headline">Plastic Alternatives Survey Page</span>
-    </v-card-title>
-    <v-card-text class="survey-content">
-      <api-form action="/alternatives" method="POST" v-on:success="onSuccess" v-bind:body="formData"
-      @submit="checkFormData">
-        <div v-for="(question, questionId) in questions" :key="questionId">
-        <p class="question-label">{{ question.text }}</p>
-        <p class="EFI">
-          Average EFI from selected questions: {{ calculateAverageEFI(question.id) }}
-        </p>
-      <v-container v-model="formData.questions[questionId]" multiple>
-      <v-checkbox class="checkbox"
-        v-for="option in question.options"
-        :key="option.label"
-        :value="option.label">
-        <template v-slot:label>
-          <div>
-            <span class="options">{{ option.label }}</span>
-            <br><span class="efi-label">Environmental Footprint Index: {{ option.footprint }}</span>
-          </div>
-        </template>
-        </v-checkbox>
-      </v-container>
-      </div>
-      <!--Submit survey-->
-      <v-btn type="submit" color="primary">Submit</v-btn>
-    </api-form>
-   </v-card-text>
-   </v-card>
-  </v-col>
-  </v-row>
+    <v-row justify="center">
+      <v-col cols="12" md="12">
+        <v-card class="survey-card">
+          <v-card-title class="title">
+            <span class="headline">Plastic Alternatives Survey Page</span>
+            <p class="efi-explanation">EFI means Environmental Footprint Index</p>
+          </v-card-title>
+          <v-card-text class="survey-content">
+            <api-form action="/alternatives" method="POST" v-on:success="onSuccess" v-bind:body="formData"
+              @submit="checkFormData">
+              <div class="survey-field" v-for="(question, questionId) in questions" :key="questionId">
+                <p class="question-label">{{ question.text }}</p>
+                <p class="EFI">
+                  Average EFI from selected questions: {{ calculateAverageEFI(question.id) }}
+                </p>
+                <v-container v-model="formData.questions[questionId]" multiple>
+                  <v-checkbox class="checkbox" v-for="(option, optionIndex) in question.options" :key="option.label"
+                    :value="option.label" @update:model-value="(value) => {
+                      if (value) {
+                        formData.questions[question.id].push(optionIndex);
+                      } else {
+                        const index = formData.questions[question.id].indexOf(optionIndex);
+                        if (index !== -1) {
+                          formData.questions[question.id].splice(index, 1);
+                        }
+                      }
+                    }">
+                    <template v-slot:label>
+                      <div>
+                        <span class="options">{{ option.label }}</span>
+                        <br><span class="efi-label">Environmental Footprint Index: {{ option.footprint }}</span>
+                      </div>
+                    </template>
+                  </v-checkbox>
+                </v-container>
+              </div>
+              <!--Submit survey-->
+              <v-btn type="submit" color="primary">Submit</v-btn>
+            </api-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
-  </template>
-  
+</template>
+
 <script lang="ts">
 interface Option {
   label: string;
@@ -69,7 +74,7 @@ interface Question {
 }
 
 // Define formData with typed questions object
-const formData = reactive<{ questions: Record<number, string[]> }>({
+const formData = ref<{ questions: Record<number, number[]> }>({
   questions: {}
 });
 
@@ -205,74 +210,68 @@ const questions = ref<Question[]>([
 
 // Initialize formData for each question
 questions.value.forEach(q => {
-  formData.questions[q.id] = []; // Initially, no options are selected for any question
+  formData.value.questions[q.id] = []; // Initially, no options are selected for any question
 });
 
 // Function to calculate average index for selected options
 const calculateAverageEFI = (questionId: number) => {
-  const selectedOptions = formData.questions[questionId] || [];
+  const selectedOptions = formData.value.questions[questionId] || [];
   if (selectedOptions.length === 0) return 0;
 
   const question = questions.value.find(q => q.id === questionId);
   if (!question) return 0;
 
-  let totalIndex=0;
-  selectedOptions.forEach((optionLabel: string) => {
-    const option = question.options.find(opt => opt.label === optionLabel);
+
+  let totalIndex = 0;
+  selectedOptions.forEach((optionIndex) => {
+    const option = question.options[optionIndex];
     if (option) {
       totalIndex += option.footprint;
     }
   });
-  return (totalIndex / selectedOptions.length); // .toFixed(2) to round off to 2 decimals
+  return (totalIndex / selectedOptions.length).toFixed(2); // to round off to 2 decimals
 };
-
-watchEffect(() => {
-  Object.keys(formData.questions).forEach((questionId) => {
-    console.log(`EFI for question ${questionId}:`, calculateAverageEFI(Number(questionId)));
-  });
-});
-
-watch(
-  () => formData.questions,
-  (newQuestions) => {
-    console.log("Updated questions:", JSON.stringify(newQuestions));
-  },
-  { deep: true }
-)
-
 </script>
 
 <style scoped>
-  .headline {
-    font-size: 1.6rem;
-    font-weight: bold;
-  }
+.headline {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
 
-  .title {
-    padding-bottom: 20px;
-  }
+.title {
+  padding-bottom: 20px;
+}
 
-  .survey-card {
-    max-height: 80vh;
-    overflow-y: auto; /* to enable scrolling */
-  }
+.survey-card {
+  max-height: 80vh;
+  overflow-y: auto;
+  /* to enable scrolling */
+}
 
-  .options {
-    text-decoration: underline;
-  }
+.survey-field {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9; /* light gray */
+  border-radius: 8px;
+}
 
-  .question-label {
-    font-weight: bold;
-    font-size: 20px;
-    display: block;
-  }
+.options {
+  font-weight: bold;
+}
 
-  .efi-label  {
-    font-size: 0.85em;
-    color: rgb(91, 91, 91);
-  }
+.question-label {
+  font-weight: bold;
+  font-size: 20px;
+  display: block;
+}
 
-  .EFI {
-    padding-bottom: 20px;
-  }
-</style>  
+.efi-label {
+  font-size: 0.85em;
+  color: rgb(91, 91, 91);
+}
+
+.EFI {
+  padding-bottom: 20px;
+}
+</style>

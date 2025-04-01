@@ -92,36 +92,36 @@ function onSuccess(data: any) {
 </script>
 
 <style scoped>
-  .headline {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+.headline {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 
-  .survey-card {
-    max-height: 80vh;
-    overflow-y: auto; /* to enable scrolling */
-  }
+.survey-card {
+  max-height: 80vh;
+  overflow-y: auto; /* to enable scrolling */
+}
 
-  /* to make survey fields look similar */
-  .survey-field {
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #f9f9f9; /* light gray */
-    border-radius: 8px;
-  }
+/* to make survey fields look similar */
+.survey-field {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9; /* light gray */
+  border-radius: 8px;
+}
 
-  .question-label {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 5px;
-    display: block;
-  }
+.question-label {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: block;
+}
 
-  .num-question-label {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 10px;
-    display: block;
-  }
+.num-question-label {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: block;
+}
 
 </style>  
