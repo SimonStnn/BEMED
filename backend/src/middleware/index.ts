@@ -25,7 +25,6 @@ export function setupMiddleware(app: Express) {
 
   // Middleware to parse JSON and URL-encoded data
   app.use(express.json());
-  app.use(cors());
   app.use(
     session({
       secret: KEYCLOAK_CLIENT_SECRET,

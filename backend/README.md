@@ -44,7 +44,7 @@ alternatives["Alternatives"] {
     int alternativeId PK, FK
 }
 
-assesments["Assesments"] {
+assessments["Assessments"] {
     int id PK
     string userId FK
     int productId FK

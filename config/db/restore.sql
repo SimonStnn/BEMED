@@ -49,7 +49,7 @@ CREATE TABLE alternatives (
     FOREIGN KEY (alternativeId) REFERENCES products (id) ON DELETE CASCADE
 );
 -- Assesments Table
-CREATE TABLE assesments (
+CREATE TABLE assessments (
     id INT PRIMARY KEY AUTO_INCREMENT,
     userId INT NOT NULL,
     productId INT NOT NULL,
