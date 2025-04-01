@@ -17,6 +17,10 @@ questions["Questions"] {
     int id PK
     string question
     string type "text, number, date, etc."
+    boolean required
+    string default
+    string options "comma separated values"
+    string unit
 }
 
 answer["Treatment answer"] {

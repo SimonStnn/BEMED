@@ -16,7 +16,11 @@ CREATE TABLE treatments (
 CREATE TABLE questions (
     id INT PRIMARY KEY AUTO_INCREMENT,
     question VARCHAR(255) NOT NULL,
-    type VARCHAR(50) NOT NULL
+    type VARCHAR(50) NOT NULL,
+    required BOOLEAN NOT NULL DEFAULT TRUE,
+    options VARCHAR(255) NULL DEFAULT NULL,
+    unit VARCHAR(50) NULL DEFAULT NULL,
+    regex VARCHAR(255) NULL DEFAULT NULL
 );
 -- Answers Table
 CREATE TABLE answers (
@@ -87,11 +91,10 @@ VALUES --
         'number'
     );
 -- Insert Products
-INSERT INTO products (id, name, description, price, weight, EF)
+INSERT INTO products (name, description, price, weight, EF)
 VALUES --
     -- SUP plastic straws
     (
-        1,
         'SUP straws',
         NULL,
         NULL,
@@ -99,7 +102,6 @@ VALUES --
         NULL
     ),
     (
-        2,
         'Paper straws',
         'Single use paper straws',
         NULL,
@@ -107,7 +109,6 @@ VALUES --
         6.21
     ),
     (
-        3,
         'Reusable straws',
         'Reusable straws from hard plastic',
         NULL,
@@ -115,16 +116,14 @@ VALUES --
         3.24
     ),
     (
-        4,
         'No straws',
         NULL,
         NULL,
         NULL,
         0.0
-    )
+    ),
     -- SUP plastic cups
     (
-        4,
         'SUP cups',
         'Single use plastic cups',
         NULL,
@@ -132,7 +131,6 @@ VALUES --
         NULL
     ),
     (
-        5,
         'Paper cups',
         'Single use paper cups',
         NULL,
@@ -140,7 +138,6 @@ VALUES --
         7.02
     ),
     (
-        6,
         'Reusable cups',
         'Reusable cups from hard plastic',
         NULL,
@@ -148,7 +145,6 @@ VALUES --
         3.69
     ),
     (
-        7,
         'Reusable cups',
         'Reusable cups from ceramic, glass or other materials',
         NULL,
@@ -157,7 +153,6 @@ VALUES --
     ),
     -- SUP plastic plates
     (
-        8,
         'SUP plates',
         NULL,
         0.30,
@@ -165,7 +160,6 @@ VALUES --
         0.7
     ),
     (
-        9,
         'Paper plates',
         NULL,
         0.35,
@@ -173,7 +167,6 @@ VALUES --
         0.4
     ),
     (
-        10,
         'Reusable plates',
         NULL,
         1.50,
@@ -182,7 +175,6 @@ VALUES --
     ),
     -- SUP water bottles
     (
-        11,
         'SUP water bottles',
         NULL,
         0.50,
@@ -190,7 +182,6 @@ VALUES --
         0.8
     ),
     (
-        12,
         'No water bottles',
         'No water bottles, only tapwater',
         1.50,
@@ -198,7 +189,6 @@ VALUES --
         0.4
     ),
     (
-        13,
         'Water dispencer',
         'Water dispencer with returnable 5L bottles',
         1.50,
@@ -206,7 +196,6 @@ VALUES --
         0.4
     ),
     (
-        14,
         'Reusable water bottles',
         'Reusable water bottles e.g. glass bottles',
         1.50,
@@ -215,7 +204,6 @@ VALUES --
     ),
     -- SUP juice bottles
     (
-        15,
         'SUP juice bottles',
         NULL,
         0.50,
@@ -223,7 +211,6 @@ VALUES --
         0.8
     ),
     (
-        16,
         'Drinks made on site',
         NULL,
         1.50,
@@ -231,7 +218,6 @@ VALUES --
         0.4
     ),
     (
-        17,
         'Big (>5L) SUP bottles',
         'Juice dispencer with returnable 5L bottles',
         1.50,
@@ -239,7 +225,6 @@ VALUES --
         0.4
     ),
     (
-        18,
         'Cans with plastic lids',
         NULL,
         1.50,
@@ -247,7 +232,6 @@ VALUES --
         0.4
     ),
     (
-        19,
         'Tetra packs',
         NULL,
         1.50,
@@ -256,7 +240,6 @@ VALUES --
     ),
     -- Plastic coffee capsules
     (
-        20,
         'Plastic coffee capsules',
         NULL,
         0.50,
@@ -264,7 +247,6 @@ VALUES --
         0.8
     ),
     (
-        21,
         'Coffee in plastic or aluminium bags',
         NULL,
         1.50,
@@ -272,7 +254,6 @@ VALUES --
         0.4
     ),
     (
-        22,
         'Coffee purchased by weight',
         NULL,
         1.50,
@@ -280,7 +261,6 @@ VALUES --
         0.4
     ),
     (
-        23,
         'No capsules used',
         NULL,
         1.50,
@@ -300,16 +280,15 @@ VALUES --
     -- reusable straws can be replaced by paper straws
     (3, 2),
     -- SUP cups can be replaced by paper cups
-    (4, 5),
-    -- SUP cups can be replaced by reusable cups
-    (4, 6),
-    -- SUP cups can be replaced by reusable cups
-    (4, 7),
-    -- paper cups can be replaced by reusable cups
     (5, 6),
-    -- paper cups can be replaced by reusable cups
+    -- SUP cups can be replaced by reusable cups
     (5, 7),
+    -- SUP cups can be replaced by reusable cups
+    (5, 8),
+    -- paper cups can be replaced by reusable cups
+    (6, 7),
+    -- paper cups can be replaced by reusable cups
+    (6, 8),
     -- reusable cups can be replaced by paper cups
-    (6, 5) --
+    (7, 6) --
 ;
-
