@@ -1,11 +1,8 @@
 import { Router } from "express";
 
-import loginRouter from "./login";
-import surveyRouter from "./survey";
+import surveyRouter from "@/routes/survey";
 
 const router = Router();
-
-router.use("/login", loginRouter);
 
 router.use("/survey", surveyRouter);
 

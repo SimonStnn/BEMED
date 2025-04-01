@@ -4,39 +4,60 @@
 
 ```mermaid
 erDiagram
-Institution {
+users["Users (Institution)"] {}
+
+treatments["Waste Treatment System"] {
     int id PK
-    string username 
-    string email
-    string role FK
-    string password "Hashed"
+    string userId FK
     date createdAt
-    int contactId FK
-    string phone
+    date updatedAt
 }
 
-Product {
+questions["Questions"] {
+    int id PK
+    string question
+    string type "text, number, date, etc."
+    boolean required
+    string default
+    string options "comma separated values"
+    string unit
+}
+
+answer["Treatment answer"] {
+    int id PK
+    int questionId FK
+    int treatmentId FK
+    string answer
+}
+
+products["Product SUPP"] {
     int id PK
     string name
-    float weight "per unit"
-    double price
+    string description
+    float price 
+    float weight "in grams"
+    float EF "Environmental Footprint"
 }
 
-Alternative["Alternative SUPP"] {
-    int id PK
-    string name
-    float HAPI
-    int to FK "alternative to"
-    
+alternatives["Alternatives"] {
+    int productId PK, FK
+    int alternativeId PK, FK
 }
 
-Assessment {
+assessments["Assessments"] {
     int id PK
-    int institutionId FK
+    string userId FK
     int productId FK
+    int ppm "pieces per month"
+    date createdAt
+    date updatedAt
 }
 
-Institution ||--o{ Assessment : "makes"
-Product ||--o{ Assessment : "assessed"
-Product ||--o{ Alternative : "has"
+questions ||--o{ answer : "has"
+treatments ||-- |{ answer : "contains"
+users ||--o{ treatments : "has"
+users ||--o{ assesments : "makes"
+products ||--o{ alternatives : "has"
+assesments }o--|| products : "is for"
+
 ```

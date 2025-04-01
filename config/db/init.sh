@@ -1,7 +1,4 @@
-#!/bin/bash
-
 echo "Running initialization script..."
-
 #
 # Create a database for Keycloak
 #
@@ -11,9 +8,7 @@ mariadb -u root -p${MARIADB_ROOT_PASSWORD} -e "CREATE USER IF NOT EXISTS '${KC_D
 # Grant privileges to the keycloak user
 mariadb -u root -p${MARIADB_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON ${KC_DB_NAME}.* TO '${KC_DB_USERNAME}'@'%';"
 mariadb -u root -p${MARIADB_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
-
 echo "Created database ${KC_DB_NAME} for ${KC_DB_USERNAME}@%"
-
 #
 # Create a database for BEMED
 #
@@ -23,7 +18,5 @@ mariadb -u root -p${MARIADB_ROOT_PASSWORD} -e "CREATE USER IF NOT EXISTS '${BEME
 # Grant privileges to the bemed user
 mariadb -u root -p${MARIADB_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON ${BEMED_DB_NAME}.* TO '${BEMED_DB_USERNAME}'@'%';"
 mariadb -u root -p${MARIADB_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
-
 echo "Created database ${BEMED_DB_NAME} for ${BEMED_DB_USERNAME}@%"
-
 echo "Database is ready!"

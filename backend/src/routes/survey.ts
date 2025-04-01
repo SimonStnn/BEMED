@@ -1,11 +1,17 @@
 import { Request, Router, type Response } from "express";
+
 import db from "@/db"
+import keycloak from "@/middleware/keycloak";
 
 const router = Router();
+// router.use(keycloak.protect());
 
 //* GET
 
 router.get("/", async (req: Request, res: Response) => {
+    // print user info
+    console.log("User info:", (req as any).kauth?.grant.access_token.content);
+
     console.log("GET /survey");
     try {
         const [rows] = await db.execute("SELECT * FROM survey_responses");
