@@ -19,9 +19,9 @@ api:
 entryPoints:
   web:
     address: :80
-    http:
-      middlewares:
-        - xforwarded@file
+    # http:
+    #   middlewares:
+    #     - xforwarded@file
   websecure:
     address: :443
 
@@ -30,9 +30,10 @@ http:
     xforwarded:
       headers:
         customRequestHeaders:
-          X-Forwarded-Proto: https
+          # Should be either "X-Forwarded-Proto: https" or "X-Forwarded-Proto: http"
+          X-Forwarded-Proto: ${BEMED_PROTOCOL}
         customResponseHeaders:
-          X-Forwarded-Proto: https
+          X-Forwarded-Proto: ${BEMED_PROTOCOL}
 
 # Configure your CertificateResolver here...
 # certificatesResolvers:

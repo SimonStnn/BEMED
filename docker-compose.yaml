@@ -67,7 +67,7 @@ services:
       - "traefik.http.routers.keycloak.rule=Host(`${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`)"
       - "traefik.http.routers.keycloak.entrypoints=web"
       - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
-      # - "traefik.http.routers.keycloak.tls=true"
+      - "traefik.http.middlewares.xforwarded@file"
 
   db:
     container_name: database
