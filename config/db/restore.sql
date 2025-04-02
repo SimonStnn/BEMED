@@ -173,7 +173,7 @@ VALUES --
         NULL,
         3.51
     ),
-        (
+    (
         'Hard plastic plates',
         'Reusable plates from hard plastic',
         NULL,
@@ -202,7 +202,7 @@ VALUES --
         NULL,
         1.85
     ),
-        (
+    (
         'Returnable glass bottles',
         'Water in returnable glass bottles',
         NULL,
@@ -224,7 +224,7 @@ VALUES --
         NULL,
         NULL
     ),
-        (
+    (
         'Returnable glass bottles',
         'Drinks in returnable glass bottles',
         NULL,
@@ -294,8 +294,8 @@ VALUES --
         0.0,
         0.0,
         0.0
-    ) 
--- Tea bags
+    ),
+    -- Tea bags
     (
         'Single use tea bags',
         'Single use tea bags',
@@ -331,7 +331,7 @@ VALUES --
         NULL,
         6.21
     ),
--- plastic coffee stir sticks
+    -- plastic coffee stir sticks
     (
         'Plastic coffee stirs',
         'Plastic coffee stir sticks',
@@ -360,7 +360,7 @@ VALUES --
         0.0,
         0.0
     ),
--- Plastic cutlery
+    -- Plastic cutlery
     (
         'SUP cutlery',
         'SUP cutlery',
@@ -389,7 +389,7 @@ VALUES --
         0.0,
         0.0
     ),
--- Plastic bags
+    -- Plastic bags
     (
         'SUP bags',
         'SUP bags',
@@ -425,7 +425,7 @@ VALUES --
         0.0,
         0.0
     ),
--- plastic / polystyrene food packaging
+    -- plastic / polystyrene food packaging
     (
         'Plastic/polystyrene food packaging',
         'Plastic/polystyrene food packaging',
@@ -447,7 +447,7 @@ VALUES --
         0.0,
         0.0
     ),
--- individual packaging (sugar, coffee, oil, vinegar etc.)
+    -- individual packaging (sugar, coffee, oil, vinegar etc.)
     (
         'Individual packaging',
         'individual packaging (sugar, coffee, oil, vinegar etc.)',
@@ -469,7 +469,7 @@ VALUES --
         NULL,
         4.0
     ),
--- toiletries
+    -- toiletries
     (
         'Plastic toilet products/packaging',
         'Plastic toilet products/packaging',
@@ -498,7 +498,7 @@ VALUES --
         0.0,
         0.0
     ),
--- plastic hand sanitizer bottles
+    -- plastic hand sanitizer bottles
     (
         'Hand sanitizer in large single use bottles',
         'Hand sanitizer in large single use bottles',
@@ -512,7 +512,7 @@ VALUES --
         0.0,
         0.0,
         0.0
-    ),  
+    ),
     (
         'SUP gloves',
         'SUP gloves',
@@ -520,20 +520,20 @@ VALUES --
         NULL,
         NULL
     ),
-        (
+    (
         'Reusable rubber gloves',
         'Reusable rubber gloves',
         NULL,
         NULL,
         4.05
     ),
-        (
+    (
         'Washing hands often',
         'No gloves used, washing hands frequently',
         0.0,
         0.0,
         0.0
-    ),
+    ) --
 ;
 -- Insert Alternatives
 INSERT INTO alternatives (productId, alternativeId)
