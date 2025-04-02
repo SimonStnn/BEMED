@@ -95,11 +95,7 @@ function onSuccess(data: any) {
   width: 100%;
   height: 100vh;
   flex-direction: column;
-}
-
-.survey-content {
-  flex-grow: 1;
-  padding: 20px;
+  overflow: scroll;
 }
 
 /* to make survey fields look similar */

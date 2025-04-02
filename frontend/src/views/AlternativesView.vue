@@ -14,51 +14,45 @@ function onSuccess(data: any) {
 </script>
 
 <template>
-  <v-container class="alternatives">
-    <v-row justify="center">
-      <v-col cols="12" md="12">
-        <v-card class="survey-card">
-          <v-card-title class="title">
-            <span class="headline">Plastic Alternatives Survey Page</span>
-            <p class="efi-explanation">EFI means Environmental Footprint Index</p>
-          </v-card-title>
-          <v-card-text class="survey-content">
-            <api-form action="/alternatives" method="POST" v-on:success="onSuccess" v-bind:body="formData"
-              @submit="checkFormData">
-              <div class="survey-field" v-for="(question, questionId) in questions" :key="questionId">
-                <p class="question-label">{{ question.text }}</p>
-                <p class="EFI">
-                  Average EFI from selected questions: {{ calculateAverageEFI(question.id) }}
-                </p>
-                <v-container v-model="formData.questions[questionId]" multiple>
-                  <v-checkbox class="checkbox" v-for="(option, optionIndex) in question.options" :key="option.label"
-                    :value="option.label" @update:model-value="(value) => {
-                      if (value) {
-                        formData.questions[question.id].push(optionIndex);
-                      } else {
-                        const index = formData.questions[question.id].indexOf(optionIndex);
-                        if (index !== -1) {
-                          formData.questions[question.id].splice(index, 1);
-                        }
-                      }
-                    }">
-                    <template v-slot:label>
-                      <div>
-                        <span class="options">{{ option.label }}</span>
-                        <br><span class="efi-label">Environmental Footprint Index: {{ option.footprint }}</span>
-                      </div>
-                    </template>
-                  </v-checkbox>
-                </v-container>
-              </div>
-              <!--Submit survey-->
-              <v-btn type="submit" color="primary">Submit</v-btn>
-            </api-form>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-card class="survey-card">
+    <v-card-title class="title">
+      <span class="headline">Plastic Alternatives Survey Page</span>
+      <p class="efi-explanation">EFI means Environmental Footprint Index</p>
+    </v-card-title>
+    <v-card-text class="survey-content">
+      <api-form action="/alternatives" method="POST" v-on:success="onSuccess" v-bind:body="formData"
+        @submit="checkFormData">
+        <div class="survey-field" v-for="(question, questionId) in questions" :key="questionId">
+          <p class="question-label">{{ question.text }}</p>
+          <p class="EFI">
+            Average EFI from selected questions: {{ calculateAverageEFI(question.id) }}
+          </p>
+          <v-container v-model="formData.questions[questionId]" multiple>
+            <v-checkbox class="checkbox" v-for="(option, optionIndex) in question.options" :key="option.label"
+              :value="option.label" @update:model-value="(value) => {
+                if (value) {
+                  formData.questions[question.id].push(optionIndex);
+                } else {
+                  const index = formData.questions[question.id].indexOf(optionIndex);
+                  if (index !== -1) {
+                    formData.questions[question.id].splice(index, 1);
+                  }
+                }
+              }">
+              <template v-slot:label>
+                <div>
+                  <span class="options">{{ option.label }}</span>
+                  <br><span class="efi-label">Environmental Footprint Index: {{ option.footprint }}</span>
+                </div>
+              </template>
+            </v-checkbox>
+          </v-container>
+        </div>
+        <!--Submit survey-->
+        <v-btn type="submit" color="primary">Submit</v-btn>
+      </api-form>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -244,9 +238,10 @@ const calculateAverageEFI = (questionId: number) => {
 }
 
 .survey-card {
-  max-height: 80vh;
-  overflow-y: auto;
-  /* to enable scrolling */
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  overflow: scroll;
 }
 
 .survey-field {
