@@ -12,9 +12,9 @@ const vuetify = createVuetify({
     themes: {
       light: {
         colors: {
-          primary: "#c1121f",
+          primary: "#2f5a9a",
         //   primary: "#FF5A5F",
-          secondary: "#FFDC5E",
+          secondary: "#8ed1fc",
         //   primary: "#1976D2",
         //   secondary: "#424242",
         },
