@@ -57,7 +57,7 @@ console.log(authStore.userInfo);
   padding-left: 10px;
   padding-top: 10px;
   font-family: 'Dosis', 'Helvetica', 'Arial', 'Lucida', 'sans-serif';
-  color: #c1121f;
+  color: #2f5a9a; /* Primary blue */
 }
 
 .headline {
@@ -91,7 +91,7 @@ p {
 }
 
 .link {
-  color: #c1121f; /* our primary red */
+  color: #2f5a9a; /* our primary blue */
   text-decoration: none;
   font-weight: bold;
 }

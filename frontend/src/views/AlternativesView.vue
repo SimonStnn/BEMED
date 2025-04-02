@@ -49,7 +49,7 @@ function onSuccess(data: any) {
           </v-container>
         </div>
         <!--Submit survey-->
-        <v-btn type="submit" color="primary">Submit</v-btn>
+        <v-btn class="sub-button" type="submit" color="primary">Submit</v-btn>
       </api-form>
     </v-card-text>
   </v-card>
@@ -266,7 +266,16 @@ const calculateAverageEFI = (questionId: number) => {
   color: rgb(91, 91, 91);
 }
 
+.efi-explanation {
+  color: #2f5a9a;
+  font-weight: bold;
+}
+
 .EFI {
   padding-bottom: 20px;
+}
+
+.sub-button {
+  margin-bottom: 50px;
 }
 </style>

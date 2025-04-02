@@ -75,7 +75,7 @@ function onSuccess(data: any) {
         <v-text-field v-model.number="formData.questions[7]" type="number" label="Q7" name="q7" required></v-text-field></div>
 
         <!--Submit survey-->
-        <v-btn type="submit" color="primary">Submit</v-btn>
+        <v-btn class="sub-button" type="submit" color="primary">Submit</v-btn>
 
       </api-form>
     </v-card-text>
@@ -118,6 +118,10 @@ function onSuccess(data: any) {
   font-size: 16px;
   margin-bottom: 10px;
   display: block;
+}
+
+.sub-button {
+  margin-bottom: 50px;
 }
 
 </style>  
