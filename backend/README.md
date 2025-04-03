@@ -56,8 +56,8 @@ assessments["Assessments"] {
 questions ||--o{ answer : "has"
 treatments ||-- |{ answer : "contains"
 users ||--o{ treatments : "has"
-users ||--o{ assesments : "makes"
+users ||--o{ assessments : "makes"
 products ||--o{ alternatives : "has"
-assesments }o--|| products : "is for"
+assessments }o--|| products : "is for"
 
 ```
