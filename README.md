@@ -14,14 +14,15 @@ architecture-beta
     service db(database)[MySQL] in docker
     service keycloak(server)[Keycloak] in docker
     service api(server)[Backend API] in docker
+    service webserver(server)[Frontend Webserver] in docker
     service traefik(server)[Traefik] in docker
-    service redis(server)[Redis] in docker
+    service portainer(server)[Portainer] in docker
     service phpmyadmin(server)[PhpMyAdmin] in docker
 
     web:R <--> L:traefik
     traefik:R <--> L:api
     traefik:T <--> L:keycloak
     api:R <--> L:db
-    api:B <--> L:redis
-    db:R <--> L:phpmyadmin
+    db:T <--> B:phpmyadmin
+    traefik:B <--> T:webserver
 ```
