@@ -631,16 +631,16 @@
       "description": "Backend API for BEMED",
       "rootUrl": "",
       "adminUrl": "",
-      "baseUrl": "http://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}/",
+      "baseUrl": "${BEMED_PROTOCOL}://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "${KEYCLOAK_CLIENT_SECRET}",
       "redirectUris": [
-        "http://${BEMED_DOMAIN}/*",
+        "${BEMED_PROTOCOL}://${BEMED_DOMAIN}/*",
         "*",
-        "http://*.${BEMED_DOMAIN}/*"
+        "${BEMED_PROTOCOL}://*.${BEMED_DOMAIN}/*"
       ],
       "webOrigins": ["*"],
       "notBefore": 0,
@@ -693,15 +693,15 @@
       "description": "Frontend for BEMED",
       "rootUrl": "",
       "adminUrl": "",
-      "baseUrl": "http://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}/",
+      "baseUrl": "${BEMED_PROTOCOL}://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "http://${BEMED_DOMAIN}/*",
+        "${BEMED_PROTOCOL}://${BEMED_DOMAIN}/*",
         "*",
-        "http://*.${BEMED_DOMAIN}/*"
+        "${BEMED_PROTOCOL}://*.${BEMED_DOMAIN}/*"
       ],
       "webOrigins": ["*"],
       "notBefore": 0,
