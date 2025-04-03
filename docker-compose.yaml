@@ -35,7 +35,7 @@ services:
     container_name: keycloak
     env_file: .env
     restart: unless-stopped
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:26.1
     command:
       - "start-dev"
       - "--import-realm"
@@ -73,7 +73,7 @@ services:
     container_name: database
     env_file: .env
     restart: unless-stopped
-    image: mariadb:latest
+    image: mariadb:11.7.2
     environment:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     ports:
