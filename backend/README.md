@@ -18,7 +18,7 @@ questions["Questions"] {
     string question
     string type "text, number, date, etc."
     boolean required
-    string default
+    string def "default"
     string options "comma separated values"
     string unit
 }

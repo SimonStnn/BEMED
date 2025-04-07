@@ -6,7 +6,7 @@ type Question = {
   description: string;
   type: string;
   required: boolean;
-  default: string;
+  def: string;
   options: string;
 };
 
