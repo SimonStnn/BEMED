@@ -1,5 +1,4 @@
-export const table = "questoins";
-
+export const table = "products";
 type Product = {
   id: number;
   name: string;
