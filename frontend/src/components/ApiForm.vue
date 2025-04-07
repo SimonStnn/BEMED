@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { ref, type PropType } from 'vue';
-import { getAPIUrl } from '@/utils';
+import { sendRequest, type Method } from '@/apiController';
 import { useAuthStore } from '@/stores/auth';
-
-type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 const props = defineProps({
   action: {
@@ -19,9 +17,8 @@ const props = defineProps({
     default: () => { },
   },
 });
-const authStore = useAuthStore();
 
-function sendRequest(event: SubmitEvent) {
+function submitForm(event: SubmitEvent) {
   event.preventDefault();
 
   const form = event.target;
@@ -34,37 +31,20 @@ function sendRequest(event: SubmitEvent) {
     data[key] = value;
   });
 
-  console.log("data:", data);
 
-  let url = getAPIUrl(props.action);
-  let options: RequestInit = {
+  sendRequest({
+    path: props.action,
     method: props.method,
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": `Bearer ${authStore.token}`, // Retrieve token from cookies
-    },
-  };
-
-  // Add query parameters to the URL if the method is GET else add the data to the body
-  if (props.method === "GET") {
-    const queryParams = new URLSearchParams(data).toString();
-    url += `?${queryParams}`;
-  } else {
-    options.body = JSON.stringify(data);
-  }
-
-  fetch(url, options)
-    .then(response => response.json())
-    .then(props.onSuccess)
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    body: data,
+  }).then(props.onSuccess).catch((error) => {
+    console.error('Error submitting form:', error);
+    // TODO: Handle error (e.g., show a notification)
+  });
 }
 </script>
 
 <template>
-  <v-form @submit="sendRequest">
+  <v-form @submit="submitForm">
     <slot></slot>
   </v-form>
 </template>
