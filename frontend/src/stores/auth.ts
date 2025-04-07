@@ -16,6 +16,19 @@ const keycloak = new Keycloak({
   clientId: KEYCLOAK_FRONTEND_CLIENT_ID,
 });
 
+keycloak.onTokenExpired = () => {
+  keycloak
+    .updateToken()
+    .then(function (refreshed) {
+      if (refreshed) {
+        console.debug("Token was successfully refreshed");
+      }
+    })
+    .catch(function () {
+      console.error("Failed to refresh the token, or the session has expired");
+    });
+};
+
 export const useAuthStore = defineStore("auth", () => {
   const isLoggedIn = ref<boolean | null>(null);
   const userInfo = ref<Keycloak.KeycloakTokenParsed | null>(null);

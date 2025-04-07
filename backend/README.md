@@ -18,7 +18,7 @@ questions["Questions"] {
     string question
     string type "text, number, date, etc."
     boolean required
-    string default
+    string def "default"
     string options "comma separated values"
     string unit
 }
@@ -56,8 +56,8 @@ assessments["Assessments"] {
 questions ||--o{ answer : "has"
 treatments ||-- |{ answer : "contains"
 users ||--o{ treatments : "has"
-users ||--o{ assesments : "makes"
+users ||--o{ assessments : "makes"
 products ||--o{ alternatives : "has"
-assesments }o--|| products : "is for"
+assessments }o--|| products : "is for"
 
 ```
