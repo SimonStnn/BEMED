@@ -27,15 +27,9 @@ export async function sendRequest(props: {
     options.body = JSON.stringify(props.body);
   }
 
-  try {
-    const res = await fetch(url, options);
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Error response:", errorText);
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    return res;
-  } catch (error) {
-    console.error("Error:", error);
+  const res = await fetch(url, options);
+  if (!res.ok) {
+    throw new Error(`HTTP: ${res.status}`);
   }
+  return res;
 }
