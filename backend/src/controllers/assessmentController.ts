@@ -54,25 +54,38 @@ class AssessmentController {
   }
 
   public static async update(
-    assessment: Partial<AssessmentSchema> & { id: number }
+    assessment: Pick<AssessmentSchema, "id"> &
+      Partial<Pick<AssessmentSchema, "ppm">>
   ): Promise<Assessment[]> {
-    const query = `UPDATE ${table} SET ? WHERE id = ?;`;
-    const values = [assessment, assessment.id];
+    const updateValues = Object.keys(assessment)
+      .filter((key) => key !== ("id" as keyof AssessmentSchema["id"]))
+      .filter(
+        (key) => assessment[key as keyof typeof assessment] !== undefined
+      );
 
-    console.debug("Updating assessment with values:", query, values);
-    const result = (await db.execute(query, values))[0] as ResultSetHeader;
+    const keys = updateValues.map((key) => {
+      return `${key} = ?`;
+    });
+    const query = `UPDATE ${table} SET ${keys.join(", ")} WHERE id = ?;`;
+
+    const result = (
+      await db.execute(query, [...updateValues, assessment.id])
+    )[0] as ResultSetHeader;
 
     return await this.get({ id: assessment.id });
   }
 
-  public static async delete(id: number): Promise<Assessment[]> {
+  public static async delete(id: Assessment["id"]): Promise<Assessment[]> {
+    const predelete = await this.get({ id });
+
     const query = `DELETE FROM ${table} WHERE id = ?;`;
-    const values = [id];
+    const result = (await db.execute(query, [id]))[0] as ResultSetHeader;
 
-    console.debug("Deleting assessment with values:", query, values);
-    const result = (await db.execute(query, values))[0] as ResultSetHeader;
+    if (result.affectedRows === 0) {
+      throw new Error("404");
+    }
 
-    return await this.get({ id });
+    return predelete;
   }
 }
 

@@ -31,8 +31,17 @@ router.post("/", async (req: Request, res: Response) => {
   );
 });
 
-router.put("/", (req: Request, res: Response) => {});
+router.put("/", async (req: Request, res: Response) => {
+  res.status(200).json(
+    await AssessmentController.update({
+      id: Number(req.body.id),
+      ppm: Number(req.body.ppm),
+    })
+  );
+});
 
-router.delete("/", (req: Request, res: Response) => {});
+router.delete("/", async (req: Request, res: Response) => {
+  res.status(200).json(await AssessmentController.delete(Number(req.body.id)));
+});
 
 export default router;
