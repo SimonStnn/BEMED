@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import surveyRouter from "@/routes/survey";
-import productRouter from "@/routes/products";
+import productRouter from "@/routes/product";
 
 const router = Router();
 
