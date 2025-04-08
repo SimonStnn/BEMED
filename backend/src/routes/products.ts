@@ -53,4 +53,26 @@ router.delete("/", async (req: Request, res: Response) => {
   }
 });
 
+router.post("/alternative", async (req: Request, res: Response) => {
+  res
+    .status(201)
+    .json(
+      await ProductController.createAlternative(
+        req.body.productId,
+        req.body.alternativeId
+      )
+    );
+});
+
+router.delete("/alternative", async (req: Request, res: Response) => {
+  res
+    .status(200)
+    .json(
+      await ProductController.deleteAlternative(
+        req.body.productId,
+        req.body.alternativeId
+      )
+    );
+});
+
 export default router;

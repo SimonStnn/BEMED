@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 
 const queriesPath = path.resolve(__dirname, "..", "db", "queries");
+const alternativesTable = "alternatives";
 
 type Product = ProductSchema & {
   alternatives: ProductSchema[];
@@ -85,12 +86,33 @@ class ProductController {
     const query = `DELETE FROM ${table} WHERE id = ?;`;
     const result = (await db.execute(query, [id]))[0] as ResultSetHeader;
 
-    
     if (result.affectedRows === 0) {
       throw new Error("404");
     }
 
     return predelete;
+  }
+
+  public static async createAlternative(
+    productId: Product["id"],
+    alternativeId: Product["id"]
+  ): Promise<Product[]> {
+    const query = `INSERT INTO ${alternativesTable} (productId, alternativeId) VALUES (?, ?);`;
+    const values = [productId, alternativeId];
+    const result = (await db.execute(query, values))[0] as ResultSetHeader;
+
+    return await this.get(productId);
+  }
+
+  public static async deleteAlternative(
+    productId: Product["id"],
+    alternativeId: Product["id"]
+  ): Promise<Product[]> {
+    const query = `DELETE FROM ${alternativesTable} WHERE productId = ? AND alternativeId = ?;`;
+    const values = [productId, alternativeId];
+    const result = (await db.execute(query, values))[0] as ResultSetHeader;
+
+    return await this.get(values[0]);
   }
 }
 
