@@ -1,7 +1,7 @@
 import { Request, Router, type Response } from "express";
 
 import db from "@/db"
-import keycloak from "@/middleware/keycloak";
+// import keycloak from "@/middleware/keycloak";
 
 const router = Router();
 // router.use(keycloak.protect());
