@@ -4,6 +4,7 @@ import session from "express-session";
 
 import keycloak, { memoryStore } from "@/middleware/keycloak";
 import logMiddleware from "@/middleware/log";
+import error_handler from "@/middleware/error_handler";
 import { EnvVariable } from "@/utils";
 
 const { KEYCLOAK_CLIENT_SECRET } = process.env as Record<EnvVariable, string>;
@@ -11,6 +12,7 @@ const { KEYCLOAK_CLIENT_SECRET } = process.env as Record<EnvVariable, string>;
 export function setupMiddleware(app: Express) {
   console.debug("Setting up middleware...");
 
+  app.use(error_handler);
   // Log each request
   app.use(logMiddleware);
 
