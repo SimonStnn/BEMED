@@ -1,11 +1,12 @@
-import { ResultSetHeader } from "mysql2";
-import ProductSchema, { table } from "@/schemas/product";
-import db from "@/db";
-import path from "path";
 import fs from "fs";
+import path from "path";
+import { ResultSetHeader } from "mysql2";
+
+import ProductSchema, { table } from "@/schemas/product";
+import { table as alternativesTable } from "@/schemas/alternative";
+import db from "@/db";
 
 const queriesPath = path.resolve(__dirname, "..", "db", "queries");
-const alternativesTable = "alternatives";
 
 type Product = ProductSchema & {
   alternatives: ProductSchema[];
@@ -23,9 +24,9 @@ class ProductController {
       product.weight,
       product.EF,
     ];
-    const [result, _] = await db.execute(query, values);
+    const result = (await db.execute(query, values))[0] as ResultSetHeader;
 
-    return await this.get((result as any).insertId);
+    return await this.get(result.insertId);
   }
 
   public static async get(
@@ -38,7 +39,7 @@ class ProductController {
     const bindParam = filter ? [filter] : [];
 
     // Replace ";" with " " to avoid SQL syntax error
-    query = query.replace(/;/g, " ");
+    query = query.replace(/;(?=\s*$)/g, " ");
     if (!filter) {
       query = query.replace(/WHERE p.id = \?/g, " ");
     }
