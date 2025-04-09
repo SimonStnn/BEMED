@@ -24,7 +24,7 @@ CREATE TABLE answers (
     treatmentId INT NOT NULL,
     answer VARCHAR(255) NOT NULL,
     FOREIGN KEY (questionId) REFERENCES questions (id),
-    FOREIGN KEY (treatmentId) REFERENCES treatments (id)
+    FOREIGN KEY (treatmentId) REFERENCES treatments (id) ON DELETE CASCADE
 );
 -- Products Table
 CREATE TABLE products (
