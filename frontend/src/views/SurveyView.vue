@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { sendRequest } from '@/apiController';
 import ApiForm from '@/components/ApiForm.vue';
 import { ref } from 'vue';
 
@@ -25,6 +26,25 @@ function onSuccess(data: any) {
 
 <template>
   <v-card class="survey-card">
+    <v-btn color="primary" @click="sendRequest({
+        path: '/treatment',
+        method: 'DELETE',
+        body: {
+          id: 9,
+          
+          answers: [
+            {questionId: 1, answer: 'Yes'},
+            {questionId: 2, answer: 'No'},
+            {questionId: 3, answer: 'Yes'},
+            {questionId: 4, answer: 'No'},
+            {questionId: 5, answer: 10},
+            {questionId: 6, answer: 5},
+            {questionId: 7, answer: 15}
+          ]
+        }, 
+      }).then(res=>res.json()).then(console.log)">
+      CLick me
+    </v-btn>
     <v-card-title>
       <span class="headline">Survey Page</span>
     </v-card-title>

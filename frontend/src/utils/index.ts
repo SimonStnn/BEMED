@@ -39,6 +39,6 @@ export const url = {
     `${BEMED_PROTOCOL}://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`
   ),
   backend: new URL(
-    `${BEMED_PROTOCOL}://${DNS_PREFIX_BEMED_BACKEND}.${BEMED_DOMAIN}`
+    `${BEMED_PROTOCOL}://${BEMED_DOMAIN}:3000`
   ),
 } as const;

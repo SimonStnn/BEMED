@@ -33,8 +33,15 @@ router.post("/", async (req: Request, res: Response) => {
   );
 });
 
-router.put("/", (req: Request, res: Response) => {});
-
-router.delete("/", (req: Request, res: Response) => {});
+router.delete("/", async (req: Request, res: Response) => {
+  res
+    .status(200)
+    .json(
+      await TreatmentController.delete(
+        (req as any).kauth?.grant.access_token.content.sub,
+        Number(req.body.id)
+      )
+    );
+});
 
 export default router;

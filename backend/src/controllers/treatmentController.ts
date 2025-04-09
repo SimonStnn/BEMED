@@ -14,7 +14,7 @@ class ProductController {
   public static async create(
     userId: TreatmentSchema["userId"],
     answers: Pick<AnswerSchema, "questionId" | "answer">[]
-  ) {
+  ): Promise<Treatment[]> {
     const connection = await db.getConnection();
 
     try {
@@ -83,6 +83,35 @@ class ProductController {
     }
 
     return result as any satisfies Treatment;
+  }
+
+  public static async delete(
+    userId: TreatmentSchema["userId"],
+    id: TreatmentSchema["id"]
+  ): Promise<Treatment[]> {
+    const predelete = await this.get({ userId, id });
+    const connection = await db.getConnection();
+
+    try {
+      await connection.beginTransaction();
+
+      const [treatmentResult] = await connection.execute<ResultSetHeader>(
+        "DELETE FROM treatments WHERE userId = ? AND id = ?",
+        [userId, id]
+      );
+
+      if (treatmentResult.affectedRows === 0) {
+        throw new Error("No treatment found to delete.");
+      }
+
+      await connection.commit();
+      return predelete;
+    } catch (error) {
+      await connection.rollback();
+      throw new Error(`Transaction failed. ${error}`);
+    } finally {
+      connection.release();
+    }
   }
 }
 
