@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { ResultSetHeader } from "mysql2/promise";
+import { ResultSetHeader, RowDataPacket } from "mysql2/promise";
 
 import AssessmentSchema, { table } from "@/schemas/assessment";
 import db from "@/db";
@@ -16,8 +16,7 @@ class AssessmentController {
     const query = `INSERT INTO ${table} (userId, productId, ppm) VALUES (?, ?, ?);`;
     const values = [assessment.userId, assessment.productId, assessment.ppm];
 
-    console.debug("Creating assessment with values:", query, values);
-    const result = (await db.execute(query, values))[0] as ResultSetHeader;
+    const [result] = await db.execute<ResultSetHeader>(query, values);
 
     return await this.get({ id: result.insertId });
   }
@@ -48,7 +47,11 @@ class AssessmentController {
       for (const clause of whereClauses)
         bindParam.push(filter[clause as keyof typeof filter]);
 
-    const [result, _] = await db.execute(query, [...bindParam, limit, skip]);
+    const [result, _] = await db.execute<RowDataPacket[]>(query, [
+      ...bindParam,
+      limit,
+      skip,
+    ]);
 
     return result as any satisfies Assessment[];
   }
@@ -68,9 +71,10 @@ class AssessmentController {
     });
     const query = `UPDATE ${table} SET ${keys.join(", ")} WHERE id = ?;`;
 
-    const result = (
-      await db.execute(query, [...updateValues, assessment.id])
-    )[0] as ResultSetHeader;
+    const [result] = await db.execute<ResultSetHeader>(query, [
+      ...updateValues,
+      assessment.id,
+    ]);
 
     return await this.get({ id: assessment.id });
   }
@@ -79,7 +83,7 @@ class AssessmentController {
     const predelete = await this.get({ id });
 
     const query = `DELETE FROM ${table} WHERE id = ?;`;
-    const result = (await db.execute(query, [id]))[0] as ResultSetHeader;
+    const [result] = await db.execute<ResultSetHeader>(query, [id]);
 
     if (result.affectedRows === 0) {
       throw new Error("404");

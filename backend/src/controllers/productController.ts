@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { ResultSetHeader } from "mysql2";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 import ProductSchema, { table } from "@/schemas/product";
 import { table as alternativesTable } from "@/schemas/alternative";
@@ -24,7 +24,7 @@ class ProductController {
       product.weight,
       product.EF,
     ];
-    const result = (await db.execute(query, values))[0] as ResultSetHeader;
+    const [result] = await db.execute<ResultSetHeader>(query, values);
 
     return await this.get(result.insertId);
   }
@@ -45,9 +45,13 @@ class ProductController {
     }
     query += ` LIMIT ? OFFSET ?;`;
 
-    const [result, _] = await db.execute(query, [...bindParam, limit, skip]);
+    const [result, _] = await db.execute<RowDataPacket[]>(query, [
+      ...bindParam,
+      limit,
+      skip,
+    ]);
 
-    for (let row of result as (Product & { alternatives: any })[]) {
+    for (let row of result) {
       row.alternatives = JSON.parse(
         row.alternatives
       ) as Partial<ProductSchema>[];
@@ -74,10 +78,10 @@ class ProductController {
     });
     const query = `UPDATE ${table} SET ${keys.join(", ")} WHERE id = ?;`;
 
-    const result = (
-      await db.execute(query, [...updateValues, product.id])
-    )[0] as ResultSetHeader;
-
+    const result = await db.execute<ResultSetHeader>(query, [
+      ...updateValues,
+      product.id,
+    ]);
     return await this.get(product.id);
   }
 
@@ -85,7 +89,7 @@ class ProductController {
     const predelete = await this.get(id);
 
     const query = `DELETE FROM ${table} WHERE id = ?;`;
-    const result = (await db.execute(query, [id]))[0] as ResultSetHeader;
+    const [result] = await db.execute<ResultSetHeader>(query, [id]);
 
     if (result.affectedRows === 0) {
       throw new Error("404");
@@ -100,7 +104,7 @@ class ProductController {
   ): Promise<Product[]> {
     const query = `INSERT INTO ${alternativesTable} (productId, alternativeId) VALUES (?, ?);`;
     const values = [productId, alternativeId];
-    const result = (await db.execute(query, values))[0] as ResultSetHeader;
+    const [result] = await db.execute<ResultSetHeader>(query, values);
 
     return await this.get(productId);
   }
@@ -111,7 +115,7 @@ class ProductController {
   ): Promise<Product[]> {
     const query = `DELETE FROM ${alternativesTable} WHERE productId = ? AND alternativeId = ?;`;
     const values = [productId, alternativeId];
-    const result = (await db.execute(query, values))[0] as ResultSetHeader;
+    const [result] = await db.execute<ResultSetHeader>(query, values);
 
     return await this.get(values[0]);
   }
