@@ -53,6 +53,8 @@ class AssessmentController {
       skip,
     ]);
 
+    for (const row of result) row.product = JSON.parse(row.product as string);
+
     return result as any satisfies Assessment[];
   }
 

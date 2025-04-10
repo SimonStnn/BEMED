@@ -4,10 +4,19 @@ SELECT a.id,
     a.ppm,
     a.createdAt,
     a.updatedAt,
-    p.name AS productName,
-    p.description AS productDescription,
-    p.price AS productPrice,
-    p.weight AS productWeight,
-    p.EF AS productEF
+    JSON_OBJECT(
+        'id',
+        p.id,
+        'name',
+        p.name,
+        'description',
+        p.description,
+        'price',
+        p.price,
+        'weight',
+        p.weight,
+        'EF',
+        p.EF
+    ) AS product
 FROM assessments a
     JOIN products p ON a.productId = p.id;
