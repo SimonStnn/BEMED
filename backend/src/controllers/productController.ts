@@ -15,7 +15,7 @@ type Product = ProductSchema & {
 class ProductController {
   public static async create(
     product: Omit<ProductSchema, "id">
-  ): Promise<Product[]> {
+  ): Promise<Product> {
     const query = `INSERT INTO ${table} (name, description, price, weight, EF) VALUES (?, ?, ?, ?, ?);`;
     const values = [
       product.name,
@@ -26,7 +26,7 @@ class ProductController {
     ];
     const [result] = await db.execute<ResultSetHeader>(query, values);
 
-    return await this.get(result.insertId);
+    return (await this.get(result.insertId))[0];
   }
 
   public static async get(
@@ -68,7 +68,7 @@ class ProductController {
 
   public static async update(
     product: Partial<ProductSchema> & { id: ProductSchema["id"] }
-  ): Promise<Product[]> {
+  ): Promise<Product> {
     const updateValues = Object.keys(product)
       .filter((key) => key !== ("id" as keyof ProductSchema["id"]))
       .filter((key) => product[key as keyof typeof product] !== undefined);
@@ -82,11 +82,11 @@ class ProductController {
       ...updateValues,
       product.id,
     ]);
-    return await this.get(product.id);
+    return (await this.get(product.id))[0];
   }
 
-  public static async delete(id: ProductSchema["id"]): Promise<Product[]> {
-    const predelete = await this.get(id);
+  public static async delete(id: ProductSchema["id"]): Promise<Product> {
+    const predelete = (await this.get(id))[0];
 
     const query = `DELETE FROM ${table} WHERE id = ?;`;
     const [result] = await db.execute<ResultSetHeader>(query, [id]);
@@ -101,23 +101,23 @@ class ProductController {
   public static async createAlternative(
     productId: Product["id"],
     alternativeId: Product["id"]
-  ): Promise<Product[]> {
+  ): Promise<Product> {
     const query = `INSERT INTO ${alternativesTable} (productId, alternativeId) VALUES (?, ?);`;
     const values = [productId, alternativeId];
     const [result] = await db.execute<ResultSetHeader>(query, values);
 
-    return await this.get(productId);
+    return (await this.get(productId))[0];
   }
 
   public static async deleteAlternative(
     productId: Product["id"],
     alternativeId: Product["id"]
-  ): Promise<Product[]> {
+  ): Promise<Product> {
     const query = `DELETE FROM ${alternativesTable} WHERE productId = ? AND alternativeId = ?;`;
     const values = [productId, alternativeId];
     const [result] = await db.execute<ResultSetHeader>(query, values);
 
-    return await this.get(values[0]);
+    return (await this.get(values[0]))[0];
   }
 }
 

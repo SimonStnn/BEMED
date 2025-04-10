@@ -228,6 +228,10 @@ paths:
       responses:
         "201":
           description: Alternative added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
     delete:
       summary: Remove a product alternative
       security:
@@ -246,6 +250,10 @@ paths:
       responses:
         "200":
           description: Alternative removed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
   /treatment:
     get:
       summary: Get treatments
@@ -341,13 +349,15 @@ components:
           type: integer
         ppm:
           type: integer
+        product:
+          $ref: "#/components/schemas/BareProduct"
         createdAt:
           type: string
           format: date-time
         updatedAt:
           type: string
           format: date-time
-    Product:
+    BareProduct:
       type: object
       properties:
         id:
@@ -362,6 +372,14 @@ components:
           type: number
         EF:
           type: number
+    Product:
+      allOf:
+        - $ref: "#/components/schemas/BareProduct"
+        - properties:
+            alternatives:
+              type: array
+              items:
+                $ref: "#/components/schemas/BareProduct"
     Treatment:
       type: object
       properties:

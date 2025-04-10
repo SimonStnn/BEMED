@@ -3,22 +3,25 @@ import path from "path";
 import { ResultSetHeader, RowDataPacket } from "mysql2/promise";
 
 import AssessmentSchema, { table } from "@/schemas/assessment";
+import ProductSchema from "@/schemas/product";
 import db from "@/db";
 
 const queriesPath = path.resolve(__dirname, "..", "db", "queries");
 
-type Assessment = AssessmentSchema;
+type Assessment = AssessmentSchema & {
+  product: ProductSchema;
+};
 
 class AssessmentController {
   public static async create(
     assessment: Omit<AssessmentSchema, "id" | "createdAt" | "updatedAt">
-  ): Promise<Assessment[]> {
+  ): Promise<Assessment> {
     const query = `INSERT INTO ${table} (userId, productId, ppm) VALUES (?, ?, ?);`;
     const values = [assessment.userId, assessment.productId, assessment.ppm];
 
     const [result] = await db.execute<ResultSetHeader>(query, values);
 
-    return await this.get({ id: result.insertId });
+    return (await this.get({ id: result.insertId }))[0];
   }
 
   public static async get(
@@ -61,7 +64,7 @@ class AssessmentController {
   public static async update(
     assessment: Pick<AssessmentSchema, "id"> &
       Partial<Pick<AssessmentSchema, "ppm">>
-  ): Promise<Assessment[]> {
+  ): Promise<Assessment> {
     const updateValues = Object.keys(assessment)
       .filter((key) => key !== ("id" as keyof AssessmentSchema["id"]))
       .filter(
@@ -78,11 +81,11 @@ class AssessmentController {
       assessment.id,
     ]);
 
-    return await this.get({ id: assessment.id });
+    return (await this.get({ id: assessment.id }))[0];
   }
 
-  public static async delete(id: Assessment["id"]): Promise<Assessment[]> {
-    const predelete = await this.get({ id });
+  public static async delete(id: Assessment["id"]): Promise<Assessment > {
+    const predelete = (await this.get({ id }))[0];
 
     const query = `DELETE FROM ${table} WHERE id = ?;`;
     const [result] = await db.execute<ResultSetHeader>(query, [id]);

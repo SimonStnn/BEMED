@@ -14,7 +14,7 @@ class ProductController {
   public static async create(
     userId: TreatmentSchema["userId"],
     answers: Pick<AnswerSchema, "questionId" | "answer">[]
-  ): Promise<Treatment[]> {
+  ): Promise<Treatment> {
     const connection = await db.getConnection();
 
     try {
@@ -35,7 +35,7 @@ class ProductController {
       }
 
       await connection.commit();
-      return await this.get({ userId, id: treatmentId });
+      return (await this.get({ userId, id: treatmentId }))[0];
     } catch (error) {
       await connection.rollback();
       throw new Error(`Transaction failed. ${error}`);
@@ -88,8 +88,8 @@ class ProductController {
   public static async delete(
     userId: TreatmentSchema["userId"],
     id: TreatmentSchema["id"]
-  ): Promise<Treatment[]> {
-    const predelete = await this.get({ userId, id });
+  ): Promise<Treatment> {
+    const predelete = (await this.get({ userId, id }))[0];
     const connection = await db.getConnection();
 
     try {
