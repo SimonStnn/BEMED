@@ -1,0 +1,386 @@
+openapi: 3.0.0
+info:
+  title: BEMED API
+  description: API documentation for the BEMED backend.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+paths:
+  /assessment:
+    get:
+      summary: Get assessments
+      security:
+        - keycloakAuth: []
+      parameters:
+        - name: productId
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Assessment"
+    post:
+      summary: Create an assessment
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                ppm:
+                  type: integer
+      responses:
+        "201":
+          description: Assessment created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Assessment"
+    put:
+      summary: Update an assessment
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                ppm:
+                  type: integer
+      responses:
+        "200":
+          description: Assessment updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Assessment"
+    delete:
+      summary: Delete an assessment
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+      responses:
+        "200":
+          description: Assessment deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Assessment"
+  /product:
+    get:
+      summary: Get products
+      security:
+        - keycloakAuth: []
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+    post:
+      summary: Create a product
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                weight:
+                  type: number
+                EF:
+                  type: number
+      responses:
+        "201":
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+    put:
+      summary: Update a product
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                weight:
+                  type: number
+                EF:
+                  type: number
+      responses:
+        "200":
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+    delete:
+      summary: Delete a product
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+      responses:
+        "200":
+          description: Product deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+  /product/alternative:
+    post:
+      summary: Add a product alternative
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                alternativeId:
+                  type: integer
+      responses:
+        "201":
+          description: Alternative added
+    delete:
+      summary: Remove a product alternative
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                alternativeId:
+                  type: integer
+      responses:
+        "200":
+          description: Alternative removed
+  /treatment:
+    get:
+      summary: Get treatments
+      security:
+        - keycloakAuth: []
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Treatment"
+    post:
+      summary: Create a treatment
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                answers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      questionId:
+                        type: integer
+                      answer:
+                        type: string
+      responses:
+        "201":
+          description: Treatment created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Treatment"
+    delete:
+      summary: Delete a treatment
+      security:
+        - keycloakAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+      responses:
+        "200":
+          description: Treatment deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Treatment"
+components:
+  securitySchemes:
+    keycloakAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Assessment:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: string
+        productId:
+          type: integer
+        ppm:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        weight:
+          type: number
+        EF:
+          type: number
+    Treatment:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        answers:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: integer
+              answer:
+                type: string
