@@ -14,8 +14,8 @@ router.get("/", async (req: Request, res: Response) => {
           ? Number(req.query.productId)
           : undefined,
       },
-      req.query.skip as any,
-      req.query.limit as any
+      req.query.skip ? Number(req.query.skip) : undefined,
+      req.query.limit ? Number(req.query.limit) : undefined
     )
   );
 });
