@@ -1,8 +1,9 @@
 import express from "express";
+import "express-async-errors";
 
 import { url } from "@/utils"; // Utils needs to be imported first
 import rootRouter from "@/routes";
-import { setupMiddleware } from "./middleware";
+import { setupMiddleware } from "@/middleware";
 import keycloak from "@/middleware/keycloak";
 
 const PORT = process.env.BEMED_API_PORT || 3000;
