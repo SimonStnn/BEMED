@@ -6,12 +6,21 @@ info:
 servers:
   - url: http://localhost:3000
     description: Local development server
+tags:
+  - name: Assessments
+    description: Operations related to assessments
+  - name: Products
+    description: Operations related to products
+  - name: Treatments
+    description: Operations related to treatments
 paths:
   /assessment:
     get:
       summary: Get assessments
       security:
         - keycloakAuth: []
+      tags:
+        - Assessments
       parameters:
         - name: productId
           in: query
@@ -41,6 +50,8 @@ paths:
       summary: Create an assessment
       security:
         - keycloakAuth: []
+      tags:
+        - Assessments
       requestBody:
         required: true
         content:
@@ -63,6 +74,8 @@ paths:
       summary: Update an assessment
       security:
         - keycloakAuth: []
+      tags:
+        - Assessments
       requestBody:
         required: true
         content:
@@ -85,6 +98,8 @@ paths:
       summary: Delete an assessment
       security:
         - keycloakAuth: []
+      tags:
+        - Assessments
       requestBody:
         required: true
         content:
@@ -106,6 +121,8 @@ paths:
       summary: Get products
       security:
         - keycloakAuth: []
+      tags:
+        - Products
       parameters:
         - name: id
           in: query
@@ -135,6 +152,8 @@ paths:
       summary: Create a product
       security:
         - keycloakAuth: []
+      tags:
+        - Products
       requestBody:
         required: true
         content:
@@ -163,6 +182,8 @@ paths:
       summary: Update a product
       security:
         - keycloakAuth: []
+      tags:
+        - Products
       requestBody:
         required: true
         content:
@@ -193,6 +214,8 @@ paths:
       summary: Delete a product
       security:
         - keycloakAuth: []
+      tags:
+        - Products
       requestBody:
         required: true
         content:
@@ -214,6 +237,8 @@ paths:
       summary: Add a product alternative
       security:
         - keycloakAuth: []
+      tags:
+        - Products
       requestBody:
         required: true
         content:
@@ -236,6 +261,8 @@ paths:
       summary: Remove a product alternative
       security:
         - keycloakAuth: []
+      tags:
+        - Products
       requestBody:
         required: true
         content:
@@ -259,6 +286,8 @@ paths:
       summary: Get treatments
       security:
         - keycloakAuth: []
+      tags:
+        - Treatments
       parameters:
         - name: id
           in: query
@@ -288,6 +317,8 @@ paths:
       summary: Create a treatment
       security:
         - keycloakAuth: []
+      tags:
+        - Treatments
       requestBody:
         required: true
         content:
@@ -315,6 +346,8 @@ paths:
       summary: Delete a treatment
       security:
         - keycloakAuth: []
+      tags:
+        - Treatments
       requestBody:
         required: true
         content:
