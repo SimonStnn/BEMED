@@ -1,45 +1,52 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { sendRequest } from '@/apiController';
-import type Product from '@/schemas/product';
+import ProductCard, { type Product } from '@/components/ProductCard.vue';
 
 const route = useRoute();
-const product = ref<Product | null>(null);
+const productId = ref(route.query.id);
+const productDetails = ref<Product | null>(null);
 
-onMounted(async () => {
-  console.log(route)
-  const productId = route.params.id;
-  if (productId) {
+const fetchProductDetails = async (id: string | null) => {
+  if (id) {
     try {
       const res = await sendRequest({
         path: `/product`,
         method: 'GET',
         body: {
-          id: productId,
+          id: id,
         }
       });
       if (!res.ok)
         throw new Error(`HTTP error! status: ${res.status}`);
       const response = await res.json();
-      product.value = response[0];
+      productDetails.value = response[0];
+      console.log('Product details:', productDetails.value);
     } catch (error) {
       console.error('Failed to fetch product details:', error);
     }
   }
+};
+
+watch(() => route.query.id, (newId) => {
+  productId.value = newId;
+  fetchProductDetails(newId as string);
+});
+
+onMounted(() => {
+  fetchProductDetails(productId.value as string);
 });
 </script>
 
 <template>
-  <h1>Product Details</h1>
-  <v-row v-if="!product" justify="center" align="center" style="flex-direction: column;">
-    <v-progress-circular indeterminate color="primary" />
-    <p>Loading...</p>
-  </v-row>
-  <v-card v-else>
-    <v-card-title>{{ product.name }}</v-card-title>
-    <v-card-subtitle>
-      {{ product.description }}
-    </v-card-subtitle>
-  </v-card>
+  <div>
+    <h1>Product Details</h1>
+    <v-row v-if="!productDetails" justify="center" align="center" style="flex-direction: column;">
+      <v-progress-circular indeterminate color="primary" />
+      <p>Loading...</p>
+    </v-row>
+    <product-card v-else :product="productDetails"
+      :go-back="() => { $router.push({ name: 'products' }).catch(err => console.error(err)); }" />
+  </div>
 </template>

@@ -25,19 +25,14 @@ const router = createRouter({
     },
     {
       path: "/products",
-      children: [
-        {
-          path: "",
-          name: "products",
-          component: ProductsView,
-        },
-        {
-          path: ":id",
-          name: "product-details",
-          component: ProductDetailsView,
-          props: true,
-        },
-      ],
+      name: "products",
+      component: ProductsView,
+    },
+
+    {
+      path: "/product",
+      name: "product-details",
+      component: ProductDetailsView,
     },
   ],
 });

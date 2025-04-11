@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import { sendRequest } from '@/apiController';
-import type Product from '@/schemas/product';
+import ProductCard, { type Product } from '@/components/ProductCard.vue';
 
 const products = ref<Product[]>([]);
 
@@ -40,11 +40,20 @@ onMounted(async () => {
           <td>{{ product.weight }}</td>
           <td>{{ product.EF }}</td>
           <td>
-            <router-link :to="`/products/${product.id}`">View Details</router-link>
+            <v-dialog max-width="500">
+              <template v-slot:activator="{ props: activatorProps }">
+                <v-btn v-bind="activatorProps" text="View Details" variant="tonal" color="secondary"></v-btn>
+              </template>
+
+              <template v-slot:default="{ isActive }">
+                <ProductCard :product="product" :go-back="() => { isActive.value = false }" />
+              </template>
+            </v-dialog>
           </td>
         </tr>
       </tbody>
     </v-table>
+
 
   </div>
 </template>

@@ -23,6 +23,11 @@ const items: { title: string, url: string, icon: string }[] = [
     url: '/alternatives',
     icon: 'mdi-clipboard-text',
   },
+  {
+    title: "products",
+    url: '/products',
+    icon: 'mdi-sitemap-outline',
+  }
 ]
 
 const drawer = ref(false)
@@ -35,62 +40,60 @@ watch(group, () => {
 </script>
 
 <template>
-  <v-card>
-    <v-layout>
-      <v-app-bar color="primary">
-        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" :disabled="!authStore.isLoggedIn" />
+  <v-layout style="min-height: 100%;">
+    <v-app-bar color="primary">
+      <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" :disabled="!authStore.isLoggedIn" />
 
-        <img src="@/assets/img/logo.png" alt="logo" class="logo" />
-        <v-toolbar-title class="nav-title"> Zero Waste Montenegro </v-toolbar-title>
+      <img src="@/assets/img/logo.png" alt="logo" class="logo" />
+      <v-toolbar-title class="nav-title"> Zero Waste Montenegro </v-toolbar-title>
 
-        <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
-        <profile-menu :disabled="!authStore.isLoggedIn" />
-      </v-app-bar>
+      <profile-menu :disabled="!authStore.isLoggedIn" />
+    </v-app-bar>
 
-      <v-navigation-drawer v-model="drawer" :location="$vuetify.display.mobile ? 'bottom' : undefined" temporary>
-        <v-list>
-          <RouterLink v-for="item in items" :key="item.url" class="v-list-item router-link" :to="item.url">
-            <v-icon>{{ item.icon }}</v-icon>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </RouterLink>
-        </v-list>
-      </v-navigation-drawer>
-      <v-main>
-        <!-- Login error -->
-        <v-container v-if="authStore.errorCode !== null">
-          <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
-            <v-btn color="primary" :loading="logginInLoader" @click="() => {
-              logginInLoader = true
-              return authStore.logout()
-            }">Logout</v-btn>
-            <p style="margin-top: .5rem;">Something went wrong</p>
-          </v-row>
-        </v-container>
-        <!-- While login is loading -->
-        <v-container v-else-if="authStore.isLoggedIn === null">
-          <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
-            <v-progress-circular indeterminate color="primary" />
-            <p>Logging in...</p>
-          </v-row>
-        </v-container>
-        <!-- If user isn't logged in correctly -->
-        <v-container v-else-if="!authStore.isLoggedIn">
-          <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
-            <v-btn color="primary" :loading="logginInLoader" @click="() => {
-              logginInLoader = true
-              return authStore.login()
-            }">Login</v-btn>
-            <p style="margin-top: .5rem;">Please login to access the content</p>
-          </v-row>
-        </v-container>
-        <!-- If user is logged in; show main content -->
-        <v-container v-else-if="authStore.isLoggedIn">
-          <RouterView />
-        </v-container>
-      </v-main>
-    </v-layout>
-  </v-card>
+    <v-navigation-drawer v-model="drawer" :location="$vuetify.display.mobile ? 'bottom' : undefined" temporary>
+      <v-list>
+        <RouterLink v-for="item in items" :key="item.url" class="v-list-item router-link" :to="item.url">
+          <v-icon>{{ item.icon }}</v-icon>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </RouterLink>
+      </v-list>
+    </v-navigation-drawer>
+    <v-main>
+      <!-- Login error -->
+      <v-container v-if="authStore.errorCode !== null">
+        <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
+          <v-btn color="primary" :loading="logginInLoader" @click="() => {
+            logginInLoader = true
+            return authStore.logout()
+          }">Logout</v-btn>
+          <p style="margin-top: .5rem;">Something went wrong</p>
+        </v-row>
+      </v-container>
+      <!-- While login is loading -->
+      <v-container v-else-if="authStore.isLoggedIn === null">
+        <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
+          <v-progress-circular indeterminate color="primary" />
+          <p>Logging in...</p>
+        </v-row>
+      </v-container>
+      <!-- If user isn't logged in correctly -->
+      <v-container v-else-if="!authStore.isLoggedIn">
+        <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
+          <v-btn color="primary" :loading="logginInLoader" @click="() => {
+            logginInLoader = true
+            return authStore.login()
+          }">Login</v-btn>
+          <p style="margin-top: .5rem;">Please login to access the content</p>
+        </v-row>
+      </v-container>
+      <!-- If user is logged in; show main content -->
+      <v-container v-else-if="authStore.isLoggedIn" style="min-height: 100%;">
+        <RouterView />
+      </v-container>
+    </v-main>
+  </v-layout>
 </template>
 
 <style scoped>
