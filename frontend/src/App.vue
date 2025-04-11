@@ -45,7 +45,7 @@ watch(group, () => {
 
         <v-spacer></v-spacer>
 
-        <profile-menu :disabled="!authStore.isLoggedIn"/>
+        <profile-menu :disabled="!authStore.isLoggedIn" />
       </v-app-bar>
 
       <v-navigation-drawer v-model="drawer" :location="$vuetify.display.mobile ? 'bottom' : undefined" temporary>
@@ -56,7 +56,7 @@ watch(group, () => {
           </RouterLink>
         </v-list>
       </v-navigation-drawer>
-      <v-main style="height: 100dvh;">
+      <v-main>
         <!-- Login error -->
         <v-container v-if="authStore.errorCode !== null">
           <v-row justify="center" align="center" style="height: 100vh; flex-direction: column;">
@@ -85,7 +85,9 @@ watch(group, () => {
           </v-row>
         </v-container>
         <!-- If user is logged in; show main content -->
-        <RouterView v-else-if="authStore.isLoggedIn" />
+        <v-container v-else-if="authStore.isLoggedIn">
+          <RouterView />
+        </v-container>
       </v-main>
     </v-layout>
   </v-card>
@@ -117,5 +119,4 @@ watch(group, () => {
   font-family: 'Dosis', 'Helvetica', 'Arial', 'Lucida', 'sans-serif';
   font-weight: bold;
 }
-
 </style>
