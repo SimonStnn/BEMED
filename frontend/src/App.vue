@@ -49,6 +49,10 @@ watch(group, () => {
 
       <v-spacer></v-spacer>
 
+      <span v-if="authStore.isLoggedIn">
+        {{ authStore.userInfo?.preferred_username }}
+      </span>
+
       <profile-menu :disabled="!authStore.isLoggedIn" />
     </v-app-bar>
 
