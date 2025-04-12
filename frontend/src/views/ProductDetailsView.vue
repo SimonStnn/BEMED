@@ -22,7 +22,6 @@ const fetchProductDetails = async (id: string | null) => {
         throw new Error(`HTTP error! status: ${res.status}`);
       const response = await res.json();
       productDetails.value = response[0];
-      console.log('Product details:', productDetails.value);
     } catch (error) {
       console.error('Failed to fetch product details:', error);
     }
@@ -46,7 +45,7 @@ onMounted(() => {
       <v-progress-circular indeterminate color="primary" />
       <p>Loading...</p>
     </v-row>
-    <product-card v-else :product="productDetails"
+    <product-card v-else :product="productDetails" :key="productDetails.id"
       :go-back="() => { $router.push({ name: 'products' }).catch(err => console.error(err)); }" />
   </div>
 </template>
