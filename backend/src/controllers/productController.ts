@@ -61,8 +61,14 @@ class ProductController {
           return key !== null && key !== undefined;
         })
       );
+      // Round EF, price, and weight to 2 decimal places
+      if (row.EF !== undefined && row.EF !== null)
+        row.EF = parseFloat(row.EF.toFixed(2));
+      if (row.price !== undefined && row.price !== null)
+        row.price = parseFloat(row.price.toFixed(2));
+      if (row.weight !== undefined && row.weight !== null)
+        row.weight = parseFloat(row.weight.toFixed(2));
     }
-
     return result as any satisfies Product;
   }
 
