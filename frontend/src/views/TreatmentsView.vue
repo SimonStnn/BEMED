@@ -34,7 +34,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <v-container>
+  <v-container class="survey-card">
     <h1 class="headline title">Available Products</h1>
     <v-row>
       <v-col
@@ -44,7 +44,7 @@ onMounted(async () => {
         sm="6"
         md="4"
       >
-        <v-card class="survey-card" outlined>
+        <v-card outlined>
           <v-card-title class="question-label">{{ product.name }}</v-card-title>
           <v-card-text>
             <p>{{ product.description }}</p>
@@ -89,20 +89,6 @@ onMounted(async () => {
   font-weight: bold;
   font-size: 20px;
   display: block;
-}
-
-.efi-label {
-  font-size: 0.85em;
-  color: rgb(91, 91, 91);
-}
-
-.efi-explanation {
-  color: #2f5a9a;
-  font-weight: bold;
-}
-
-.EFI {
-  padding-bottom: 20px;
 }
 
 .sub-button {
