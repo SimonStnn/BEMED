@@ -1,9 +1,9 @@
 import { Request, Router, type Response } from "express";
+// import keycloak from "@/middleware/keycloak";
 import AssessmentController from "@/controllers/assessmentController";
-import keycloak from "@/middleware/keycloak";
 
 const router = Router();
-router.use(keycloak.protect());
+// router.use(keycloak.protect());
 
 router.get("/", async (req: Request, res: Response) => {
   res.status(200).json(
