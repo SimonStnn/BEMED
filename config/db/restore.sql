@@ -90,23 +90,23 @@ VALUES --
     -- SUP plastic straws #1
     (
         'SUP straws',
-        'SUP straws',
-        NULL,
-        NULL,
+        'Single use plastic straws',
+        0.15, -- price in euro
+        0.4, -- weight in gram
         NULL
     ),
     (
         'Paper straws',
         'Single use paper straws',
-        NULL,
-        NULL,
+        0.35,
+        0.4,
         6.21
     ),
     (
         'Reusable straws',
-        'Reusable straws',
-        NULL,
-        NULL,
+        'Reusable straws from hard plastic',
+        1.20,
+        5.0, 
         3.24
     ),
     (
@@ -120,29 +120,29 @@ VALUES --
     (
         'SUP cups',
         'SUP cups',
-        NULL,
-        NULL,
+        0.25,
+        0.035, -- weight 35gram
         NULL
     ),
     (
         'Paper cups',
         'Single use paper cups',
-        NULL,
-        NULL,
+        0.35,
+        0.04,
         7.02
     ),
     (
         'Reusable cups',
         'Reusable cups from hard plastic',
-        NULL,
-        NULL,
+        2.00,
+        10.0,
         3.69
     ),
     (
         'Reusable cups',
         'Reusable cups from ceramic, glass or other materials',
-        NULL,
-        NULL,
+        2.50,
+        12.0,
         3.15
     ),
     -- SUP plastic plates #9
