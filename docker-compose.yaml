@@ -26,10 +26,10 @@ services:
     environment:
       - ADMIN_PASSWORD=admin
     ports:
-      - "9000:9000" 
+      - "9000:9000"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro" 
-      - "portainer_data:/data" 
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "portainer_data:/data"
 
   keycloak:
     container_name: keycloak
@@ -49,7 +49,7 @@ services:
       - KC_DB=mariadb
       - KC_DB_URL=jdbc:mariadb://db/${KC_DB_NAME}
       - KC_HOSTNAME=${BEMED_PROTOCOL}://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}/
-      - KC_PROXY_HEADERS=xforwarded 
+      - KC_PROXY_HEADERS=xforwarded
       - KC_HEALTH_ENABLED=true
       - KC_METRICS_ENABLED=true
       - KC_HTTP_ENABLED=true
@@ -153,6 +153,27 @@ services:
       - "traefik.http.routers.root.rule=Host(`${BEMED_DOMAIN}`)"
       - "traefik.http.routers.root.entrypoints=web"
       - "traefik.http.routers.root.service=frontend"
+
+  docs:
+    container_name: docs
+    build:
+      context: ./docs
+    restart: unless-stopped
+    volumes:
+      - ./docs:/docs
+    user: "${UID:-1000}:${GID:-1000}"
+    ports:
+      - "8000:8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.docs.rule=Host(`docs.${BEMED_DOMAIN}`)"
+      - "traefik.http.routers.docs.entrypoints=web"
+      - "traefik.http.services.docs.loadbalancer.server.port=8000"
+    depends_on:
+      - traefik
+    environment:
+      - ENABLE_LIVE_RELOAD=true
+
 volumes:
   database_data:
   portainer_data:

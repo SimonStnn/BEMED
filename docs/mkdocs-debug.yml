@@ -1,0 +1,11 @@
+site_name: BEMED Documentation
+docs_dir: content
+site_dir: site
+
+nav:
+  - Home: REAMDE.md
+  - Backend API: backend-api.md
+  - Frontend: frontend.md
+  - Docker Services: docker-services.md
+
+theme: material
