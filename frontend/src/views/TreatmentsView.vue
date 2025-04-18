@@ -3,9 +3,14 @@ import { ref, onMounted } from 'vue';
 import { sendRequest } from '@/apiController';
 import type Product from '@/schemas/product';
 import type Alternative from '@/schemas/alternative';
+import type Answer from '@/schemas/answer';
+import type Treatment from '@/schemas/treatment';
 
 const products = ref<Product[]>([]);
 const alternatives = ref<Alternative[]>([]);
+const mainProducts = ref<Product[]>([]);
+const alternativeMap = ref<Record<number, Product[]>>({});
+var choose_alternative = "- Choose an alternative:"
 
 onMounted(async () => {
   try {
@@ -15,6 +20,8 @@ onMounted(async () => {
     const response = await res.json();
     products.value = response;
 
+    processAltMapping();
+
   } catch (error) {
     console.error('Failed to fetch products:', error);
   }
@@ -22,37 +29,59 @@ onMounted(async () => {
 
 onMounted(async () => {
   try {
-    const res = await sendRequest({ path: '/alternative', method: 'GET' });
+    const res = await sendRequest({ path: '/product/alternative', method: 'GET' });
     if (!res.ok)
       throw new Error(`HTTP error! status: ${res.status}`);
     const response = await res.json();
     alternatives.value = response;
 
+    processAltMapping();
+
   } catch (error) {
     console.error('Failed to fetch alternatives:', error);
   }
 });
+
+// create a list of the main products and alternatives
+function processAltMapping() {
+  const mainProductIds = new Set(alternatives.value.map(a => a.productId));
+  mainProducts.value = products.value.filter(p => mainProductIds.has(p.id));
+
+  const altMap: Record<number, Product[]> = {};
+  for (const link of alternatives.value) {
+    const mainId = link.productId;
+    // find the alternatives
+    const altProduct = products.value.find(p => p.id === link.alternativeId);
+    if (altProduct) {
+      if (!altMap[mainId]) altMap[mainId] = [];
+      altMap[mainId].push(altProduct);
+    }
+  }
+  alternativeMap.value = altMap;
+}
+
 </script>
 <template>
   <v-container class="survey-card">
-    <h1 class="headline title">Available Products</h1>
+    <h1 class="headline title">Plastic Alternatives survey</h1>
+    <p class="efi-explanation">EFI means Environmental Footprint Index</p>
     <v-row>
-      <v-col
-        v-for="product in products"
+      <v-col v-for="product in products"
         :key="product.id"
-        cols="12"
-        sm="6"
-        md="4"
-      >
-        <v-card outlined>
-          <v-card-title class="question-label">{{ product.name }}</v-card-title>
-          <v-card-text>
-            <p>{{ product.description }}</p>
-            <p>Price: {{ product.price }}</p>
-            <p>Weight: {{ product.weight }} kg</p>
-            <p>EF: {{ product.EF }}</p>
-          </v-card-text>
-        </v-card>
+        cols="12" class="survey-field">
+        <v-card-title class="question-label">
+          {{  product.name + ` ${choose_alternative }` || 'No question found' }}
+        </v-card-title>
+        <v-card-text>
+          <p>Description: {{ product.description }} -  EF: {{ product.EF }}</p>
+          <p>Price: {{ product.price }} - Weight: {{ product.weight }} kg</p>
+          <div v-if="alternativeMap[product.id]?.length">
+            <ul><li v-for="alt in alternativeMap[product.id]" :key="alt.id">
+              {{ alt.name }} - {{ alt.description }}
+            </li></ul>
+          </div>
+        </v-card-text>
+        <v-container class="checkbox"></v-container>
       </v-col>
     </v-row>
   </v-container>
@@ -65,6 +94,11 @@ onMounted(async () => {
 
 .title {
   padding-bottom: 20px;
+}
+
+.efi-explanation {
+  color: #2f5a9a;
+  font-weight: bold;
 }
 
 .survey-card {
