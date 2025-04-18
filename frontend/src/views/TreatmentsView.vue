@@ -63,7 +63,7 @@ function processAltMapping() {
 </script>
 <template>
   <v-container class="survey-card">
-    <h1 class="headline title">Plastic Alternatives survey</h1>
+    <h1 class="headline">Plastic Alternatives survey</h1>
     <p class="efi-explanation">EFI means Environmental Footprint Index</p>
     <v-row>
       <v-col v-for="product in products"
@@ -73,8 +73,12 @@ function processAltMapping() {
           {{  product.name + ` ${choose_alternative }` || 'No question found' }}
         </v-card-title>
         <v-card-text>
-          <p>Description: {{ product.description }} -  EF: {{ product.EF }}</p>
-          <p>Price: {{ product.price }} - Weight: {{ product.weight }} kg</p>
+          <div class="product-info-row">
+            <p>Description: {{ product.description }}</p><span class="divider"></span>
+            <p>EF: {{ product.EF }}</p><span class="divider"></span>
+            <p>Price: {{ product.price }}</p><span class="divider"></span>
+            <p>Weight: {{ product.weight }} kg</p>
+          </div>
           <div v-if="alternativeMap[product.id]?.length">
             <ul><li v-for="alt in alternativeMap[product.id]" :key="alt.id">
               {{ alt.name }} - {{ alt.description }}
@@ -91,14 +95,26 @@ function processAltMapping() {
   font-size: 1.6rem;
   font-weight: bold;
 }
-
-.title {
-  padding-bottom: 20px;
-}
-
 .efi-explanation {
   color: #2f5a9a;
   font-weight: bold;
+  font-size: 1.2rem;
+  padding-bottom: 30px;
+}
+
+.product-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.divider {
+  width: 1px;
+  height: 18px;
+  background-color: #ccc;
 }
 
 .survey-card {
