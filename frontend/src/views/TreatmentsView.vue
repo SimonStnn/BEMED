@@ -2,14 +2,10 @@
 import { ref, onMounted } from 'vue';
 import { sendRequest } from '@/apiController';
 import type Product from '@/schemas/product';
-import type Alternative from '@/schemas/alternative';
 import type Answer from '@/schemas/answer';
 import type Treatment from '@/schemas/treatment';
 
 const products = ref<Product[]>([]);
-const alternatives = ref<Alternative[]>([]);
-const mainProducts = ref<Product[]>([]);
-const alternativeMap = ref<Record<number, Product[]>>({});
 var choose_alternative = "- Choose an alternative:"
 
 onMounted(async () => {
@@ -19,47 +15,10 @@ onMounted(async () => {
       throw new Error(`HTTP error! status: ${res.status}`);
     const response = await res.json();
     products.value = response;
-
-    processAltMapping();
-
   } catch (error) {
     console.error('Failed to fetch products:', error);
   }
 });
-
-onMounted(async () => {
-  try {
-    const res = await sendRequest({ path: '/product/alternative', method: 'GET' });
-    if (!res.ok)
-      throw new Error(`HTTP error! status: ${res.status}`);
-    const response = await res.json();
-    alternatives.value = response;
-
-    processAltMapping();
-
-  } catch (error) {
-    console.error('Failed to fetch alternatives:', error);
-  }
-});
-
-// create a list of the main products and alternatives
-function processAltMapping() {
-  const mainProductIds = new Set(alternatives.value.map(a => a.productId));
-  mainProducts.value = products.value.filter(p => mainProductIds.has(p.id));
-
-  const altMap: Record<number, Product[]> = {};
-  for (const link of alternatives.value) {
-    const mainId = link.productId;
-    // find the alternatives
-    const altProduct = products.value.find(p => p.id === link.alternativeId);
-    if (altProduct) {
-      if (!altMap[mainId]) altMap[mainId] = [];
-      altMap[mainId].push(altProduct);
-    }
-  }
-  alternativeMap.value = altMap;
-}
-
 </script>
 <template>
   <v-container class="survey-card">
@@ -75,14 +34,16 @@ function processAltMapping() {
         <v-card-text>
           <div class="product-info-row">
             <p>Description: {{ product.description }}</p><span class="divider"></span>
-            <p>EF: {{ product.EF }}</p><span class="divider"></span>
             <p>Price: {{ product.price }}</p><span class="divider"></span>
             <p>Weight: {{ product.weight }} kg</p>
           </div>
-          <div v-if="alternativeMap[product.id]?.length">
-            <ul><li v-for="alt in alternativeMap[product.id]" :key="alt.id">
-              {{ alt.name }} - {{ alt.description }}
-            </li></ul>
+          <div><li v-for="alt in product.alternatives?.length ? product.alternatives : []" :key="alt.id"  class="alt-info-row">
+              <p class="prod-name">{{ alt.name }}</p><span class="divider"></span>
+              <p>Description: {{ alt.description }}</p><span class="divider"></span>
+              <p>Price: {{ alt.price }}</p><span class="divider"></span>
+              <p>Weight: {{ alt.weight }} kg</p><span class="divider"></span>
+              <p>EF: {{ alt.EF }}</p>
+            </li>
           </div>
         </v-card-text>
         <v-container class="checkbox"></v-container>
@@ -102,13 +63,32 @@ function processAltMapping() {
   padding-bottom: 30px;
 }
 
+.question-label {
+  font-weight: bold;
+  font-size: 20px;
+  display: block;
+}
+
 .product-info-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
-  margin-bottom: 10px;
-  font-size: 14px;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.alt-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.prod-name {
+  font-weight: bold;
 }
 
 .divider {
@@ -133,12 +113,6 @@ function processAltMapping() {
 
 .options {
   font-weight: bold;
-}
-
-.question-label {
-  font-weight: bold;
-  font-size: 20px;
-  display: block;
 }
 
 .sub-button {

@@ -190,8 +190,8 @@ VALUES --
         0.0
     ),
     (
-        'Water dispencer',
-        'Water dispencer with returnable 5L bottles',
+        'Water dispenser',
+        'Water dispenser with returnable 5L bottles',
         NULL,
         NULL,
         1.85
