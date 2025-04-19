@@ -130,7 +130,7 @@ The backend implements several controller classes:
 API endpoints are organized into the following route groups:
 
 1. **/assessment**: Routes for creating and retrieving assessment data
-2. **/docs**: Swagger UI for API documentation 
+2. **/docs**: Swagger UI for API documentation
 3. **/product**: Routes for product management
 4. **/treatment**: Routes for managing waste treatment systems and their survey data
 
@@ -206,7 +206,7 @@ The frontend is a Vue.js 3 application using the Composition API, Vuetify for UI
 - **Build Context**: `/backend`
 - **Dependencies**: Keycloak and MariaDB
 
-### Frontend
+### Frontend Service
 
 - **Purpose**: Web application serving the user interface
 - **Build Context**: `/frontend`
@@ -231,7 +231,7 @@ The frontend is a Vue.js 3 application using the Composition API, Vuetify for UI
 
 Create a `.env` file in the root directory with the following variables:
 
-```
+```text
 # Domain configuration
 BEMED_DOMAIN=localhost
 DNS_PREFIX_KEYCLOAK=keycloak
@@ -268,10 +268,10 @@ docker-compose up -d
 
 ### Accessing Services
 
-- Frontend: http://app.localhost
-- Backend API: http://api.localhost
-- Keycloak: http://keycloak.localhost
-- PHPMyAdmin: http://phpmyadmin.localhost
-- Documentation: http://docs.localhost
-- Portainer: http://localhost:9000
-- Traefik Dashboard: http://traefik.localhost:8080
+- Frontend: <http://app.localhost>
+- Backend API: <http://api.localhost>
+- Keycloak: <http://keycloak.localhost>
+- PHPMyAdmin: <http://phpmyadmin.localhost>
+- Documentation: <http://docs.localhost>
+- Portainer: <http://localhost:9000>
+- Traefik Dashboard: <http://traefik.localhost:8080>
