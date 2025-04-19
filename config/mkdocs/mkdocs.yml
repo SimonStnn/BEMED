@@ -1,6 +1,7 @@
 site_name: BEMED Documentation
 site_description: Comprehensive documentation for the BEMED Zero Waste Management System
-site_author: BEMED Team
+site_author: Simon Stijnen
+repo_url: https://github.com/SimonStnn/BEMED.git
 copyright: Copyright &copy; 2025 BEMED
 
 # Set docs_dir to the root docs directory instead of content
@@ -8,19 +9,26 @@ docs_dir: ../../docs
 
 theme:
   name: material
+  locale: en
   palette:
-    - scheme: default
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
       primary: blue
-      accent: light blue
+      accent: indigo
+      scheme: default
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: dark)"
       primary: blue
-      accent: light blue
+      accent: indigo
+      scheme: slate
       toggle:
         icon: material/brightness-4
-        name: Switch to light mode
+        name: Switch to system preference
   features:
     - navigation.tabs
     - navigation.sections
@@ -52,6 +60,8 @@ markdown_extensions:
   - tables
   - admonition
   - footnotes
+  - toc:
+      permalink: true
 
 plugins:
   - search
