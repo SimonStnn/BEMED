@@ -87,26 +87,26 @@ VALUES --
 -- Insert Products
 INSERT INTO products (name, description, price, weight, EF)
 VALUES --
-    -- SUP plastic straws
+    -- SUP plastic straws #1
     (
         'SUP straws',
-        'SUP straws',
-        NULL,
-        NULL,
+        'Single use plastic straws',
+        0.15, -- price in euro
+        0.4, -- weight in gram
         NULL
     ),
     (
         'Paper straws',
         'Single use paper straws',
-        NULL,
-        NULL,
+        0.35,
+        0.4,
         6.21
     ),
     (
         'Reusable straws',
-        'Reusable straws',
-        NULL,
-        NULL,
+        'Reusable straws from hard plastic',
+        1.20,
+        5.0, 
         3.24
     ),
     (
@@ -116,36 +116,36 @@ VALUES --
         0.0,
         0.0
     ),
-    -- SUP plastic cups
+    -- SUP plastic cups #5
     (
         'SUP cups',
         'SUP cups',
-        NULL,
-        NULL,
+        0.25,
+        0.035, -- weight 35gram
         NULL
     ),
     (
         'Paper cups',
         'Single use paper cups',
-        NULL,
-        NULL,
+        0.35,
+        0.04,
         7.02
     ),
     (
         'Reusable cups',
         'Reusable cups from hard plastic',
-        NULL,
-        NULL,
+        2.00,
+        10.0,
         3.69
     ),
     (
         'Reusable cups',
         'Reusable cups from ceramic, glass or other materials',
-        NULL,
-        NULL,
+        2.50,
+        12.0,
         3.15
     ),
-    -- SUP plastic plates
+    -- SUP plastic plates #9
     (
         'SUP plates',
         'SUP plates',
@@ -174,7 +174,7 @@ VALUES --
         NULL,
         3.60
     ),
-    -- SUP water bottles
+    -- SUP water bottles #13
     (
         'SUP water bottles',
         'SUP water bottles',
@@ -190,8 +190,8 @@ VALUES --
         0.0
     ),
     (
-        'Water dispencer',
-        'Water dispencer with returnable 5L bottles',
+        'Water dispenser',
+        'Water dispenser with returnable 5L bottles',
         NULL,
         NULL,
         1.85
@@ -210,7 +210,7 @@ VALUES --
         NULL,
         5.00
     ),
-    -- SUP juice bottles
+    -- SUP juice bottles #18
     (
         'SUP juice bottles',
         'SUP juice bottles',
@@ -260,7 +260,7 @@ VALUES --
         NULL,
         8.0
     ),
-    -- Plastic coffee capsules
+    -- Plastic coffee capsules #25
     (
         'Plastic coffee capsules',
         'Plastic coffee capsules',
@@ -289,7 +289,7 @@ VALUES --
         0.0,
         0.0
     ),
-    -- Tea bags
+    -- Tea bags #29
     (
         'Single use tea bags',
         'Single use tea bags',
@@ -298,7 +298,7 @@ VALUES --
         NULL
     ),
     (
-        'Tea in plastic bags',
+        'Tea in big plastic bags',
         'Tea in bigger plastic bags',
         NULL,
         NULL,
@@ -325,7 +325,7 @@ VALUES --
         NULL,
         6.21
     ),
-    -- plastic coffee stir sticks
+    -- plastic coffee stir sticks #34
     (
         'Plastic coffee stirs',
         'Plastic coffee stir sticks',
@@ -354,7 +354,7 @@ VALUES --
         0.0,
         0.0
     ),
-    -- Plastic cutlery
+    -- Plastic cutlery #38
     (
         'SUP cutlery',
         'SUP cutlery',
@@ -383,7 +383,7 @@ VALUES --
         0.0,
         0.0
     ),
-    -- Plastic bags
+    -- Plastic bags #42
     (
         'SUP bags',
         'SUP bags',
@@ -406,7 +406,7 @@ VALUES --
         2.63
     ),
     (
-        'BYO',
+        'Bring your own bag',
         'BYO - bring your own bag',
         0.0,
         0.0,
@@ -419,7 +419,7 @@ VALUES --
         0.0,
         0.0
     ),
-    -- plastic / polystyrene food packaging
+    -- plastic / polystyrene food packaging #47
     (
         'Plastic/polystyrene food packaging',
         'Plastic/polystyrene food packaging',
@@ -441,7 +441,7 @@ VALUES --
         0.0,
         0.0
     ),
-    -- individual packaging (sugar, coffee, oil, vinegar etc.)
+    -- individual packaging (sugar, coffee, oil, vinegar etc.) #50
     (
         'Individual packaging',
         'individual packaging (sugar, coffee, oil, vinegar etc.)',
@@ -463,7 +463,7 @@ VALUES --
         NULL,
         4.0
     ),
-    -- toiletries
+    -- toiletries #53
     (
         'Plastic toilet products/packaging',
         'Plastic toilet products/packaging',
@@ -492,7 +492,7 @@ VALUES --
         0.0,
         0.0
     ),
-    -- plastic hand sanitizer bottles
+    -- plastic hand sanitizer bottles #57
     (
         'Hand sanitizer in large single use bottles',
         'Hand sanitizer in large single use bottles',
@@ -507,6 +507,7 @@ VALUES --
         0.0,
         0.0
     ),
+    -- plastic gloves #59
     (
         'SUP gloves',
         'SUP gloves',
@@ -536,20 +537,94 @@ VALUES --
     (1, 2),
     -- plastic straws can be replaced by reusable straws
     (1, 3),
-    -- paper straws can be replaced by reusable straws
-    (2, 3),
-    -- reusable straws can be replaced by paper straws
-    (3, 2),
+    -- plastic straws can be replaced by no straws
+    (1, 4),
     -- SUP cups can be replaced by paper cups
     (5, 6),
-    -- SUP cups can be replaced by reusable cups
+    -- SUP cups can be replaced by hard plastic cups
     (5, 7),
     -- SUP cups can be replaced by reusable cups
     (5, 8),
-    -- paper cups can be replaced by reusable cups
-    (6, 7),
-    -- paper cups can be replaced by reusable cups
-    (6, 8),
-    -- reusable cups can be replaced by paper cups
-    (7, 6) --
+    -- SUP plates can be replaced by paper plates
+    (9, 10),
+    -- paper  can be replaced by reusable plates
+    (9, 11),
+    -- paper cups can be replaced by hard plastic plates
+    (9, 12),
+    -- SUP water bottles can be replaced by no water bottles
+    (13, 14),
+    -- SUP water bottles can be replaced by a water dispenser
+    (13, 15),
+    -- SUP water bottles can be replaced by returnable glass bottles
+    (13, 16),
+    -- SUP water bottles can be replaced by single use glass bottles
+    (13, 17),
+    -- SUP juice bottles can be replaced by returnable glass bottles
+    (18, 19),
+    -- SUP juice bottles can be replaced by single use glass bottles
+    (18, 20),
+    -- SUP juice bottles can be replaced by drinks made on site
+    (18, 21),
+    -- SUP juice bottles can be replaced by Big (>5L) SUP bottles
+    (18, 22),
+    -- SUP juice bottles can be replaced by cans with a plastic lining
+    (18, 23),
+    -- SUP juice bottles can be replaced by tetra packs
+    (18, 24),
+    -- SUP coffee capsules can be replaced by coffee in plastic or aluminium bags
+    (25, 26),
+    -- SUP coffee capsules can be replaced by coffee purchased by weight
+    (25, 27),
+    -- SUP coffee capsules can be replaced by no capsules used
+    (25, 28),
+    -- SUP tea bags can be replaced by bigger plastic tea bags
+    (29, 30),
+    -- SUP tea bags can be replaced by tea purchased by weight
+    (29, 31),
+    -- SUP tea bags can be replaced by not using tea bags
+    (29, 32),
+    -- SUP tea bags can be replaced by paper tea bags
+    (29, 33),
+    -- SUP coffee stir sticks can be replaced by reusable spoons
+    (34, 35),
+    -- SUP coffee stir sticks can be replaced by wooden stir sticks
+    (34, 36),
+    -- SUP coffee stir sticks can be replaced by not using sticks
+    (34, 37),
+    -- SUP cutlery can be replaced by reusable cutlery
+    (38, 39),
+    -- SUP cutlery can be replaced by biodegradable cutlery
+    (38, 40),
+    -- SUP cutlery can be replaced by bring your own cutlery
+    (38, 41),
+    -- SUP bags can be replaced by paper bags
+    (42, 43),
+    -- SUP bags can be replaced by reusable bags or baskets
+    (42, 44),
+    -- SUP bags can be replaced by BYO - bring your own bag
+    (42, 45),
+    -- SUP bags can be replaced by not using bags
+    (42, 46),
+    -- Plastic/polystyrene food packaging can be replaced by single use paper boxes
+    (47, 48),
+    -- Plastic/polystyrene food packaging can be replaced by not using boxes
+    (47, 49),
+    -- Individual packaging can be replaced by reusable containers
+    (50, 51),
+    -- Individual packaging can be replaced by individual portions medium up to 1KG, large >1KG
+    (50, 52),
+    -- Plastic toilet products/packaging can be replaced by toiletries in reusable containers
+    (53, 54),
+    -- Plastic toilet products/packaging can be replaced by soaps without plastic packaging
+    (53, 55),
+    -- Plastic toilet products/packaging can be replaced by no toiletries
+    (53, 56),
+    -- Plastic toilet products/packaging can be replaced by no toiletries packaging
+    (53, 56),
+    -- Hand sanitizer in large single use bottles can be replaced by hand washing
+    (57, 58),
+    -- SUP gloves in large single use bottles can be replaced reusable rubber gloves
+    (59, 60),
+    -- SUP gloves in large single use bottles can be replaced by no gloves, hand washing
+    (59, 61),
 ;

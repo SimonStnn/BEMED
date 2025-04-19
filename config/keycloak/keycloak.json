@@ -68,6 +68,38 @@
         "attributes": {}
       },
       {
+        "id": "500f1a0a-6405-418b-84bf-0ad86e2abb55",
+        "name": "admin",
+        "description": "Has elevated priveleges over a user",
+        "composite": true,
+        "composites": {
+          "client": {
+            "realm-management": [
+              "query-groups",
+              "view-realm",
+              "view-clients",
+              "view-users",
+              "query-users"
+            ],
+            "bemed-api": ["uma_protection"],
+            "bemed-frontend": ["uma_protection"],
+            "account": [
+              "view-profile",
+              "view-groups",
+              "manage-account",
+              "manage-account-links",
+              "view-applications",
+              "manage-consent",
+              "delete-account",
+              "view-consent"
+            ]
+          }
+        },
+        "clientRole": false,
+        "containerId": "7708c1fd-be03-4482-b15e-79eeb7260264",
+        "attributes": {}
+      },
+      {
         "id": "76fd9b73-67ce-482f-b800-3dfe74b02bfd",
         "name": "default-roles-${KEYCLOAK_REALM}",
         "description": "${role_default-roles}",
@@ -465,6 +497,25 @@
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "webAuthnPolicyPasswordlessExtraOrigins": [],
+  "users": [
+    {
+      "id": "5f35677c-1b13-4da2-8d06-b277d3e6f9b1",
+      "username": "service-account-bemed-api",
+      "emailVerified": false,
+      "createdTimestamp": 1744139551039,
+      "enabled": true,
+      "totp": false,
+      "serviceAccountClientId": "bemed-api",
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": ["default-roles-bemed"],
+      "clientRoles": {
+        "bemed-api": ["uma_protection"]
+      },
+      "notBefore": 0,
+      "groups": []
+    }
+  ],
   "scopeMappings": [
     {
       "clientScope": "offline_access",
@@ -603,7 +654,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "realm_client": "false",
-        "client.use.lightweight.access.token.enabled": "true"
+        "client.use.lightweight.access.token.enabled": "true",
+        "post.logout.redirect.uris": "+"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -1664,13 +1716,13 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "saml-user-attribute-mapper",
-            "oidc-usermodel-property-mapper",
-            "saml-role-list-mapper",
-            "oidc-full-name-mapper",
             "oidc-sha256-pairwise-sub-mapper",
-            "oidc-usermodel-attribute-mapper",
+            "oidc-full-name-mapper",
             "oidc-address-mapper",
+            "saml-role-list-mapper",
+            "oidc-usermodel-property-mapper",
+            "saml-user-attribute-mapper",
+            "oidc-usermodel-attribute-mapper",
             "saml-user-property-mapper"
           ]
         }
@@ -1701,14 +1753,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "saml-role-list-mapper",
             "oidc-full-name-mapper",
             "oidc-usermodel-attribute-mapper",
             "saml-user-property-mapper",
-            "oidc-address-mapper",
             "oidc-usermodel-property-mapper",
             "saml-user-attribute-mapper",
-            "oidc-sha256-pairwise-sub-mapper"
+            "oidc-sha256-pairwise-sub-mapper",
+            "saml-role-list-mapper",
+            "oidc-address-mapper"
           ]
         }
       }
