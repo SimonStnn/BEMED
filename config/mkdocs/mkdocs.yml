@@ -3,8 +3,8 @@ site_description: Comprehensive documentation for the BEMED Zero Waste Managemen
 site_author: BEMED Team
 copyright: Copyright &copy; 2025 BEMED
 
-# Set docs_dir to the content directory
-docs_dir: content
+# Set docs_dir to the root docs directory instead of content
+docs_dir: ../../docs
 
 theme:
   name: material
@@ -48,7 +48,7 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: "!!python/name:pymdownx.superfences.fence_code_format"
   - tables
   - admonition
   - footnotes

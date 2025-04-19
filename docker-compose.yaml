@@ -157,10 +157,13 @@ services:
   docs:
     container_name: docs
     build:
-      context: ./docs
+      context: .
+      dockerfile: /config/mkdocs/Dockerfile
     restart: unless-stopped
     volumes:
       - ./docs:/docs
+      - ./config/mkdocs:/config/mkdocs
+      - ./frontend/public/:/docs/assets/:ro
     user: "${UID:-1000}:${GID:-1000}"
     ports:
       - "8000:8000"
