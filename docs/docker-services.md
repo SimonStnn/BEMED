@@ -8,7 +8,7 @@ The BEMED application architecture is based on a microservices approach using Do
 
 Traefik serves as the entry point for all requests, acting as a reverse proxy and load balancer.
 
-### Configuration
+### Configuration Traefik
 
 ```yaml
 traefik:
@@ -30,7 +30,7 @@ traefik:
     - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 ```
 
-### Key Features
+### Key Features Traefik
 
 - **Dynamic Configuration**: Automatically discovers and configures routes to services
 - **Dashboard**: Web UI for monitoring and management at port 8080
@@ -41,7 +41,7 @@ traefik:
 
 Portainer provides a web interface for managing Docker containers, images, networks, and volumes.
 
-### Configuration
+### Configuration Portainer
 
 ```yaml
 portainer:
@@ -57,7 +57,7 @@ portainer:
     - "portainer_data:/data" 
 ```
 
-### Key Features
+### Key Features Portainer
 
 - **Container Management**: Start, stop, and manage containers
 - **Resource Monitoring**: Track container resource usage
@@ -68,7 +68,7 @@ portainer:
 
 Keycloak provides identity and access management for the application, handling authentication and authorization.
 
-### Configuration
+### Configuration Keycloak
 
 ```yaml
 keycloak:
@@ -100,7 +100,7 @@ keycloak:
     - ./config/keycloak/:/opt/keycloak/data/import/:ro
 ```
 
-### Key Features
+### Key Features Keycloak
 
 - **User Management**: Registration, login, and profile management
 - **Identity Brokering**: Connect to external identity providers like Google or Facebook
@@ -112,7 +112,7 @@ keycloak:
 
 MariaDB serves as the primary database for the application, storing all application data.
 
-### Configuration
+### Configuration MariaDB
 
 ```yaml
 db:
@@ -129,7 +129,7 @@ db:
     - database_data:/var/lib/mysql
 ```
 
-### Key Features
+### Key Features MariaDB
 
 - **Relational Database**: SQL-compliant database for structured data
 - **Data Persistence**: Volume mapping for persistent storage
@@ -140,7 +140,7 @@ db:
 
 PHPMyAdmin provides a web interface for database administration.
 
-### Configuration
+### Configuration PHPMyAdmin
 
 ```yaml
 phpmyadmin:
@@ -156,7 +156,7 @@ phpmyadmin:
     - "8081:80"
 ```
 
-### Key Features
+### Key Features PHPMyAdmin
 
 - **Database Management**: Create, modify, and drop databases and tables
 - **SQL Execution**: Run SQL queries through a web interface
@@ -167,7 +167,7 @@ phpmyadmin:
 
 The backend API service provides the application's server-side logic and RESTful endpoints.
 
-### Configuration
+### Configuration Backend API
 
 ```yaml
 backend:
@@ -185,7 +185,7 @@ backend:
     - "3000:${BEMED_API_PORT}"
 ```
 
-### Key Features
+### Key Features Backend API
 
 - **API Endpoints**: RESTful API for application data
 - **Authentication Integration**: Keycloak integration for secure endpoints
@@ -196,7 +196,7 @@ backend:
 
 The frontend service serves the Vue.js web application to users.
 
-### Configuration
+### Configuration Frontend
 
 ```yaml
 frontend:
@@ -216,7 +216,7 @@ frontend:
       BEMED_PROTOCOL: ${BEMED_PROTOCOL}
 ```
 
-### Key Features
+### Key Features Frontend
 
 - **Web Interface**: User interface for the application
 - **Responsive Design**: Works on desktop and mobile devices
@@ -227,33 +227,42 @@ frontend:
 
 The documentation service provides a web interface for viewing the project documentation.
 
-### Configuration
+### Configuration Documentation
 
 ```yaml
 docs:
   container_name: docs
   build:
-    context: ./docs
-    dockerfile: Dockerfile
+    context: .
+    dockerfile: config/mkdocs/Dockerfile
   restart: unless-stopped
-  ports:
-    - "8000:8000"
   volumes:
     - ./docs:/docs
+    - ./config/mkdocs:/config/mkdocs
+    - ./frontend/public/:/docs/assets/:ro
+  user: "${UID:-1000}:${GID:-1000}"
+  ports:
+    - "8085:8000"
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.docs.rule=Host(`docs.${BEMED_DOMAIN}`)"
     - "traefik.http.routers.docs.entrypoints=web"
     - "traefik.http.services.docs.loadbalancer.server.port=8000"
+  depends_on:
+    - traefik
+  environment:
+    - ENABLE_LIVE_RELOAD=true
 ```
 
-### Key Features
+### Key Features Documentation
 
 - **Documentation Website**: Web-based access to project documentation
 - **Search**: Full-text search across documentation
 - **Navigation**: Structured navigation menu
 - **Markdown Support**: Documentation written in Markdown format
-- **Live Updates**: Documentation updates automatically when source files change
+- **Live Updates**: Documentation updates automatically when source files change thanks to live reload
+- **Asset Integration**: Frontend assets are available to the documentation
+- **MkDocs Material Theme**: Modern and responsive documentation theme with dark/light mode
 
 ## Data Volumes
 

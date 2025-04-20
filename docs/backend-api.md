@@ -26,11 +26,13 @@ The treatments endpoints allow management of waste treatment systems and their a
 Retrieves treatment data based on the specified filters.
 
 **Query Parameters:**
+
 - `id` (optional): Treatment ID to retrieve a specific treatment
 - `skip` (optional): Number of records to skip for pagination (default: 0)
 - `limit` (optional): Maximum number of records to return (default: 10)
 
 **Response:**
+
 ```json
 [
   {
@@ -53,6 +55,7 @@ Retrieves treatment data based on the specified filters.
 Creates a new treatment record with associated answers.
 
 **Request Body:**
+
 ```json
 {
   "answers": [
@@ -76,6 +79,7 @@ Returns the created treatment object with its ID and timestamps.
 Deletes a treatment record.
 
 **Query Parameters:**
+
 - `id`: ID of the treatment to delete
 
 ### Products
@@ -87,11 +91,13 @@ The products endpoints allow management of product data and their environmental 
 Retrieves product data based on specified filters.
 
 **Query Parameters:**
+
 - `id` (optional): Product ID to retrieve a specific product
 - `skip` (optional): Number of records to skip for pagination (default: 0)
 - `limit` (optional): Maximum number of records to return (default: 10)
 
 **Response:**
+
 ```json
 [
   {
@@ -120,6 +126,7 @@ Retrieves product data based on specified filters.
 Creates a new product record.
 
 **Request Body:**
+
 ```json
 {
   "name": "Plastic Water Bottle",
@@ -138,6 +145,7 @@ Returns the created product object with its ID.
 Updates an existing product record.
 
 **Request Body:**
+
 ```json
 {
   "id": 1,
@@ -157,6 +165,7 @@ Returns the updated product object.
 Deletes a product record.
 
 **Query Parameters:**
+
 - `id`: ID of the product to delete
 
 #### POST /product/alternative
@@ -164,6 +173,7 @@ Deletes a product record.
 Creates a relationship between a product and its alternative.
 
 **Request Body:**
+
 ```json
 {
   "productId": 1,
@@ -179,6 +189,7 @@ Returns the updated product object with its alternatives.
 Removes a relationship between a product and its alternative.
 
 **Query Parameters:**
+
 - `productId`: ID of the main product
 - `alternativeId`: ID of the alternative to remove
 
@@ -191,11 +202,13 @@ The assessments endpoints allow creation and retrieval of product usage assessme
 Retrieves assessment data based on the specified filters.
 
 **Query Parameters:**
+
 - `id` (optional): Assessment ID to retrieve a specific assessment
 - `skip` (optional): Number of records to skip for pagination (default: 0)
 - `limit` (optional): Maximum number of records to return (default: 10)
 
 **Response:**
+
 ```json
 [
   {
@@ -222,6 +235,7 @@ Retrieves assessment data based on the specified filters.
 Creates a new assessment record.
 
 **Request Body:**
+
 ```json
 {
   "productId": 1,
@@ -247,6 +261,7 @@ The API uses a centralized error handling middleware that returns consistent err
 ```
 
 Common HTTP status codes:
+
 - `200 OK`: Request succeeded
 - `201 Created`: Resource was created
 - `400 Bad Request`: Invalid parameters or request body

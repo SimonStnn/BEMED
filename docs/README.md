@@ -231,7 +231,7 @@ The frontend is a Vue.js 3 application using the Composition API, Vuetify for UI
 
 Create a `.env` file in the root directory with the following variables:
 
-```text
+```conf
 # Domain configuration
 BEMED_DOMAIN=localhost
 DNS_PREFIX_KEYCLOAK=keycloak

@@ -158,7 +158,7 @@ services:
     container_name: docs
     build:
       context: .
-      dockerfile: /config/mkdocs/Dockerfile
+      dockerfile: config/mkdocs/Dockerfile
     restart: unless-stopped
     volumes:
       - ./docs:/docs
@@ -166,7 +166,7 @@ services:
       - ./frontend/public/:/docs/assets/:ro
     user: "${UID:-1000}:${GID:-1000}"
     ports:
-      - "8000:8000"
+      - "8085:8000"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.docs.rule=Host(`docs.${BEMED_DOMAIN}`)"

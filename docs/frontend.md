@@ -85,11 +85,13 @@ The alternatives page displays environmentally friendly alternatives to single-u
 A reusable form component that handles API interactions, providing consistent error handling and loading states.
 
 **Props:**
+
 - `action`: API endpoint to call
 - `method`: HTTP method (GET, POST, etc.)
 - `body`: Request payload
 
 **Events:**
+
 - `success`: Emitted when the API call succeeds
 - `error`: Emitted when the API call fails
 
@@ -98,6 +100,7 @@ A reusable form component that handles API interactions, providing consistent er
 A component for displaying user information and providing authentication-related actions such as login and logout.
 
 **Features:**
+
 - User profile display
 - Authentication status
 - Login/logout functionality
@@ -202,7 +205,7 @@ const router = createRouter({
 
 The frontend uses environment variables for configuration, which are loaded during the build process:
 
-```
+```conf
 KEYCLOAK_REALM=BEMED
 KEYCLOAK_FRONTEND_CLIENT_ID=frontend
 KEYCLOAK_CLIENT_SECRET=your_client_secret
