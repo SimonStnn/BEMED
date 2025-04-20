@@ -1,10 +1,10 @@
 import { Request, Router, type Response } from "express";
 
-import keycloak from "@/middleware/keycloak";
+// import keycloak from "@/middleware/keycloak";
 import ProductController from "@/controllers/productController";
 
 const router = Router();
-router.use(keycloak.protect());
+// router.use(keycloak.protect());
 
 router.get("/", async (req: Request, res: Response) => {
   res
