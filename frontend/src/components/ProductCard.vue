@@ -1,9 +1,17 @@
 <script lang="ts" setup>
 import { sendRequest } from '@/apiController';
-import type ProductSchema from '@/schemas/product';
 import { useAuthStore } from '@/stores/auth';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+
+type ProductSchema = {
+  id: number;
+  name: string;
+  description: string | null;
+  price: number | null;
+  weight: number | null;
+  EF: number | null;
+};
 
 export type Product = ProductSchema & {
   alternatives: ProductSchema[];

@@ -15,8 +15,7 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/schemas/*": ["../backend/src/schemas/*"],
+      "@/*": ["./src/*"]
     },
     "noEmit": true,
     "module": "ESNext",
