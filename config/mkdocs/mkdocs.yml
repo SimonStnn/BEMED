@@ -43,6 +43,7 @@ theme:
 
 nav:
   - Home: README.md
+  - Getting Started: getting-started.md
   - Backend API: backend-api.md
   - Frontend: frontend.md
   - Docker Services: docker-services.md
