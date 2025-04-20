@@ -1,0 +1,12 @@
+site_name: BEMED Documentation
+# Updated docs_dir to point to the root docs directory
+docs_dir: ../../docs
+site_dir: site
+
+nav:
+  - Home: README.md
+  - Backend API: backend-api.md
+  - Frontend: frontend.md
+  - Docker Services: docker-services.md
+
+theme: material
