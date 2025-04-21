@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue';
 import { sendRequest } from '@/apiController';
 import type Product from '@/schemas/product';
-import type Treatment from '@/schemas/treatment';
 
 const products = ref<Product[]>([]);
 const selectedAlternatives = ref<{ productId: number, alternativeId: number }[]>([]);
@@ -12,40 +11,16 @@ var choose_alternative = "- Choose an alternative:"
 
 onMounted(async () => {
   try {
-    const res = await sendRequest({ path: '/product', method: 'GET' });
-    if (!res.ok)
-      throw new Error(`HTTP error! status: ${res.status}`);
+    const res = await sendRequest({ path: '/product', method: 'GET', body: { limit: 100 } });
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const response = await res.json();
     console.log('Fetched product IDs:', response.map((p: Product) => p.id));
     products.value = response;
-  } catch (error) {
-    console.error('Failed to fetch products:', error);
-  }
-});
-onMounted(async () => {
-  try {
-    const res = await sendRequest({ path: '/treatment', method: 'POST' });
-    if (!res.ok)
-      throw new Error(`HTTP error! status: ${res.status}`);
-    const response = await res.json();
-    products.value = response;
-  } catch (error) {
-    console.error('Failed to fetch products:', error);
-  }
-});
-onMounted(async () => {
-  try {
-    const res = await sendRequest({ path: '/product', method: 'GET' });
-    if (!res.ok)
-      throw new Error(`HTTP error! status: ${res.status}`);
-    const response = await res.json();
-    products.value = response;
 
-    // filter only allowed products
+    // Filter only allowed products
     filteredProducts.value = response.filter((product: Product) =>
       allowedProductIds.includes(product.id)
     );
-
   } catch (error) {
     console.error('Failed to fetch products:', error);
   }
@@ -82,11 +57,9 @@ async function submitTreatment() {
     <h1 class="headline">Plastic Alternatives survey</h1>
     <p class="efi-explanation">EFI means Environmental Footprint Index</p>
     <v-row>
-      <v-col v-for="product in filteredProducts"
-        :key="product.id"
-        cols="12" class="survey-field">
+      <v-col v-for="product in filteredProducts" :key="product.id" cols="12" class="survey-field">
         <v-card-title class="question-label">
-          {{  product.name + ` ${choose_alternative }` || 'No question found' }}
+          {{ product.name + ` ${choose_alternative}` || 'No question found' }}
         </v-card-title>
         <v-card-text>
           <div class="product-info-row">
@@ -94,14 +67,13 @@ async function submitTreatment() {
             <p>Price: {{ product.price }}</p><span class="divider"></span>
             <p>Weight: {{ product.weight }} kg</p>
           </div>
-          <div><li v-for="alt in product.alternatives?.length ? product.alternatives : []" 
-                :key="alt.id"  class="alt-info-row">
-                <input
-                  type="checkbox"
-                  :checked="selectedAlternatives.some(sel => sel.productId === product.id && sel.alternativeId === alt.id)"
-                  @change="() => toggleSelection(product.id, alt.id)"
-                />
-                <p class="prod-name">{{ alt.name }}</p><span class="divider"></span>
+          <div>
+            <li v-for="alt in product.alternatives?.length ? product.alternatives : []" :key="alt.id"
+              class="alt-info-row">
+              <input type="checkbox"
+                :checked="selectedAlternatives.some(sel => sel.productId === product.id && sel.alternativeId === alt.id)"
+                @change="() => toggleSelection(product.id, alt.id)" />
+              <p class="prod-name">{{ alt.name }}</p><span class="divider"></span>
               <p>Description: {{ alt.description }}</p><span class="divider"></span>
               <p>Price: {{ alt.price }}</p><span class="divider"></span>
               <p>Weight: {{ alt.weight }} kg</p><span class="divider"></span>
@@ -119,6 +91,7 @@ async function submitTreatment() {
   font-size: 1.6rem;
   font-weight: bold;
 }
+
 .efi-explanation {
   color: #2f5a9a;
   font-weight: bold;
@@ -164,7 +137,6 @@ async function submitTreatment() {
   width: 100%;
   height: 100%;
   flex-direction: column;
-  overflow: scroll;
 }
 
 .survey-field {
