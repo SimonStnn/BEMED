@@ -7,7 +7,7 @@ const products = ref<Product[]>([]);
 
 onMounted(async () => {
   try {
-    const res = await sendRequest({ path: '/product', method: 'GET' });
+    const res = await sendRequest({ path: '/product', method: 'GET', body: { limit: 100 } });
     if (!res.ok)
       throw new Error(`HTTP error! status: ${res.status}`);
     const response = await res.json();
