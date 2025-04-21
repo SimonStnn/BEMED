@@ -22,37 +22,12 @@ const assesments = ref([
     "updatedAt": "2025-04-21T09:22:32.190Z"
   }
 ])
-
 // Saves timestamps for createdAt and updatedAt
 const timestamps = ref({
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString()
 })
 
-/**
- * 
- * @param asessments Updates the products from the API(PUT request)
- * calls when a user changes a value in the input field(blur-event)
- */
-
-// PUT
-function updateProduct(asessments: any) {
-  console.log('Product updated:', asessments)
-  fetch(`/api/products/${asessments.id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(asessments)
-  }).then(res => res.json())
-    .then(data => {
-      console.log('Product updated successfully:', data)
-    })
-    .catch(error => {
-      console.error('Error updating product:', error)
-    })
-  timestamps.value.updatedAt = new Date().toISOString()
-}
 /**
  * Adds a new product to the list of products (dosen't call the API yet)
  * This function is called when the user clicks the "Add Product" button.
@@ -100,7 +75,6 @@ function onSuccess(data: any) {
       <tbody>
         <tr v-for="assesment in assesments" :key="assesment.id">
           <td>{{ assesment.product.name }}</td>
-
           <td>{{ assesment.ppm }}</td>
           <td>{{ assesment.createdAt }}</td>
           <td>
@@ -114,3 +88,4 @@ function onSuccess(data: any) {
 
   </div>
 </template>
+
