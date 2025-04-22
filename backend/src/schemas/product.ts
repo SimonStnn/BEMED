@@ -1,4 +1,3 @@
-import type Alternative from './alternative';
 export const table = "products";
 type Product = {
   id: number;
