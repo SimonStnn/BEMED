@@ -19,18 +19,13 @@ const items: { title: string, url: string, icon: string }[] = [
     icon: 'mdi-clipboard-text',
   },
   {
-    title: 'Alternatives',
-    url: '/alternatives',
-    icon: 'mdi-clipboard-text',
-  },
-  {
     title: "products",
     url: '/products',
     icon: 'mdi-sitemap-outline',
   },
   {
-    title: 'Treatments',
-    url: '/treatments',
+    title: 'Choose Alternatives',
+    url: '/alternatives',
     icon: 'mdi-clipboard-text',
   },
 ]

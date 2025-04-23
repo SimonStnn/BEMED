@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import SurveyView from "../views/SurveyView.vue";
-import AlternativesView from "../views/AlternativesView.vue";
 import ProductsView from "../views/ProductsView.vue";
 import ProductDetailsView from "../views/ProductDetailsView.vue";
-import TreatmentsView from '@/views/TreatmentsView.vue'
+import ChooseAltView from '@/views/ChooseAltView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,12 +21,7 @@ const router = createRouter({
     {
       path: "/alternatives",
       name: "alternatives",
-      component: AlternativesView,
-    },
-    {
-      path: '/treatments',
-      name: 'treatments',
-      component: TreatmentsView,
+      component: ChooseAltView,
     },
     {
       path: "/products",

@@ -57,12 +57,12 @@ function calculateAverageEF(productId: number): number | null {
 <template>
   <h1 class="headline">Plastic Alternatives survey</h1>
   <p class="efi-explanation">EFI means Environmental Footprint Index</p>
-  <v-row>
-    <v-col v-for="product in filteredProducts" :key="product.id" cols="12" class="survey-field">
-      <v-card-title class="question-label">
-        {{ product.name + ' - Choose an alternative:' || 'No question found' }}
-      </v-card-title>
-      <v-card-text>
+  <v-card-text>
+    <v-row>
+      <v-col v-for="product in filteredProducts" :key="product.id" cols="12" class="survey-field">
+        <v-card-title class="question-label">
+          {{ product.name + ' - Choose an alternative:' || 'No question found' }}
+        </v-card-title>
         <p class="sup-description">{{ product.description }}</p>
         <div class="product-info-row">
           <div class="info-item">
@@ -81,8 +81,8 @@ function calculateAverageEF(productId: number): number | null {
             <p class="info-label" title="Environmental Footprint Index">EFI</p>
           </div>
         </div>
-        <div title="Environmental Footprint Index">Average EFI: {{ calculateAverageEF(product.id) ?? product.EF ?? "N/A"
-          }}</div>
+        <div class="avg-efi" title="Environmental Footprint Index">Average EFI: {{ calculateAverageEF(product.id) ?? product.EF ?? "N/A"
+        }}</div>
         <v-checkbox v-for="alt in product.alternatives || []" :key="alt.id" class="alt-info-row" hide-details
           v-model="selectedAlternatives" :value="{ productId: product.id, alternativeId: alt.id }">
           <template v-slot:label>
@@ -93,10 +93,10 @@ function calculateAverageEF(productId: number): number | null {
             </div>
           </template>
         </v-checkbox>
-      </v-card-text>
-    </v-col>
-    <v-btn color="primary" @click="submitTreatment">Submit Treatment</v-btn>
-  </v-row>
+      </v-col>
+    </v-row>
+    <v-btn class="sub-button" color="primary" @click="submitTreatment">Submit Treatment</v-btn>
+  </v-card-text>
 </template>
 
 <style scoped>
@@ -109,7 +109,7 @@ function calculateAverageEF(productId: number): number | null {
   color: #2f5a9a;
   font-weight: bold;
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  padding-top: 0px;
 }
 
 .survey-field {
@@ -122,14 +122,13 @@ function calculateAverageEF(productId: number): number | null {
 .question-label {
   font-weight: bold;
   font-size: 1.1rem;
+  padding-left: 10px;
   padding-bottom: 0px;
 }
 
 .sup-description {
   font-size: 0.8rem;
-  margin-left: 0px;
   padding-top: 0px;
-  padding-left: 0px;
   color: #555;
 }
 
@@ -149,6 +148,13 @@ function calculateAverageEF(productId: number): number | null {
 
 .icon {
   color: #666;
+}
+
+.avg-efi {
+  color: rgb(91, 91, 91);
+  padding-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .alt-info-row {
@@ -171,5 +177,9 @@ function calculateAverageEF(productId: number): number | null {
 .descr-label {
   font-size: 0.85em;
   color: rgb(91, 91, 91);
+}
+
+.sub-button {
+  margin-top: 20px;
 }
 </style>
