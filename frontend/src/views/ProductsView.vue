@@ -20,7 +20,7 @@ onMounted(async () => {
 </script>
 <template>
   <div>
-    <h1>Products</h1>
+    <h1 class="headline">Product information</h1>
     <v-table striped hoverable>
       <thead>
         <tr>
@@ -57,3 +57,9 @@ onMounted(async () => {
 
   </div>
 </template>
+<style scoped>
+.headline {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+</style>

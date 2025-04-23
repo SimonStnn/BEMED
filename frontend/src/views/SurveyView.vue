@@ -25,9 +25,9 @@ function onSuccess(data: any) {
 </script>
 
 <template>
-  <v-card class="survey-card">
     <v-card-title>
       <span class="headline">Survey Page</span>
+      <p class="explanation">Please select max. 1 option for every question</p>
     </v-card-title>
     <v-card-text class="survey-content">
       <api-form action="/survey" method="POST" v-on:success="onSuccess" v-bind:body="formData"
@@ -76,34 +76,29 @@ function onSuccess(data: any) {
         <v-text-field v-model.number="formData.questions[7]" type="number" label="Q7" name="q7" required></v-text-field></div>
 
         <!--Submit survey-->
+        <p class="req-explanation">Questions with '*' are required</p>
         <v-btn class="sub-button" type="submit" color="primary">Submit</v-btn>
 
       </api-form>
     </v-card-text>
-  </v-card>
 </template>
-  
-<script lang="ts">
-</script>
 
 <style scoped>
 .headline {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: bold;
 }
 
-.survey-card {
-  width: 100%;
-  height: 100vh;
-  flex-direction: column;
-  overflow: scroll;
+.explanation {
+  color: #2f5a9a;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
-/* to make survey fields look similar */
 .survey-field {
   margin-bottom: 20px;
   padding: 10px;
-  background-color: #f9f9f9; /* light gray */
+  background-color: #f9f9f9;
   border-radius: 8px;
 }
 
@@ -119,6 +114,11 @@ function onSuccess(data: any) {
   font-size: 16px;
   margin-bottom: 10px;
   display: block;
+}
+
+.req-explanation {
+  font-size: 0.85rem;
+  text-decoration: underline;
 }
 
 .sub-button {

@@ -47,18 +47,16 @@ watch(group, () => {
 <template>
   <v-layout style="min-height: 100%;">
     <v-app-bar color="primary">
-      <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" :disabled="!authStore.isLoggedIn" />
+        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" :disabled="!authStore.isLoggedIn" />
 
-      <img src="@/assets/img/logo.png" alt="logo" class="logo" />
-      <v-toolbar-title class="nav-title"> Zero Waste Montenegro </v-toolbar-title>
+        <img src="@/assets/img/lockup.png" alt="logo" class="logo" />
+        <v-spacer></v-spacer>
 
-      <v-spacer></v-spacer>
+        <span v-if="authStore.isLoggedIn">
+          {{ authStore.userInfo?.preferred_username }}
+        </span>
 
-      <span v-if="authStore.isLoggedIn">
-        {{ authStore.userInfo?.preferred_username }}
-      </span>
-
-      <profile-menu :disabled="!authStore.isLoggedIn" />
+        <profile-menu :disabled="!authStore.isLoggedIn" />
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" :location="$vuetify.display.mobile ? 'bottom' : undefined" temporary>
@@ -107,10 +105,12 @@ watch(group, () => {
 
 <style scoped>
 .logo {
-  height: 58px;
+  height: 90px;
   /* Make non transparent pixels white */
   filter: brightness(0) invert(1);
   user-select: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .router-link {

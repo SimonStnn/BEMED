@@ -55,50 +55,68 @@ function calculateAverageEF(productId: number): number | null {
 </script>
 
 <template>
-  <v-container class="survey-card">
-    <h1 class="headline">Plastic Alternatives survey</h1>
-    <p class="efi-explanation">EFI means Environmental Footprint Index</p>
-    <v-row>
-      <v-col v-for="product in filteredProducts" :key="product.id" cols="12" class="survey-field">
-        <v-card-title class="question-label">
-          {{ product.name + ' - Choose an alternative:' || 'No question found' }}
-        </v-card-title>
-        <v-card-text>
-          <p class="sup-description">{{ product.description }}</p>
-          <div class="product-info-row">
-            <div class="info-item">
-              <v-icon icon="mdi-cash" class="icon"></v-icon>
-              <p>{{ product.price }}</p>
-              <span class="info-label">Price</span>
-            </div>
-            <div class="info-item">
-              <v-icon icon="mdi-weight-kilogram" class="icon"></v-icon>
-              <p>{{ product.weight }}</p>
-              <span class="info-label">Weight in KG</span>
-            </div>
+  <h1 class="headline">Plastic Alternatives survey</h1>
+  <p class="efi-explanation">EFI means Environmental Footprint Index</p>
+  <v-row>
+    <v-col v-for="product in filteredProducts" :key="product.id" cols="12" class="survey-field">
+      <v-card-title class="question-label">
+        {{ product.name + ' - Choose an alternative:' || 'No question found' }}
+      </v-card-title>
+      <v-card-text>
+        <p class="sup-description">{{ product.description }}</p>
+        <div class="product-info-row">
+          <div class="info-item">
+            <v-icon icon="mdi-cash" class="icon"></v-icon>
+            <p>{{ product.price }}</p>
+            <p class="info-label">Price</p>
           </div>
-          <div class="avg-ef">Average EFI: {{ calculateAverageEF(product.id) ?? product.EF ?? "N/A" }}</div>
-          <v-checkbox v-for="alt in product.alternatives || []" :key="alt.id"
-            class="alt-info-row" hide-details v-model="selectedAlternatives" :value="{ productId: product.id, alternativeId: alt.id }">
-            <template v-slot:label>
-              <div>
-                <span class="options">{{ alt.name }}</span>
-                <span class="efi-label" title="Environmental Footprint Index"> EF: {{ alt.EF }}</span><br>
-                <span class="descr-label">{{ alt.description }}</span>
-              </div>
-            </template>
-          </v-checkbox>
-        </v-card-text>
-      </v-col>
-      <v-btn color="primary" @click="submitTreatment">Submit Treatment</v-btn>
-    </v-row>
-  </v-container>
+          <div class="info-item">
+            <v-icon icon="mdi-weight-kilogram" class="icon"></v-icon>
+            <p>{{ product.weight }}</p>
+            <p class="info-label">Weight in KG</p>
+          </div>
+          <div class="info-item">
+            <v-icon icon="mdi-earth" class="icon"></v-icon>
+            <p title="Environmental Footprint Index">{{ product.EF || 0 }}</p>
+            <p class="info-label" title="Environmental Footprint Index">EFI</p>
+          </div>
+        </div>
+        <div title="Environmental Footprint Index">Average EFI: {{ calculateAverageEF(product.id) ?? product.EF ?? "N/A"
+          }}</div>
+        <v-checkbox v-for="alt in product.alternatives || []" :key="alt.id" class="alt-info-row" hide-details
+          v-model="selectedAlternatives" :value="{ productId: product.id, alternativeId: alt.id }">
+          <template v-slot:label>
+            <div>
+              <span class="alt-options">{{ alt.name }}</span>
+              <span class="efi-label" title="Environmental Footprint Index"> EFI: {{ alt.EF }}</span><br>
+              <span class="descr-label">{{ alt.description }}</span>
+            </div>
+          </template>
+        </v-checkbox>
+      </v-card-text>
+    </v-col>
+    <v-btn color="primary" @click="submitTreatment">Submit Treatment</v-btn>
+  </v-row>
 </template>
 
 <style scoped>
 .headline {
   font-size: 1.7rem;
   font-weight: bold;
+}
+
+.efi-explanation {
+  color: #2f5a9a;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.survey-field {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
 }
 
 .question-label {
@@ -115,31 +133,6 @@ function calculateAverageEF(productId: number): number | null {
   color: #555;
 }
 
-.efi-explanation {
-  color: #2f5a9a;
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.icon {
-  color: #666;
-}
-
-.efi-label {
-  font-size: 0.85em;
-  color: rgb(91, 91, 91);
-}
-
-.descr-label {
-  font-size: 0.85em;
-  color: rgb(91, 91, 91);
-}
-
-.options {
-  font-weight: bold;
-}
-
 .product-info-row {
   display: flex;
   align-items: center;
@@ -154,6 +147,10 @@ function calculateAverageEF(productId: number): number | null {
   margin: 0 8px;
 }
 
+.icon {
+  color: #666;
+}
+
 .alt-info-row {
   display: flex;
   gap: 10px;
@@ -162,16 +159,17 @@ function calculateAverageEF(productId: number): number | null {
   border-bottom: 1px solid #ccc;
 }
 
-.survey-card {
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
+.alt-options {
+  font-weight: bold;
 }
 
-.survey-field {
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
+.efi-label {
+  font-size: 0.85em;
+  color: rgb(91, 91, 91);
+}
+
+.descr-label {
+  font-size: 0.85em;
+  color: rgb(91, 91, 91);
 }
 </style>
