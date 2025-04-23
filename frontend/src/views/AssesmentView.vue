@@ -29,56 +29,6 @@ const timestamps = ref({
   updatedAt: new Date().toISOString()
 })
 
-/**
- * 
- * @param asessments Updates the products from the API(PUT request)
- * calls when a user changes a value in the input field(blur-event)
- */
-
-// PUT
-function updateProduct(asessments: any) {
-  console.log('Product updated:', asessments)
-  fetch(`/api/products/${asessments.id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(asessments)
-  }).then(res => res.json())
-    .then(data => {
-      console.log('Product updated successfully:', data)
-    })
-    .catch(error => {
-      console.error('Error updating product:', error)
-    })
-  timestamps.value.updatedAt = new Date().toISOString()
-}
-/**
- * Adds a new product to the list of products (dosen't call the API yet)
- * This function is called when the user clicks the "Add Product" button.
- * but not before the user press the "Submit" button.
- */
-// POST
-function addAssesment() {
-  const newAssesment: any = {
-    id: Date.now(), // Unique ID for the new assesmnets(temporary id)
-    userId: "string",
-    productId: 0,
-    ppm: 0,
-    product: {
-      id: 0,
-      name: "string",
-      description: "string",
-      price: 0,
-      weight: 0,
-      EF: 0
-    }
-  };
-  assesments.value.push(newAssesment)
-  console.log('Product added:', newAssesment)
-}
-
-
 
 function onSuccess(data: any) {
   console.log('Response from server:', data)
