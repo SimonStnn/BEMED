@@ -172,7 +172,9 @@ onMounted(async () => {
       <!-- <v-btn color="primary">Edit</v-btn>
         <v-btn color="error">Delete</v-btn> -->
       <v-btn v-if="product.alternatives.length" color="primary" variant="flat"
-        @click="$router.push({ name: 'products' })">Start Assessment</v-btn>
+        @click="()=>{
+          
+          $router.push({ name: 'assessmentsCreate', query: { productId: product.id} })}">Start Assessment</v-btn>
     </v-card-actions>
   </v-card>
 </template>

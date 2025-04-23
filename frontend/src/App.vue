@@ -24,6 +24,11 @@ const items: { title: string, url: string, icon: string }[] = [
     icon: 'mdi-clipboard-text',
   },
   {
+    title: 'Assessments',
+    url: '/assessments',
+    icon: 'mdi-clipboard-text',
+  },
+  {
     title: "products",
     url: '/products',
     icon: 'mdi-sitemap-outline',

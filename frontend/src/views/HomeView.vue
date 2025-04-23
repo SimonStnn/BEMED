@@ -16,7 +16,7 @@ console.log(authStore.userInfo);
       and behaviours to stop littering and reduce waste production.
       </h3>
       <p>
-        The methodologies we use involve alternatives to single-use products
+        The methodology we use involve alternatives to single-use products
         and packaging, reusing and recycling discarded materials at the source,
         and moving away from waste incineration and land-filling. <br>
         We are part of the global ecological transition, acting with respect for human rights
@@ -28,6 +28,7 @@ console.log(authStore.userInfo);
       </p>
       <h3 class="contact-us">Contact us</h3>
     </v-card-text>
+    
     <div class="contact-item">
     <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
     <span class="span">We are located in Podgorica, Montenegro</span></div>
@@ -54,6 +55,7 @@ console.log(authStore.userInfo);
 }
 
 .title {
+  text-align: center;
   padding-left: 10px;
   padding-top: 10px;
   font-family: 'Dosis', 'Helvetica', 'Arial', 'Lucida', 'sans-serif';

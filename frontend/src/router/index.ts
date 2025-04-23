@@ -4,6 +4,8 @@ import SurveyView from "../views/SurveyView.vue";
 import AlternativesView from "../views/AlternativesView.vue";
 import ProductsView from "../views/ProductsView.vue";
 import ProductDetailsView from "../views/ProductDetailsView.vue";
+import AssessmentView from '@/views/AssessmentView.vue'
+import CreateAssessmentView from "@/views/CreateAssessmentView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +24,16 @@ const router = createRouter({
       path: "/alternatives",
       name: "alternatives",
       component: AlternativesView,
+    },
+    {
+      path: '/assessments',
+      name: 'assessments',
+      component: AssessmentView,
+    },
+    {
+      path: '/assessments/create',
+      name: 'assessments-create',
+      component: CreateAssessmentView,
     },
     {
       path: "/products",
