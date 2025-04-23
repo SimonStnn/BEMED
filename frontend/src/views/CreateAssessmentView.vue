@@ -44,18 +44,18 @@ function onSuccess(data: any) {
 }
 
 function addAssessment() {
-  const assesments = productIds.map((productId) => {
+  const assessments = productIds.map((productId) => {
     return {
       productId: productId,
       ppm: ppmValues.value[productId] || 0
     };
   });
 
-  for (const assesment of assesments) { 
+  for (const assessment of assessments) { 
     sendRequest({
       path: '/assessment',
       method: 'POST',
-      body:  assesment 
+      body:  assessment 
     }).then(response => {
       if (response.ok) {
         console.log('Assessment added successfully');

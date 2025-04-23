@@ -24,8 +24,8 @@ const items: { title: string, url: string, icon: string }[] = [
     icon: 'mdi-clipboard-text',
   },
   {
-    title: 'Assesments',
-    url: '/assesments',
+    title: 'Assessments',
+    url: '/assessments',
     icon: 'mdi-clipboard-text',
   },
   {

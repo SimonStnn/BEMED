@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router';
 
 // List of products (mock data for now)
-const assesments = ref([
+const assessments = ref([
   {
     "id": 0,
     "userId": "string",
@@ -37,7 +37,7 @@ function onSuccess(data: any) {
 </script>
 <template>
   <div>
-    <h1>Assesments</h1>
+    <h1>Assessments</h1>
     <v-table striped hoverable>
       <thead>
         <tr>
@@ -48,13 +48,13 @@ function onSuccess(data: any) {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="assesment in assesments" :key="assesment.id">
-          <td>{{ assesment.product.name }}</td>
+        <tr v-for="assessment in assessments" :key="assessment.id">
+          <td>{{ assessment.product.name }}</td>
 
-          <td>{{ assesment.ppm }}</td>
-          <td>{{ assesment.createdAt }}</td>
+          <td>{{ assessment.ppm }}</td>
+          <td>{{ assessment.createdAt }}</td>
           <td>
-            <v-btn @click="$router.push({ name: 'product-details', query: { id: assesment.product.id } })"
+            <v-btn @click="$router.push({ name: 'product-details', query: { id: assessment.product.id } })"
               text="View Product" variant="tonal" color="secondary"></v-btn>
           </td>
         </tr>
