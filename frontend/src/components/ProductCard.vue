@@ -41,7 +41,7 @@ async function addAlternative(alternativeId: Product["id"]) {
     method: 'POST',
     body: {
       productId: props.product.id,
-      alternativeId: alternativeId
+      alternativeId: alternativeId, limit: 100
     }
   })
   if (!res.ok) {
@@ -80,6 +80,7 @@ onMounted(async () => {
   possibleAlternativeProducts.value = (await sendRequest({
     path: '/product',
     method: 'GET',
+    body: { limit: 100 },
   }).then((res) => {
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     return res.json();

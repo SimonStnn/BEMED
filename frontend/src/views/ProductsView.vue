@@ -7,7 +7,7 @@ const products = ref<Product[]>([]);
 
 onMounted(async () => {
   try {
-    const res = await sendRequest({ path: '/product', method: 'GET' });
+    const res = await sendRequest({ path: '/product', method: 'GET', body: { limit: 100 } });
     if (!res.ok)
       throw new Error(`HTTP error! status: ${res.status}`);
     const response = await res.json();
@@ -20,7 +20,7 @@ onMounted(async () => {
 </script>
 <template>
   <div>
-    <h1>Products</h1>
+    <h1 class="headline">Product information</h1>
     <v-table striped hoverable>
       <thead>
         <tr>
@@ -57,3 +57,9 @@ onMounted(async () => {
 
   </div>
 </template>
+<style scoped>
+.headline {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+</style>
