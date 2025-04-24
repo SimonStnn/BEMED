@@ -1,12 +1,32 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import { sendRequest } from '@/apiController';
-import type Product from '@/schemas/product';
+import { useRouter, useRoute } from 'vue-router';
+
+type Product = {
+  id: number;
+  name: string;
+  description: string | null;
+  price: number | null;
+  weight: number | null;
+  EF: number | null;
+  alternatives?: {
+    id: number;
+    name: string;
+    description: string | null;
+    price: number | null;
+    weight: number | null;
+    EF: number | null;
+  }[] | null;
+};
 
 const products = ref<Product[]>([]);
 const selectedAlternatives = ref<{ productId: number, alternativeId: number }[]>([]);
 const filteredProducts = ref<Product[]>([]);
 const allowedProductIds = [1, 5, 13, 18, 25, 29, 34, 38, 42, 47, 50, 53, 62, 59];
+const router = useRouter();
+const route = useRoute();
+const receivedAlternativeIds = ref<number[]>([]);
 
 onMounted(async () => {
   try {
@@ -19,6 +39,17 @@ onMounted(async () => {
     );
   } catch (error) {
     console.error('Failed to fetch products:', error);
+  }
+});
+onMounted(() => {
+  const pushedData = (route as any).state?.pushedData; // Cast route to any to access state
+  if (pushedData) {
+    try {
+      receivedAlternativeIds.value = JSON.parse(pushedData);
+      console.log('Received Alternative IDs:', receivedAlternativeIds.value);
+    } catch (err) {
+      console.error('Failed to parse pushedData:', err);
+    }
   }
 });
 
@@ -52,6 +83,7 @@ function calculateAverageEF(productId: number): number | null {
   const total = selectedEFs.reduce((sum, ef) => sum + ef, 0);
   return Number((total / selectedEFs.length).toFixed(2));
 }
+
 </script>
 
 <template>
@@ -77,7 +109,7 @@ function calculateAverageEF(productId: number): number | null {
           </div>
           <div class="info-item">
             <v-icon icon="mdi-earth" class="icon"></v-icon>
-            <p title="Environmental Footprint Index">{{ product.EF || 0 }}</p>
+            <p title="Environmental Footprint Index">{{ product.EF || '-' }}</p>
             <p class="info-label" title="Environmental Footprint Index">EFI</p>
           </div>
         </div>
@@ -95,7 +127,10 @@ function calculateAverageEF(productId: number): number | null {
         </v-checkbox>
       </v-col>
     </v-row>
-    <v-btn class="sub-button" color="primary" @click="submitTreatment">Submit Treatment</v-btn>
+    <router-link :to="{ name: 'assessments-create', state: { selectedAlternatives } }"></router-link>
+    <v-btn class="sub-button" color="primary" 
+    @click="router.push({ name: 'assessments-create',query: {productId: selectedAlternatives.map(alt=>alt.alternativeId).join(',') }})"	
+    >Next step - start assessment</v-btn>
   </v-card-text>
 </template>
 
