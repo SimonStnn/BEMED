@@ -58,9 +58,6 @@ class ProductController {
     }
     query += ` LIMIT ? OFFSET ?;`;
 
-    console.log("Query:", query);
-    console.log("Bind Params:", [...bindParam, limit, skip]);
-
     const [result, _] = await db.execute<RowDataPacket[]>(query, [
       ...bindParam,
       limit,

@@ -1,4 +1,4 @@
-use "BEMED";
+USE "BEMED";
 -- Treatments Table
 CREATE TABLE treatments (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -576,9 +576,6 @@ VALUES
 (53, 54),
 (53, 55),
 (53, 56),
-(62, 57),
-(62, 58),
 (59, 60),
 (59, 61);
-
 ;

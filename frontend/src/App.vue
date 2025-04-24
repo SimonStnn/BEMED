@@ -48,8 +48,9 @@ watch(group, () => {
   <v-layout style="min-height: 100%;">
     <v-app-bar color="primary">
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" :disabled="!authStore.isLoggedIn" />
-
-        <img src="@/assets/img/lockup.png" alt="logo" class="logo" />
+        <RouterLink to="/" class="nav-title" style="text-decoration: none; color: white;">
+          <img src="@/assets/img/lockup.png" alt="logo" class="logo"/>
+        </RouterLink>
         <v-spacer></v-spacer>
 
         <span v-if="authStore.isLoggedIn">
