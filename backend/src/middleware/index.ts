@@ -18,8 +18,8 @@ export function setupMiddleware(app: Express) {
   // Middleware to enable CORS
   app.use(
     cors({
-      origin: ["*"],
-      // origin: ["http://localhost", "http://localhost:81", url.frontend],
+      // origin: ["*"],
+      origin: ["http://localhost", "http://localhost:81", url.frontend],
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       allowedHeaders: "Content-Type, Authorization, Accept",
       exposedHeaders: "Content-Type",

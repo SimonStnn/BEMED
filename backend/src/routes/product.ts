@@ -78,4 +78,17 @@ protectedRouter.delete("/alternative", async (req: Request, res: Response) => {
     );
 });
 
+protectedRouter.get("/used", async (req: Request, res: Response) => {
+  res.status(200).json(
+    await ProductController.getUsedProducts(
+      (req as any).auth?.sub, // Changed from req.kauth to req.auth
+      req.query.skip ? Number(req.query.skip) : undefined,
+      req.query.limit ? Number(req.query.limit) : undefined
+    )
+  );
+});
+
+// Include protected routes
+router.use(protectedRouter);
+
 export default router;

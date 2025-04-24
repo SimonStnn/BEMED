@@ -4,6 +4,7 @@ import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 import ProductSchema, { table } from "@/schemas/product";
 import { table as alternativesTable } from "@/schemas/alternative";
+import AssessmentController from "@/controllers/assessmentController";
 import db from "@/db";
 
 const queriesPath = path.resolve(__dirname, "..", "db", "queries");
@@ -30,20 +31,35 @@ class ProductController {
   }
 
   public static async get(
-    filter?: ProductSchema["id"],
+    filter?: ProductSchema["id"] | ProductSchema["id"][],
     skip: number = 0,
     limit: number = 10
   ): Promise<Product[]> {
     const queryPath = path.resolve(queriesPath, "getProduct.sql");
     let query = await fs.promises.readFile(queryPath, "utf-8");
-    const bindParam = filter ? [filter] : [];
+    let bindParam: any[] = [];
 
     // Replace ";" with " " to avoid SQL syntax error
     query = query.replace(/;(?=\s*$)/g, " ");
+
     if (!filter) {
       query = query.replace(/WHERE p.id = \?/g, " ");
+    } else if (Array.isArray(filter)) {
+      // Handle array of IDs
+      const placeholders = filter.map(() => "?").join(", ");
+      query = query.replace(
+        /WHERE p.id = \?/g,
+        `WHERE p.id IN (${placeholders || -1})`
+      );
+      bindParam = [...filter];
+    } else {
+      // Handle single ID
+      bindParam = [filter];
     }
     query += ` LIMIT ? OFFSET ?;`;
+
+    console.log("Query:", query);
+    console.log("Bind Params:", [...bindParam, limit, skip]);
 
     const [result, _] = await db.execute<RowDataPacket[]>(query, [
       ...bindParam,
@@ -124,6 +140,18 @@ class ProductController {
     const [result] = await db.execute<ResultSetHeader>(query, values);
 
     return (await this.get(values[0]))[0];
+  }
+
+  public static async getUsedProducts(
+    userId: string,
+    skip: number = 0,
+    limit: number = 10
+  ): Promise<Product[]> {
+    const assessments = await AssessmentController.get({ userId }, skip, limit);
+    console.log("Assessments:", assessments);
+    const productIds = assessments.map((assessment) => assessment.productId);
+    console.log("Product IDs:", productIds);
+    return await this.get(productIds, skip, limit);
   }
 }
 
