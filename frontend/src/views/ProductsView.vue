@@ -18,6 +18,7 @@ onMounted(async () => {
   }
 });
 </script>
+
 <template>
   <div>
     <h1 class="headline">Product information</h1>
@@ -36,9 +37,9 @@ onMounted(async () => {
         <tr v-for="product in products" :key="product.id">
           <td>{{ product.name }}</td>
           <td>{{ product.description }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.weight }}</td>
-          <td>{{ product.EF }}</td>
+          <td>{{ product.price ?? '-' }}</td>
+          <td>{{ product.weight ?? '-' }}</td>
+          <td>{{ product.EF ?? '-' }}</td>
           <td>
             <v-dialog max-width="500">
               <template v-slot:activator="{ props: activatorProps }">
@@ -54,9 +55,9 @@ onMounted(async () => {
       </tbody>
     </v-table>
 
-
   </div>
 </template>
+
 <style scoped>
 .headline {
   font-size: 1.7rem;

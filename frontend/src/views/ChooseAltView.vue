@@ -95,7 +95,7 @@ function calculateAverageEF(productId: number): number | null {
         </v-checkbox>
       </v-col>
     </v-row>
-    <v-btn class="sub-button" color="primary" @click="submitTreatment">Submit Treatment</v-btn>
+    <v-btn class="sub-button" color="primary" @click="submitTreatment">Next step</v-btn>
   </v-card-text>
 </template>
 

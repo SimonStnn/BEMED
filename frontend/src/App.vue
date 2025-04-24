@@ -11,27 +11,27 @@ const items: { title: string, url: string, icon: string }[] = [
   {
     title: 'Home',
     url: '/',
-    icon: 'mdi-home',
+    icon: 'mdi-home-outline',
   },
   {
     title: 'Survey',
     url: '/survey',
-    icon: 'mdi-clipboard-text',
+    icon: 'mdi-file-document-edit',
   },
   {
     title: 'Assessments',
     url: '/assessments',
-    icon: 'mdi-clipboard-text',
-  },
-  {
-    title: "products",
-    url: '/products',
-    icon: 'mdi-sitemap-outline',
+    icon: 'mdi-file-chart-check',
   },
   {
     title: 'Choose Alternatives',
     url: '/alternatives',
-    icon: 'mdi-clipboard-text',
+    icon: 'mdi-file-arrow-left-right',
+  },
+  {
+    title: "Products",
+    url: '/products',
+    icon: 'mdi-archive-outline',
   },
 ]
 
