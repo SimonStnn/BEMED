@@ -1,15 +1,15 @@
-import { Request, Router, type Response } from "express";
-// import keycloak from "@/middleware/keycloak";
+import { Request, Router, type Response, NextFunction } from "express";
+import jwtMiddleware from "@/middleware/jwt";
 import AssessmentController from "@/controllers/assessmentController";
 
 const router = Router();
-// router.use(keycloak.protect());
+router.use(jwtMiddleware.protect());
 
 router.get("/", async (req: Request, res: Response) => {
   res.status(200).json(
     await AssessmentController.get(
       {
-        userId: (req as any).kauth?.grant.access_token.content.sub,
+        userId: (req as any).auth?.sub,
         productId: req.query.productId
           ? Number(req.query.productId)
           : undefined,
@@ -24,7 +24,7 @@ router.post("/", async (req: Request, res: Response) => {
   console.log(req.body);
   res.status(201).json(
     await AssessmentController.create({
-      userId: (req as any).kauth?.grant.access_token.content.sub,
+      userId: (req as any).auth?.sub,
       productId: Number(req.body.productId),
       ppm: Number(req.body.ppm),
     })

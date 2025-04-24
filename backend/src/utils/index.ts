@@ -9,6 +9,7 @@ const requiredEnvVars = [
   "KEYCLOAK_CLIENT_SECRET",
   "KEYCLOAK_REALM",
   "BEMED_DOMAIN",
+  "BEMED_PROTOCOL",
   "BEMED_DB_NAME",
   "BEMED_DB_USERNAME",
   "BEMED_DB_PASSWORD",
@@ -43,13 +44,20 @@ export function loadEnv() {
 }
 loadEnv();
 
-const { DNS_PREFIX_KEYCLOAK, DNS_PREFIX_BEMED_BACKEND, BEMED_DOMAIN } =
-  process.env as Record<EnvVariable, string>;
+const {
+  DNS_PREFIX_KEYCLOAK,
+  DNS_PREFIX_BEMED_BACKEND,
+  BEMED_DOMAIN,
+  BEMED_PROTOCOL,
+} = process.env as Record<EnvVariable, string>;
 export const url = {
-  keycloak: new URL(`http://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`).toString(),
-  backend: new URL(
-    `http://${DNS_PREFIX_BEMED_BACKEND}.${BEMED_DOMAIN}`
+  keycloak: new URL(
+    `${BEMED_PROTOCOL}://${DNS_PREFIX_KEYCLOAK}.${BEMED_DOMAIN}`
   ).toString(),
+  backend: new URL(
+    `${BEMED_PROTOCOL}://${DNS_PREFIX_BEMED_BACKEND}.${BEMED_DOMAIN}`
+  ).toString(),
+  frontend: new URL(`${BEMED_PROTOCOL}://${BEMED_DOMAIN}`).toString(),
 } as const;
 
 export function inDocker(): boolean {

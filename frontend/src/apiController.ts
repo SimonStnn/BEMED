@@ -9,14 +9,26 @@ export async function sendRequest(props: {
 }) {
   const authStore = useAuthStore();
 
+  // Check if token exists before making the request
+  if (!authStore.token) {
+    console.error("Auth token is missing. User might not be logged in.");
+    // Attempt to refresh auth if possible
+    const refreshed = await authStore.checkAuth();
+    if (!refreshed || !authStore.token) {
+      throw new Error("Authentication required. Missing token.");
+    }
+  }
+
   let url = getAPIUrl(props.path);
   let options: RequestInit = {
     method: props.method,
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: `Bearer ${authStore.token}`, // Retrieve token from cookies
+      Authorization: `Bearer ${authStore.token}`,
     },
+    // Enable credentials to ensure cookies are sent if needed
+    // credentials: "include",
   };
 
   // Add query parameters to the URL if the method is GET else add the data to the body
@@ -29,6 +41,10 @@ export async function sendRequest(props: {
 
   const res = await fetch(url, options);
   if (!res.ok) {
+    if (res.status === 401 || res.status === 403) {
+      await authStore.checkAuth();
+      throw new Error(`Authentication error: ${res.status}`);
+    }
     throw new Error(`HTTP: ${res.status}`);
   }
   return res;
