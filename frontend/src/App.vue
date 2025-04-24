@@ -14,14 +14,14 @@ const items: { title: string, url: string, icon: string }[] = [
     icon: 'mdi-home-outline',
   },
   {
+    title: "Products",
+    url: '/products',
+    icon: 'mdi-archive-outline',
+  },
+  {
     title: 'Survey',
     url: '/survey',
     icon: 'mdi-file-document-edit',
-  },
-  {
-    title: 'Assessments',
-    url: '/assessments',
-    icon: 'mdi-file-chart-check',
   },
   {
     title: 'Choose Alternatives',
@@ -29,13 +29,13 @@ const items: { title: string, url: string, icon: string }[] = [
     icon: 'mdi-file-arrow-left-right',
   },
   {
-    title: "Products",
-    url: '/products',
-    icon: 'mdi-archive-outline',
+    title: 'Assessments',
+    url: '/assessments',
+    icon: 'mdi-file-chart-check',
   },
 ]
 
-const drawer = ref(false)
+const drawer = ref(true)
 const logginInLoader = ref(false)
 const group = ref<string | null>(null)
 
@@ -60,7 +60,7 @@ watch(group, () => {
         <profile-menu :disabled="!authStore.isLoggedIn" />
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" :location="$vuetify.display.mobile ? 'bottom' : undefined" temporary>
+    <v-navigation-drawer v-model="drawer" app>
       <v-list>
         <RouterLink v-for="item in items" :key="item.url" class="v-list-item router-link" :to="item.url">
           <v-icon>{{ item.icon }}</v-icon>
@@ -110,7 +110,7 @@ watch(group, () => {
   /* Make non transparent pixels white */
   filter: brightness(0) invert(1);
   user-select: none;
-  padding-top: 10px;
+  padding-top: 15px;
   padding-bottom: 10px;
 }
 
