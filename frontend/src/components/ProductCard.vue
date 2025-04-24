@@ -174,12 +174,8 @@ onMounted(async () => {
       <v-divider></v-divider>
       <v-card-actions class="d-flex justify-end">
         <v-btn v-if="goBack" color="secondary" variant="tonal" @click="goBack">Back</v-btn>
-        <!-- <v-btn color="primary">Edit</v-btn>
-        <v-btn color="error">Delete</v-btn> -->
-        <v-btn v-if="product.alternatives.length" color="primary" variant="flat" @click="() => {
-
-          $router.push({ name: 'assessmentsCreate', query: { productId: product.id } })
-        }">Start Assessment</v-btn>
+        <v-btn v-if="product.alternatives.length" color="primary" variant="flat" @click="() => $router.push({ name: 'assessments-create', query: { productId: product.id } })
+        ">Start Assessment</v-btn>
       </v-card-actions>
     </template>
   </v-card>

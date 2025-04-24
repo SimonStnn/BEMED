@@ -145,9 +145,7 @@ class ProductController {
     limit: number = 10
   ): Promise<Product[]> {
     const assessments = await AssessmentController.get({ userId }, skip, limit);
-    console.log("Assessments:", assessments);
     const productIds = assessments.map((assessment) => assessment.productId);
-    console.log("Product IDs:", productIds);
     return await this.get(productIds, skip, limit);
   }
 }

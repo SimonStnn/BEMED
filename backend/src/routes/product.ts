@@ -9,13 +9,35 @@ protectedRouter.use(jwtMiddleware.protect());
 
 // Public routes
 router.get("/", async (req: Request, res: Response) => {
+  let productId: number | number[] | undefined;
+  if (req.query.id) {
+    const idParam = String(req.query.id);
+    if (idParam.includes(",")) {
+      // Handle comma-separated list of IDs
+      productId = idParam
+        .split(",")
+        .map((id) => Number(id.trim()))
+        .filter((id) => !isNaN(id));
+    } else {
+      // Handle single ID
+      const parsedId = Number(idParam);
+      productId = !isNaN(parsedId) ? parsedId : undefined;
+    }
+  } else {
+    productId = undefined;
+  }
+
   res
     .status(200)
     .json(
       await ProductController.get(
-        req.query.id ? Number(req.query.id) : undefined,
+        productId,
         req.query.skip ? Number(req.query.skip) : undefined,
-        req.query.limit ? Number(req.query.limit) : undefined
+        Array.isArray(productId)
+          ? productId.length
+          : req.query.limit
+          ? Number(req.query.limit)
+          : undefined
       )
     );
 });
