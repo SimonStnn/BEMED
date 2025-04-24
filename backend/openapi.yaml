@@ -232,6 +232,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Product"
+        "404":
+          description: Product not found
   /product/alternative:
     post:
       summary: Add a product alternative
@@ -281,6 +283,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Product"
+  /product/used:
+    get:
+      summary: Get products used by the current user
+      security:
+        - keycloakAuth: []
+      tags:
+        - Products
+      parameters:
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
   /treatment:
     get:
       summary: Get treatments

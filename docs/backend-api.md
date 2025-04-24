@@ -168,6 +168,31 @@ Deletes a product record.
 
 - `id`: ID of the product to delete
 
+#### GET /product/used
+
+Retrieves products that have been used by the current user in assessments.
+
+**Query Parameters:**
+
+- `skip` (optional): Number of records to skip for pagination (default: 0)
+- `limit` (optional): Maximum number of records to return (default: 10)
+
+**Response:**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Plastic Water Bottle",
+    "description": "Single-use plastic water bottle",
+    "price": 1.5,
+    "weight": 15,
+    "EF": 8.4,
+    "alternatives": []
+  }
+]
+```
+
 #### POST /product/alternative
 
 Creates a relationship between a product and its alternative.
