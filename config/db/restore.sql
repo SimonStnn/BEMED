@@ -532,99 +532,53 @@ VALUES --
 ;
 -- Insert Alternatives
 INSERT INTO alternatives (productId, alternativeId)
-VALUES --
-    -- plastic straws can be replaced by paper straws
-    (1, 2),
-    -- plastic straws can be replaced by reusable straws
-    (1, 3),
-    -- plastic straws can be replaced by no straws
-    (1, 4),
-    -- SUP cups can be replaced by paper cups
-    (5, 6),
-    -- SUP cups can be replaced by hard plastic cups
-    (5, 7),
-    -- SUP cups can be replaced by reusable cups
-    (5, 8),
-    -- SUP plates can be replaced by paper plates
-    (9, 10),
-    -- paper  can be replaced by reusable plates
-    (9, 11),
-    -- paper cups can be replaced by hard plastic plates
-    (9, 12),
-    -- SUP water bottles can be replaced by no water bottles
-    (13, 14),
-    -- SUP water bottles can be replaced by a water dispenser
-    (13, 15),
-    -- SUP water bottles can be replaced by returnable glass bottles
-    (13, 16),
-    -- SUP water bottles can be replaced by single use glass bottles
-    (13, 17),
-    -- SUP juice bottles can be replaced by returnable glass bottles
-    (18, 19),
-    -- SUP juice bottles can be replaced by single use glass bottles
-    (18, 20),
-    -- SUP juice bottles can be replaced by drinks made on site
-    (18, 21),
-    -- SUP juice bottles can be replaced by Big (>5L) SUP bottles
-    (18, 22),
-    -- SUP juice bottles can be replaced by cans with a plastic lining
-    (18, 23),
-    -- SUP juice bottles can be replaced by tetra packs
-    (18, 24),
-    -- SUP coffee capsules can be replaced by coffee in plastic or aluminium bags
-    (25, 26),
-    -- SUP coffee capsules can be replaced by coffee purchased by weight
-    (25, 27),
-    -- SUP coffee capsules can be replaced by no capsules used
-    (25, 28),
-    -- SUP tea bags can be replaced by bigger plastic tea bags
-    (29, 30),
-    -- SUP tea bags can be replaced by tea purchased by weight
-    (29, 31),
-    -- SUP tea bags can be replaced by not using tea bags
-    (29, 32),
-    -- SUP tea bags can be replaced by paper tea bags
-    (29, 33),
-    -- SUP coffee stir sticks can be replaced by reusable spoons
-    (34, 35),
-    -- SUP coffee stir sticks can be replaced by wooden stir sticks
-    (34, 36),
-    -- SUP coffee stir sticks can be replaced by not using sticks
-    (34, 37),
-    -- SUP cutlery can be replaced by reusable cutlery
-    (38, 39),
-    -- SUP cutlery can be replaced by biodegradable cutlery
-    (38, 40),
-    -- SUP cutlery can be replaced by bring your own cutlery
-    (38, 41),
-    -- SUP bags can be replaced by paper bags
-    (42, 43),
-    -- SUP bags can be replaced by reusable bags or baskets
-    (42, 44),
-    -- SUP bags can be replaced by BYO - bring your own bag
-    (42, 45),
-    -- SUP bags can be replaced by not using bags
-    (42, 46),
-    -- Plastic/polystyrene food packaging can be replaced by single use paper boxes
-    (47, 48),
-    -- Plastic/polystyrene food packaging can be replaced by not using boxes
-    (47, 49),
-    -- Individual packaging can be replaced by reusable containers
-    (50, 51),
-    -- Individual packaging can be replaced by individual portions medium up to 1KG, large >1KG
-    (50, 52),
-    -- Plastic toilet products/packaging can be replaced by toiletries in reusable containers
-    (53, 54),
-    -- Plastic toilet products/packaging can be replaced by soaps without plastic packaging
-    (53, 55),
-    -- Plastic toilet products/packaging can be replaced by no toiletries
-    (53, 56),
-    -- Plastic toilet products/packaging can be replaced by no toiletries packaging
-    (53, 56),
-    -- Hand sanitizer in large single use bottles can be replaced by hand washing
-    (57, 58),
-    -- SUP gloves in large single use bottles can be replaced reusable rubber gloves
-    (59, 60),
-    -- SUP gloves in large single use bottles can be replaced by no gloves, hand washing
-    (59, 61),
+VALUES
+(1, 2),
+(1, 3),
+(1, 4),
+(5, 6),
+(5, 7),
+(5, 8),
+(9, 10),
+(9, 11),
+(9, 12),
+(13, 14),
+(13, 15),
+(13, 16),
+(13, 17),
+(18, 19),
+(18, 20),
+(18, 21),
+(18, 22),
+(18, 23),
+(18, 24),
+(25, 26),
+(25, 27),
+(25, 28),
+(29, 30),
+(29, 31),
+(29, 32),
+(29, 33),
+(34, 35),
+(34, 36),
+(34, 37),
+(38, 39),
+(38, 40),
+(38, 41),
+(42, 43),
+(42, 44),
+(42, 45),
+(42, 46),
+(47, 48),
+(47, 49),
+(50, 51),
+(50, 52),
+(53, 54),
+(53, 55),
+(53, 56),
+(62, 57),
+(62, 58),
+(59, 60),
+(59, 61);
+
 ;
