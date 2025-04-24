@@ -1,13 +1,10 @@
 import cors from "cors";
 import express, { type Express } from "express";
-import session from "express-session";
 
-import keycloak, { memoryStore } from "@/middleware/keycloak";
 import logMiddleware from "@/middleware/log";
 import error_handler from "@/middleware/error_handler";
-import { EnvVariable } from "@/utils";
-
-const { KEYCLOAK_CLIENT_SECRET } = process.env as Record<EnvVariable, string>;
+import jwtMiddleware from "@/middleware/jwt";
+import { type EnvVariable, url } from "@/utils";
 
 export function setupMiddleware(app: Express) {
   console.debug("Setting up middleware...");
@@ -21,29 +18,19 @@ export function setupMiddleware(app: Express) {
   // Middleware to enable CORS
   app.use(
     cors({
-      origin: "*",
+      // origin: ["*"],
+      origin: ["http://localhost", "http://localhost:81", url.frontend],
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      allowedHeaders: "Content-Type, Authorization",
-      credentials: true,
+      allowedHeaders: "Content-Type, Authorization, Accept",
+      exposedHeaders: "Content-Type",
+      // credentials: true,
     })
   );
 
   // Middleware to parse JSON and URL-encoded data
   app.use(express.json());
-
-  // Middleware to enable sessions
-  app.use(
-    session({
-      secret: KEYCLOAK_CLIENT_SECRET,
-      resave: false,
-      saveUninitialized: true,
-      store: memoryStore,
-    })
-  );
-
-  // Keycloak middleware to protect routes
-  app.use(keycloak.middleware());
-
-  // Middleware to parse URL-encoded data
   app.use(express.urlencoded({ extended: true }));
+
+  // JWT error handler - must be after JWT middleware is applied to routes but before other error handlers
+  app.use(jwtMiddleware.handleJwtErrors as any);
 }

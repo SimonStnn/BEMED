@@ -1,11 +1,13 @@
 import { Request, Router, type Response } from "express";
-
-// import keycloak from "@/middleware/keycloak";
+import jwtMiddleware from "@/middleware/jwt";
 import ProductController from "@/controllers/productController";
 
 const router = Router();
-// router.use(keycloak.protect());
+// Apply JWT protection to certain routes that need authentication
+const protectedRouter = Router();
+protectedRouter.use(jwtMiddleware.protect());
 
+// Public routes
 router.get("/", async (req: Request, res: Response) => {
   res
     .status(200)
@@ -18,7 +20,8 @@ router.get("/", async (req: Request, res: Response) => {
     );
 });
 
-router.post("/", async (req: Request, res: Response) => {
+// Protected routes
+protectedRouter.post("/", async (req: Request, res: Response) => {
   res.status(201).json(
     await ProductController.create({
       name: req.body.name,
@@ -30,7 +33,7 @@ router.post("/", async (req: Request, res: Response) => {
   );
 });
 
-router.put("/", async (req: Request, res: Response) => {
+protectedRouter.put("/", async (req: Request, res: Response) => {
   res.status(200).json(
     await ProductController.update({
       id: req.body.id,
@@ -43,7 +46,7 @@ router.put("/", async (req: Request, res: Response) => {
   );
 });
 
-router.delete("/", async (req: Request, res: Response) => {
+protectedRouter.delete("/", async (req: Request, res: Response) => {
   try {
     res.status(200).json(await ProductController.delete(Number(req.body.id)));
   } catch (error) {
@@ -53,7 +56,7 @@ router.delete("/", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/alternative", async (req: Request, res: Response) => {
+protectedRouter.post("/alternative", async (req: Request, res: Response) => {
   res
     .status(201)
     .json(
@@ -64,7 +67,7 @@ router.post("/alternative", async (req: Request, res: Response) => {
     );
 });
 
-router.delete("/alternative", async (req: Request, res: Response) => {
+protectedRouter.delete("/alternative", async (req: Request, res: Response) => {
   res
     .status(200)
     .json(
@@ -74,5 +77,18 @@ router.delete("/alternative", async (req: Request, res: Response) => {
       )
     );
 });
+
+protectedRouter.get("/used", async (req: Request, res: Response) => {
+  res.status(200).json(
+    await ProductController.getUsedProducts(
+      (req as any).auth?.sub, // Changed from req.kauth to req.auth
+      req.query.skip ? Number(req.query.skip) : undefined,
+      req.query.limit ? Number(req.query.limit) : undefined
+    )
+  );
+});
+
+// Include protected routes
+router.use(protectedRouter);
 
 export default router;

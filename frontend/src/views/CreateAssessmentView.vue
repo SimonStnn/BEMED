@@ -51,11 +51,11 @@ function addAssessment() {
     };
   });
 
-  for (const assessment of assessments) { 
+  for (const assessment of assessments) {
     sendRequest({
       path: '/assessment',
       method: 'POST',
-      body:  assessment 
+      body: assessment
     }).then(response => {
       if (response.ok) {
         console.log('Assessment added successfully');
@@ -101,7 +101,7 @@ function addAssessment() {
               </template>
 
               <template v-slot:default="{ isActive }">
-                <ProductCard :product="product" :go-back="() => { isActive.value = false }" />
+                <ProductCard :product="product" :go-back="() => { isActive.value = false }" disable-link hide-actions />
               </template>
             </v-dialog>
           </td>
