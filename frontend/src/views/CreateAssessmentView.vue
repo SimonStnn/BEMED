@@ -43,7 +43,7 @@ function onSuccess(data: any) {
   console.log('Response from server:', data)
 }
 
-function addAssessment() {
+async function addAssessment() {
   const assessments = productIds.map((productId) => {
     return {
       productId: productId,
@@ -51,28 +51,38 @@ function addAssessment() {
     };
   });
 
-  for (const assessment of assessments) {
-    sendRequest({
-      path: '/assessment',
-      method: 'POST',
-      body: assessment
-    }).then(response => {
+  const promises = assessments.map(async (assessment) => {
+    try {
+      const response = await sendRequest({
+        path: '/assessment',
+        method: 'POST',
+        body: assessment
+      })
       if (response.ok) {
         console.log('Assessment added successfully');
+        return true;
       } else {
-        console.error('Failed to add assessment');
+        throw new Error(`Failed to add assessment: ${response.statusText}`);
       }
-    }).catch(error => {
-      console.error('Error while adding assessment:', error);
-    });
+    } catch (error) {
+      console.error('Error adding assessment:', error);
+      return false;
+    }
   }
+  );
+
+  return await Promise.all(promises);
 }
 </script>
 
 <template>
   <div v-if="products">
-    <form v-on:submit="(e) => { e.preventDefault(); addAssessment(); $router.push({ name: 'assessments' }) }">
-      <v-table striped hoverable>
+    <form v-on:submit="(e) => {
+      e.preventDefault();
+      addAssessment().then(() => {
+        $router.push({ name: 'assessments' });
+      });
+    }"> <v-table striped hoverable>
         <thead>
           <tr>
             <th>Product name</th>
