@@ -105,7 +105,7 @@ function calculateAverageEF(productId: number): number | null {
           <div class="info-item">
             <v-icon icon="mdi-weight-gram" class="icon"></v-icon>
             <p>{{ product.weight }}</p>
-            <p class="info-label">Weight in gram</p>
+            <p class="info-label">Weight in grams</p>
           </div>
           <div class="info-item">
             <v-icon icon="mdi-earth" class="icon"></v-icon>

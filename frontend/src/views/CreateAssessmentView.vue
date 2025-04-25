@@ -92,8 +92,8 @@ function addAssessment() {
               <v-text-field class="ppm-col" v-model="ppmValues[product.id]" label="Pieces per month" type="number"
                 min="0" required></v-text-field>
             </td>
-            <td>{{ product.weight ?? '-' }} gram</td>
-            <td>{{ ((product.weight || 0) * (ppmValues[product.id] || 0)).toFixed(2) + ' gram' }}</td>
+            <td>{{ product.weight ?? '-' }} grams</td>
+            <td>{{ ((product.weight || 0) * (ppmValues[product.id] || 0)).toFixed(2) + ' grams' }}</td>
 
             <td>€{{ product.price ?? ' -' }}</td>
             <td>€{{ ((product.price || 0) * (ppmValues[product.id] || 0)).toFixed(2) }}</td>
