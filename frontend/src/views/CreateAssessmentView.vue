@@ -67,50 +67,73 @@ function addAssessment() {
     });
   }
 }
-
-
 </script>
 
 <template>
   <div v-if="products">
-    <v-table striped hoverable>
-      <thead>
-        <tr>
-          <th>Product name</th>
-          <th>Pieces per month</th>
-          <th>Weight</th>
-          <th>Total weight</th>
-          <th>Price</th>
-          <th>Total Price</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in products" :key="product.id">
-          <td>{{ product.name }}</td>
-          <v-text-field v-model="ppmValues[product.id]" label="Pieces Per Month" type="number" min="0"></v-text-field>
-          <td>{{ product.weight }}</td>
-          <td>{{ ((product.weight || 0) * (ppmValues[product.id] || 0)).toFixed(2) }}</td>
+    <form v-on:submit="(e) => { e.preventDefault(); addAssessment(); $router.push({ name: 'assessments' }) }">
+      <v-table striped hoverable>
+        <thead>
+          <tr>
+            <th>Product name</th>
+            <th>Pieces per month</th>
+            <th>Weight (grams)</th>
+            <th>Total weight</th>
+            <th>Price</th>
+            <th>Total Price</th>
+            <th>EF score</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="product in products" :key="product.id">
+            <td>{{ product.name }}</td>
+            <td>
+              <v-text-field class="ppm-col" v-model="ppmValues[product.id]" label="Pieces per month" type="number"
+                min="0" required></v-text-field>
+            </td>
+            <td>{{ product.weight ?? '-' }} grams</td>
+            <td>{{ ((product.weight || 0) * (ppmValues[product.id] || 0)).toFixed(2) + ' grams' }}</td>
 
-          <td>€{{ product.price }}</td>
-          <td>€{{ ((product.price || 0) * (ppmValues[product.id] || 0)).toFixed(2) }}</td>
-          <td>
-            <v-dialog max-width="500">
-              <template v-slot:activator="{ props: activatorProps }">
-                <v-btn v-bind="activatorProps" text="View Details" variant="tonal" color="secondary"></v-btn>
-              </template>
+            <td>€{{ product.price ?? ' -' }}</td>
+            <td>€{{ ((product.price || 0) * (ppmValues[product.id] || 0)).toFixed(2) }}</td>
 
-              <template v-slot:default="{ isActive }">
-                <ProductCard :product="product" :go-back="() => { isActive.value = false }" disable-link hide-actions />
-              </template>
-            </v-dialog>
-          </td>
-        </tr>
-      </tbody>
-    </v-table>
+            <td>{{ product.EF ?? '-' }}</td>
+            <td>
+              <v-dialog max-width="500">
+                <template v-slot:activator="{ props: activatorProps }">
+                  <v-btn v-bind="activatorProps" text="View Details" variant="tonal" color="secondary"></v-btn>
+                </template>
 
-
-
-    <v-btn color="primary" @click="addAssessment">Add</v-btn>
+                <template v-slot:default="{ isActive }">
+                  <ProductCard :product="product" :go-back="() => { isActive.value = false }" disable-link
+                    hide-actions />
+                </template>
+              </v-dialog>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" style="text-align: right; font-weight: bold;">Average EF Score:</td>
+            <td>{{(products.reduce((sum, product) => sum + (product.EF || 0), 0) / products.length).toFixed(2)}}</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </v-table>
+      <v-btn color="primary" type="submit">Finish
+        assessment</v-btn>
+    </form>
   </div>
 </template>
+
+<style>
+.ppm-col {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+table .v-input__details {
+  display: none;
+}
+</style>

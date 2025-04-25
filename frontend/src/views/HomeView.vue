@@ -95,8 +95,7 @@ p {
 }
 
 .link {
-  color: #2f5a9a;
-  /* our primary blue */
+  color: #2f5a9a;/* our primary blue */
   text-decoration: none;
   font-weight: bold;
 }

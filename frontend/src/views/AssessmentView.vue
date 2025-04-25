@@ -76,7 +76,7 @@ function onSuccess(data: any) {
 </script>
 <template>
   <div>
-    <h1>Assessments</h1>
+    <h1 class="headline">Assessments</h1>
     <v-table striped hoverable>
       <thead>
         <tr>
@@ -103,3 +103,9 @@ function onSuccess(data: any) {
     </v-table>
   </div>
 </template>
+<style scoped>
+.headline {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+</style>
