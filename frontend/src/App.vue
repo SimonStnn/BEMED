@@ -19,12 +19,12 @@ const items: { title: string, url: string, icon: string }[] = [
     icon: 'mdi-archive-outline',
   },
   {
-    title: 'Survey',
+    title: 'Step 1 - Basic Info',
     url: '/survey',
     icon: 'mdi-file-document-edit',
   },
   {
-    title: 'Choose Alternatives',
+    title: 'Step 3 - Alternatives',
     url: '/alternatives',
     icon: 'mdi-file-arrow-left-right',
   },

@@ -15,12 +15,25 @@ console.log(authStore.userInfo);
       and behaviours to stop littering and reduce waste production.
     </h3>
     <p>
-      The methodology we use involve alternatives to single-use products
-      and packaging, reusing and recycling discarded materials at the source,
-      and moving away from waste incineration and land-filling. <br>
-      We are part of the global ecological transition, acting with respect for human rights
-      and better consideration of the most disadvantaged and
-      future generations.
+      The project aims to reduce single-use plastic products (SUPPs) in institutions 
+      through a comprehensive approach, 
+      starting with the development of an assessment tool to evaluate current SUPPs usage 
+      and set benchmarks for future tracking. 
+      Procurement guidelines will be created to help institutions transition to sustainable alternatives, 
+      providing criteria for eco-friendly product selection. 
+      Case studies of successful SUPP reduction efforts will be compiled to inspire and guide similar initiatives. 
+      <br>Implementation strategies. <br>
+      Training sessions will be conducted to raise awareness and improve waste management habits. 
+      The project will culminate in a conference to share tools, and outcomes, and foster partnerships 
+      for expanding SUPP reduction across Montenegrin institutions.
+      Zero Waste Montenegro was established in 2016 with the objective to dedicate itself to one of the largest environmental issues in Montenegro: waste mismanagement. 
+      With the support of passionate volunteers, 
+      the organization initiated the first coalition of NGOs working together to raise awareness 
+      on littering and single-use plastic pollution in Montenegro: <a href='https://cleanupmontenegro.me' target='_blank' rel='noopener noreferrer' class="link">Cleanup Montenegro></a>.
+      Zero Waste Montenegro has grown since and its team of full and part-time employees, volunteers and freelancers, 
+      led by a multi-disciplinary Steering Committee, 
+      are now working on impactful projects with municipalities, citizen groups, (inter)national organizations, ministries and businesses on their ZW journey.​
+
       If you would like to read more about the Zero Waste movement, <br>
       go to <a href="https://zerowasteeurope.eu" target="_blank" rel="noopener noreferrer"
         class="link">ZeroWasteEurope</a> and read more about this special journey.
